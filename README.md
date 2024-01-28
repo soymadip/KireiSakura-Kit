@@ -14,8 +14,8 @@ KireiSakura-Kit is a library/framework based on [Bash](https://www.gnu.org/softw
 ## Idea & Statement:
 
 - When I started learning bash, created some automation scripts for various things like adding chaotic AUR, installing packages etc. Then when I was updating my Oh-My-ZSH, I suddenly thought of making something similarly modular which can be used to do various things.....
-- As for now this project is very Arch-linux centic as I use EndevourOS, but can be made to use with any distro.
-- As I am just learning bash and nowhere near to be an expert, this framework/library is very simple. But I believe this can be a very powerful & useful concept.
+- As for now this project is very Arch-linux centric as I use EndevourOS, but can be made to use with any distro.
+- As I have just started learning bash and my knowledge is very little, this framework/library is very simple. But I believe this is be a very powerful & useful concept.
 - Contribute if you find this useful and wanna make this more powerful.
 
 ## Methods & Guldelines:
