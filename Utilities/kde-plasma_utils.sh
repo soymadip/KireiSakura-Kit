@@ -23,4 +23,57 @@ change_meta_to_krunner() {
 }
 
 
-#  
+
+# Change wallpaper:
+change_wallpaper() {
+
+    local wallpaper_path="$1"
+    prompt "Do you want to change wallpaper?" confirm_wallpaper
+    if [ "$confirm_wallpaper" == "y" ] || [ "$confirm_wallpaper" == "Y" ] || [ -z "$confirm_wallpaper" ]; then
+        log "Changing wallpaper." inform
+        sleep 2
+        qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "var Desktops = desktops();for (i=0;i<Desktops.length;i++) { d = Desktops[i];d.wallpaperPlugin = 'org.kde.image';d.currentConfigGroup = Array('Wallpaper', 'org.kde.image', 'General');d.writeConfig('Image', 'file:///${wallpaper_path}') }"
+        log "Done"
+        print_footer "Wallpaper changed." success
+    else
+        print_footer "Wallpaper change skipped." skipped
+    fi
+}
+
+
+
+# Change icon theme:
+change_icon_theme() {
+    local icon_theme="$1"
+    prompt "Do you want to change icon theme?" confirm_icon_theme
+    if [ "$confirm_icon_theme" == "y" ] || [ "$confirm_icon_theme" == "Y" ] || [ -z "$confirm_icon_theme" ]; then
+        log "Changing icon theme." inform
+        sleep 2 
+        kwriteconfig6 --file kdeglobals --group Icons --key Theme "$icon_theme"
+        qdbus org.kde.KWin /KWin reconfigure
+        log "Done"
+        print_footer "Icon theme changed to $icon_theme." success
+    else
+        print_footer "Icon theme change skipped." skipped
+    fi
+}
+
+
+# Change cursor theme & size:
+change_cursor_theme() {
+    local cursor_theme="$1"
+    local cursor_size="$2"
+
+    prompt "Do you want to change cursor theme?" confirm_cursor_theme
+    if [ "$confirm_cursor_theme" == "y" ] || [ "$confirm_cursor_theme" == "Y" ] || [ -z "$confirm_cursor_theme" ]; then
+        log "Changing cursor theme." inform
+        sleep 2 
+        kwriteconfig6 --file ~/.config/kcminputrc --group Mouse --key cursorTheme "$cursor_theme"
+        kwriteconfig6 --file ~/.config/kcminputrc --group Mouse --key cursorSize "$cursor_size" 
+        qdbus org.kde.KWin /KWin reconfigure
+        log "Done, Changes will be applied after relogin."
+        print_footer "Cursor theme changed to $cursor_theme." success
+    else
+        print_footer "Cursor theme change skipped." skipped
+    fi
+}

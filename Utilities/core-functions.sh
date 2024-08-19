@@ -20,43 +20,74 @@ welcome() {
     echo -e "\n${YELLOW}Welcome to Init-Script......${NC}"
 }
 
+# Log file name (use default if not specified)
+kirei_log_file="${LOG_FILE:-KireiSakura-Kit.log}"
+if [ ! -e "$kirei_log_file" ]; then
+    touch "$kirei_log_file"
+fi
 
-# Log system
-logger() {
+
+
+
+# Log function
+log() {
     local log_message=$1
     local log_level=$2
-
-    if [ "$log_level" == "error" ]; then
-        echo -e "${RED}[X]-> $log_message${NC}"
-    elif [ "$log_level" == "imp" ]; then
-        echo -e "${YELLOW}[!]->${NC} ${RED}$log_message${NC}"
-    elif [ "$log_level" == "inform" ]; then
-        echo -e "${YELLOW}[!]-> $log_message${NC}"
-    elif [ "$log_level" == "success" ]; then
-        echo -e "${GREEN}[✔]-> $log_message${NC}"
-    else 
-        echo -e "${BLUE}[-]-> $log_message${NC}"
-    fi
-}
-
-# log messages to screen
-log() {
-    local log_level=$2
+    local extra_info=$3
     
-    if [ -n "$3" ]; then
-        if [ "${log_level}" == "error" ]; then
-            logger "$1${RED} <-[${NC}${3}${RED}]${NC}" "${log_level}"
-        elif [ "${log_level}" == "inform" ] || [ "${log_level}" == "imp" ]; then
-            logger "$1${YELLOW} <-[${NC}${3}${YELLOW}]${NC}" "${log_level}"
-        elif [ "${log_level}" == "success" ]; then
-            logger "$1${GREEN} <-[${NC}${3}${GREEN}]${NC}" "${log_level}"
-        else
-            logger "$1" "${log_level}"
-        fi
+
+    # Determine color based on log level
+    case "$log_level" in
+        "error")
+            color="${RED}"
+            ;;
+        "imp")
+            color="${YELLOW}"
+            ;;
+        "inform")
+            color="${YELLOW}"
+            ;;
+        "success")
+            color="${GREEN}"
+            ;;
+        *)
+            color="${BLUE}"
+            ;;
+    esac
+
+    # Format the log message
+    if [ -n "$extra_info" ]; then
+        # Extra info case
+        formatted_message="${color}[ ${extra_info} ] -> ${log_message}${NC}"
     else
-        logger "$1" "${log_level}"
+        # No extra info case
+        case "$log_level" in
+            "error")
+                prefix="[X]->"
+                ;;
+            "imp")
+                prefix="[!]->"
+                ;;
+            "inform")
+                prefix="[!]->"
+                ;;
+            "success")
+                prefix="[✔]->"
+                ;;
+            *)
+                prefix="[-]->"
+                ;;
+        esac
+        formatted_message="${color}${prefix} ${log_message}${NC}"
     fi
+
+
+    # Print to console
+    echo -e "$formatted_message"
+    # Log to file
+    echo "$(date +"%Y-%m-%d %H:%M:%S") [$log_level] $log_message" >> "$kirei_log_file"
 }
+
 
 
 
