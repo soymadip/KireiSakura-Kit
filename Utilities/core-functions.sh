@@ -20,8 +20,10 @@ welcome() {
     echo -e "\n${YELLOW}Welcome to Init-Script......${NC}"
 }
 
+
 # Log file name (use default if not specified)
 kirei_log_file="${LOG_FILE:-KireiSakura-Kit.log}"
+
 if [ ! -e "$kirei_log_file" ]; then
     touch "$kirei_log_file"
 fi
@@ -94,10 +96,19 @@ log() {
 # ui for individual process
 # prompt asking for user authentication
 prompt() {
-    echo -e "${AQUA}--------------------------${NC}"
-    echo -e "${LAVENDER}[?] $1${NC} (y/n)"
-    read -p "|==-> " $2
+    local message=$1
+    local response_var=$2
+    local flag=${3:-""}
+
+    if [ "$flag" != "--no-separator" ]; then
+        echo -e "${AQUA}--------------------------${NC}"
+    fi
+
+    echo -e "${LAVENDER}[?] ${message}${NC} (y/n)"
+    read -p "|==-> " $response_var
 }
+
+
 
 # footer after each module completes
 print_footer() {
@@ -129,28 +140,47 @@ import_all_from() {
 }
 
 
+
+# Install a package using pacman or paru
+install_package() {
+    local package=$1
+
+    if sudo pacman -S --noconfirm --needed "$package"; then
+        log "$package installed successfully." success "INSTALLER"
+    else
+        log "$package not found in repos. Attempting AUR......"
+        if paru --needed -S $package; then
+            log "$package installed successfully from AUR" success "INSTALLER"
+        else
+            log "$package not found in repos or AUR. Please install it manually." error "INSTALLER"
+        fi
+    fi
+}
+
+
+
 # Check if a dependency is installed
 check_dependency() {
-    local DEPENDENCY=$1
-    local REQUIRED=$2
+    local dependency=$1
+    local required=$2
 
-    if ! pacman -Q "$DEPENDENCY" &> /dev/null; then
-        log "Error: ${DEPENDENCY} is not installed." error "CHECKER"
-        prompt "Do you want to install ${DEPENDENCY}?" confirm_install
-        if [ "$confirm_install" == "y" ] || [ "$confirm_install" == "Y" ] || [ -z "$confirm_install" ]; then
-            sudo pacman -S --noconfirm "$DEPENDENCY"
-            log "$DEPENDENCY installed."
+    if pacman -Q "$dependency" &> /dev/null; then
+        log "$dependency is installed." success
+    else
+        log "$dependency is not installed." inform
+        if [ -n "$required" ] && [ "$required" == "--needed" ]; then
+            log "installing $dependency...." inform
+            install_package "$dependency"
+            log "$dependency installed." success
         else
-            if [ -n "$REQUIRED" ] && [ "$REQUIRED" == "needed" ]; then
-                log "${DEPENDENCY} is not installed." inform
-                print_footer "Please install it before running this." skip
-                exit 1
+            prompt "Do you want to install $dependency?" confirm_install --no-separator
+            if [ "$confirm_install" == "y" ] || [ "$confirm_install" == "Y" ] || [ -z "$confirm_install" ]; then
+                install_package "$dependency"
+                log "$dependency installed." success
             else
-                log "${DEPENDENCY} is not installed." inform "CHECKER"
+                log "$dependency installation was declined by the user." inform
             fi
         fi
-    else
-        log "${DEPENDENCY} is installed in system." success
     fi
 }
 

@@ -24,7 +24,7 @@ change_meta_to_krunner() {
 
 
 
-# Change wallpaper:
+# Change wallpaper: [change_wallpaper absolute/path/to/wallpaper]
 change_wallpaper() {
 
     local wallpaper_path="$1"
@@ -34,7 +34,7 @@ change_wallpaper() {
         sleep 2
         qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "var Desktops = desktops();for (i=0;i<Desktops.length;i++) { d = Desktops[i];d.wallpaperPlugin = 'org.kde.image';d.currentConfigGroup = Array('Wallpaper', 'org.kde.image', 'General');d.writeConfig('Image', 'file:///${wallpaper_path}') }"
         log "Done"
-        print_footer "Wallpaper changed." success
+        print_footer "Wallpaper changed to $wallpaper_path." success
     else
         print_footer "Wallpaper change skipped." skipped
     fi
@@ -42,7 +42,7 @@ change_wallpaper() {
 
 
 
-# Change icon theme:
+# Change icon theme: [change_icon_theme icon_theme_name]
 change_icon_theme() {
     local icon_theme="$1"
     prompt "Do you want to change icon theme?" confirm_icon_theme
@@ -59,7 +59,7 @@ change_icon_theme() {
 }
 
 
-# Change cursor theme & size:
+# Change cursor theme & size: [change_cursor_theme cursor_theme_name cursor_size]
 change_cursor_theme() {
     local cursor_theme="$1"
     local cursor_size="$2"
@@ -77,3 +77,35 @@ change_cursor_theme() {
         print_footer "Cursor theme change skipped." skipped
     fi
 }
+
+
+
+# Function to change the SDDM theme
+change_sddm_theme() {
+    local theme_name="$1"
+    local config_file="${2:-/etc/sddm.conf.d/kde_settings.conf}"
+    local theme_dir="/usr/share/sddm/themes/$theme_name"
+
+    # Check if the theme name is provided
+    if [[ -z "$theme_name" ]]; then
+        log "Error: No theme name provided." error
+        log "Usage: change_sddm_theme <theme_name> [config_file]"
+        return 1
+    fi
+
+    # Check if the theme directory exists
+    if [[ ! -d "$theme_dir" ]]; then
+        echo "Error: Theme '$theme_name' does not exist in $theme_dir."
+        return 1
+    fi
+
+    log "Changing SDDM theme to $theme_name." inform
+    if sudo sed -i "s/^Current=.*/Current=$theme_name/" "$config_file" ; then
+        echo "SDDM theme changed to $theme_name."
+    else
+        echo "Failed to change SDDM theme."
+    fi
+
+}
+
+
