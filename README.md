@@ -1,6 +1,6 @@
  <h1 align="center"> 🏗 KireiSakura-Kit</h1>
 
-<pre align="center">Library/framework based on [Bash](https://www.gnu.org/software/bash/) to easily write beautiful & powerful scripts.</pre>
+<p align="center">Library/framework based on <a href="https://www.gnu.org/software/bash">Bash</a> to easily write beautiful & powerful scripts.</p>
 
 ---
 
