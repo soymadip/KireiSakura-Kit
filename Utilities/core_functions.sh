@@ -21,22 +21,14 @@ welcome() {
 }
 
 
-# Log file name (use default if not specified)
-kirei_log_file="${LOG_FILE:-KireiSakura-Kit.log}"
-
-if [ ! -e "$kirei_log_file" ]; then
-    touch "$kirei_log_file"
-fi
-
-
 
 
 # Log function
 log() {
     local log_message=$1
-    local log_level=$2
+    local log_level=${2:-"  -  "}
     local extra_info=$3
-    
+
 
     # Determine color based on log level
     case "$log_level" in
@@ -83,7 +75,6 @@ log() {
         formatted_message="${color}${prefix} ${log_message}${NC}"
     fi
 
-
     # Print to console
     echo -e "$formatted_message"
     # Log to file
@@ -93,8 +84,53 @@ log() {
 
 
 
-# ui for individual process
+# check if a directory exists (make it if it doesn't):
+## check_dir <directory> [--needed] [--el_exit]
+check_dir() {
+    local dir=$1
+    local is_needed=0
+    local el_exit=0
+
+    while [[ $# -gt 1 ]]; do
+        case "$2" in
+            "--needed")
+                is_needed=1
+                ;;
+            "--el_exit")
+                el_exit=1
+                ;;
+            *)
+                ;;
+        esac
+        shift
+    done
+
+    if [ -d "$dir" ]; then
+        log "Directory '$dir' exists." inform
+    else
+        log "Directory '$dir' does not exist." inform
+
+        if [ "$is_needed" -eq 1 ]; then
+            log "Creating directory '$dir'..." inform
+            mkdir -p "$dir" || {
+                log "Failed to create directory '$dir'" error
+                return 1
+            }
+            log "Directory '$dir' created successfully." success
+        fi
+
+        if [ "$el_exit" -eq 1 ]; then
+            exit 0
+        fi
+    fi
+}
+
+
+
+
+
 # prompt asking for user authentication
+## prompt <message> <response_variable> [--no-separator]
 prompt() {
     local message=$1
     local response_var=$2
@@ -129,11 +165,32 @@ print_footer() {
 
 
 
+load_util() {
+    local script_bases=("$@")
+    local script_dir
+    local script_path
+
+    # Resolve the directory of the current script
+    script_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+    for script_base in "${script_bases[@]}"; do
+        script_path="$script_dir/$script_base.sh"
+
+        if [ -f "$script_path" ]; then
+            source "$script_path"
+            log "Loaded $script_path"
+        else
+            log "Error: $script_path does not exist." error
+        fi
+    done
+}
+
+
 # Import all files from a directory
-import_all_from() {
+load_all_from() {
     local directory=$1
-    local file_ext=$2
-    
+    local file_ext=${2:-"sh"}
+
     for script in ${directory}/*.${file_ext}; do
         [ -e "$script" ] && [ "$(basename "$script")" != "core-functions.sh" ] && source "$script"
     done
@@ -144,17 +201,22 @@ import_all_from() {
 # Install a package using pacman or paru
 install_package() {
     local package=$1
+    local failed=0
 
     if sudo pacman -S --noconfirm --needed "$package"; then
         log "$package installed successfully." success "INSTALLER"
     else
-        log "$package not found in repos. Attempting AUR......"
-        if paru --needed -S $package; then
-            log "$package installed successfully from AUR" success "INSTALLER"
+        log "$package not found in repos. Attempting AUR..." inform
+
+        if paru --needed -S "$package"; then
+            log "$package installed successfully from AUR." success "INSTALLER"
         else
             log "$package not found in repos or AUR. Please install it manually." error "INSTALLER"
+            failed=1 
         fi
     fi
+
+    return $failed
 }
 
 
@@ -183,4 +245,3 @@ check_dependency() {
         fi
     fi
 }
-

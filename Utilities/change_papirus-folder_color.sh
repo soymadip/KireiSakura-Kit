@@ -10,7 +10,7 @@ change_papirus_folder_color() {
     fi
 
     log "Changing Papirus folder color to $color_name with theme $theme_name." inform
-    papirus-folders -v -C $color_name --theme $theme_name
+    command papirus-folders -v -C $color_name --theme $theme_name
 
     log "Papirus folder color changed to $color_name." success
     print_footer
