@@ -21,6 +21,7 @@ show_man() {
     exit 1
 }
 
+
 # Help message
 show_help() {
     printf "\n  Usage: ${temp_LAVENDER}kireisakura {OPTIONS}${temp_RESET}\n"
@@ -66,7 +67,9 @@ init() {
 
     # Output environment variable setup commands
     echo -e "kirei_dir=$kirei_dir" 
+    echo -e "kirei_utils_dir=$kirei_core/Utilities" 
     echo -e "kirei_core=$kirei_core" 
+    
     # printf "export kirei_dir=\"%s\"\n" "$kirei_dir"
     printf "kirei_log_file=\"\${LOG_FILE:-KireiSakura-Kit.log}\"\n"
     printf "kirei_cache_dir=\"\${CACHE_DIR:-\$HOME/.cache/KireiSakura-Kit}\"\n"
@@ -107,6 +110,7 @@ init_flag=false
 if [ "$#" -eq 0 ]; then
     show_man
 fi
+
 
 # Parse options
 while [[ "$#" -gt 0 ]]; do

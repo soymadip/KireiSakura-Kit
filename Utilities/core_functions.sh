@@ -170,11 +170,28 @@ load_util() {
     local script_dir
     local script_path
 
-    # Resolve the directory of the current script
-    script_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
     for script_base in "${script_bases[@]}"; do
         script_path="$script_dir/$script_base.sh"
+
+        if [ -f "$script_path" ]; then
+            source "$script_path"
+            log "Loaded $script_path"
+        else
+            log "Error: $script_path does not exist." error
+        fi
+    done
+}
+
+
+kimport() {
+    local called_modules=("$@")
+    local script_dir
+    local script_path
+
+
+    for module in "${called_modules[@]}"; do
+        script_path="$kirei_utils_dir/$script_base.sh"
 
         if [ -f "$script_path" ]; then
             source "$script_path"
