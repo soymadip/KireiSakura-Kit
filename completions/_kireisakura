@@ -1,0 +1,47 @@
+
+#compdef kireisakura
+
+_kireisakura() {
+  local -a flags
+  local -a directories
+  local -a urls
+
+  # Define possible flags and options
+  flags=(
+    '-h[Show help]'                 # Help flag
+    '-v[Show version]'              # Version flag
+    '-i[Initialize the Kit]'        # Initialize flag
+    '-d[Specify custom directory]:directory:_files' # Custom directory flag
+    '-u[Update to the newest version]'   # Update flag
+    '-ul[Specify update URL]:URL'   # Update URL flag
+  )
+
+  # Define the completion function
+  _arguments -s \
+    "$flags[@]" \
+    '-d[Specify custom directory]:directory:_files' \
+    '-ul[Specify update URL]:URL'
+
+  # Optionally, you can add custom logic for specific flags
+  case $words[1] in
+    -d|--dir)
+      # Provide directory completions
+      _files
+      ;;
+    -ul|--update-url)
+      # Provide URL completions
+      _urls
+      ;;
+  esac
+}
+
+# Define a custom completion for URLs
+_urls() {
+  local urls=(
+    'https://example.com/'
+    'https://github.com/soymadip/KireiSakura-Kit/releases/latest'
+  )
+  
+  _describe 'URL' urls
+}
+

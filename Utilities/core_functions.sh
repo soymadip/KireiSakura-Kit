@@ -16,8 +16,9 @@ RED='\033[0;31m'
 
 #welcome system
 welcome() {
-    clear
-    echo -e "\n${YELLOW}Welcome to Init-Script......${NC}"
+  local script_name=$1
+  clear
+  printf "\n\n${YELLOW}$(figlet "  Welcome") ${NC}.......to Init-Script\n\n\n"
 }
 
 
@@ -35,9 +36,6 @@ log() {
         "error")
             color="${RED}"
             ;;
-        "imp")
-            color="${YELLOW}"
-            ;;
         "inform")
             color="${YELLOW}"
             ;;
@@ -48,19 +46,23 @@ log() {
             color="${BLUE}"
             ;;
     esac
+    
+
+    if starts_with "\n" "$log_message"; then
+      log_message=$(trim_char "\n" "$log_message" )
+      echo ""
+      echo -e "$(date +"%Y-%m-%d %H:%M:%S") " >> "$kirei_log_file"
+    fi
 
     # Format the log message
     if [ -n "$extra_info" ]; then
         # Extra info case
-        formatted_message="${color}[ ${extra_info} ] -> ${log_message}${NC}"
+        formatted_message="${color}[ ${extra_info} ]-> ${log_message}${NC}"
     else
         # No extra info case
         case "$log_level" in
             "error")
                 prefix="[X]->"
-                ;;
-            "imp")
-                prefix="[!]->"
                 ;;
             "inform")
                 prefix="[!]->"
@@ -78,52 +80,12 @@ log() {
     # Print to console
     echo -e "$formatted_message"
     # Log to file
-    echo "$(date +"%Y-%m-%d %H:%M:%S") [$log_level] $log_message" >> "$kirei_log_file"
+    echo -e "$(date +"%Y-%m-%d %H:%M:%S") [$log_level] $log_message" >> "$kirei_log_file"
 }
 
 
 
 
-# check if a directory exists (make it if it doesn't):
-## check_dir <directory> [--needed] [--el_exit]
-check_dir() {
-    local dir=$1
-    local is_needed=0
-    local el_exit=0
-
-    while [[ $# -gt 1 ]]; do
-        case "$2" in
-            "--needed")
-                is_needed=1
-                ;;
-            "--el_exit")
-                el_exit=1
-                ;;
-            *)
-                ;;
-        esac
-        shift
-    done
-
-    if [ -d "$dir" ]; then
-        log "Directory '$dir' exists." inform
-    else
-        log "Directory '$dir' does not exist." inform
-
-        if [ "$is_needed" -eq 1 ]; then
-            log "Creating directory '$dir'..." inform
-            mkdir -p "$dir" || {
-                log "Failed to create directory '$dir'" error
-                return 1
-            }
-            log "Directory '$dir' created successfully." success
-        fi
-
-        if [ "$el_exit" -eq 1 ]; then
-            exit 0
-        fi
-    fi
-}
 
 
 
@@ -164,7 +126,7 @@ print_footer() {
 #______________________________________________Inbuilt Functions__________________________________________________
 
 
-
+# Deparciated
 load_util() {
     local script_bases=("$@")
     local script_dir
@@ -184,23 +146,47 @@ load_util() {
 }
 
 
+# Import  modules
+# kimport <module1> <module2>
 kimport() {
     local called_modules=("$@")
-    local script_dir
-    local script_path
+    local module_path
+    local failed_imports=()
+    # local is_quiet=0
 
+    log "Importing modules....\n" inform kimport
 
-    for module in "${called_modules[@]}"; do
-        script_path="$kirei_utils_dir/$script_base.sh"
+    for module_name in "${called_modules[@]}"; do
+        module_path="$kirei_utils_dir/$module_name.sh"
 
-        if [ -f "$script_path" ]; then
-            source "$script_path"
-            log "Loaded $script_path"
+        if [ -f "$module_path" ]; then
+            if source "$module_path"; then
+                log "Imported module: '$module_name'" 
+            else
+                log "Failed to import: '$module_name'" inform 
+                failed_imports+=("$module_name")  
+            fi
         else
-            log "Error: $script_path does not exist." error
+            log "Failed to import '$module_name': doesn't exist." inform 
+            failed_imports+=("$module_name") 
         fi
+        sleep 0.3
     done
+
+    if [ "${#failed_imports[@]}" -gt 0 ]; then
+        echo "" 
+        log " Failed to import modules:" error kimport
+        for failed_import in "${failed_imports[@]}"; do
+            echo -e "\t\t${LAVENDER}$failed_import ${NC}"
+        done
+        log "Please check your imports." inform kimport
+        exit 1
+    else 
+      log "\nImported all modules successfully." success kimport
+    fi
 }
+
+
 
 
 # Import all files from a directory
@@ -262,3 +248,89 @@ check_dependency() {
         fi
     fi
 }
+
+
+
+# check if a directory exists (make it if it doesn't):
+## check_dir <directory> [--needed || --el_exit] [--quiet]
+check_dir() {
+    local dir=$1
+    local is_needed=0
+    local el_exit=0
+    local is_quiet=0
+
+    while [[ $# -gt 1 ]]; do
+        case "$2" in
+            -n|--needed)
+                is_needed=1
+                ;;
+            -e|--el_exit)
+                el_exit=1
+                ;;
+            -q|--quiet)
+                is_quiet=1
+                ;;
+            *)
+                ;;
+        esac
+        shift
+    done
+
+    if [ "$is_needed" -eq 1 ] && [ "$el_exit" -eq 1 ]; then
+      log "Invalid flags given." error check_dir
+      log "How come you gave -n & -e flags both?" inform
+      return 1
+    fi
+
+
+    if [ -d "$dir" ]; then
+        [ "$is_quiet" -ne 1 ] && log "Directory '$dir' exists." inform
+    else
+        log "Directory '$dir' does not exist." inform
+
+        if [ "$is_needed" -eq 1 ]; then
+            log "Creating directory '$dir'..." inform
+            
+           if mkdir -p "$dir"; then 
+             [ "$is_quiet" -ne 1 ] && log "Directory '$dir' created successfully." success
+             return 1
+           else 
+             log "Failed to create directory '$dir'" error check_dir
+           fi
+        fi
+
+        if [ "$el_exit" -eq 1 ]; then
+            exit 0
+        fi
+    fi
+}
+
+
+# Check if a message strats with given char. if yes, srccessfull..
+# strats_with <character_to_check> <message_in_which_to_check> 
+starts_with() {
+  local character=$1
+  local string=$2
+
+  if [[ "$string" == "$character"* ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+
+
+trim_char() {
+  local character=$1
+  local string=$2
+  local trimmed_message
+
+  if starts_with "$character" "$string"; then 
+    trimmed_message="${string#"$character"}"
+    echo "$trimmed_message"
+  else 
+    echo "$string"
+  fi
+}
+
