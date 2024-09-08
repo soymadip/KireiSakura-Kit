@@ -162,7 +162,8 @@ has_update() {
     local local_ver="$1"
     local git_ver="$2"
 
-    # Convert versions to numbers by replacing dots with spaces local local_vcode=$(echo "$local_ver" | tr '.' ' ')
+    # Convert versions to numbers by replacing dots with spaces 
+    local local_vcode=$(echo "$local_ver" | tr '.' ' ')
     local git_vcode=$(echo "$git_ver" | tr '.' ' ')
 
     # Compare versions (lexicograpgic comp)
