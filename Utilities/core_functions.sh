@@ -161,7 +161,7 @@ kimport() {
 
         if [ -f "$module_path" ]; then
             if source "$module_path"; then
-                log "Imported module: '$module_name'" 
+                log "Imported: '$module_name'" 
             else
                 log "Failed to import: '$module_name'" inform 
                 failed_imports+=("$module_name")  
@@ -271,36 +271,42 @@ check_dir() {
                 is_quiet=1
                 ;;
             *)
+                echo "Invalid option: $2"
+                return 1
                 ;;
         esac
         shift
     done
 
-    if [ "$is_needed" -eq 1 ] && [ "$el_exit" -eq 1 ]; then
-      log "Invalid flags given." error check_dir
+    if [[ "$is_needed" -eq 1 && "$el_exit" -eq 1 ]]; then
+      log "Invalid flags given." error
       log "How come you gave -n & -e flags both?" inform
       return 1
     fi
 
-
-    if [ -d "$dir" ]; then
-        [ "$is_quiet" -ne 1 ] && log "Directory '$dir' exists." inform
+    if [[ -d "$dir" ]]; then
+        [[ "$is_quiet" -ne 1 ]] && log "Directory '$dir' exists." inform
     else
-        log "Directory '$dir' does not exist." inform
+        [[ "$is_quiet" -ne 1 ]] && log "Directory '$dir' does not exist." inform
 
-        if [ "$is_needed" -eq 1 ]; then
-            log "Creating directory '$dir'..." inform
-            
-           if mkdir -p "$dir"; then 
-             [ "$is_quiet" -ne 1 ] && log "Directory '$dir' created successfully." success
-             return 1
-           else 
-             log "Failed to create directory '$dir'" error check_dir
-           fi
+        if [[ "$is_needed" -eq 1 ]]; then
+            [[ "$is_quiet" -ne 1 ]] && log "Creating directory '$dir'..." inform
+
+            if mkdir -p "$dir" 2>/dev/null; then
+                [[ "$is_quiet" -ne 1 ]] && log "Directory '$dir' created successfully."  success
+            else
+                log "Failed to create directory '$dir'. Attempting with sudo..." inform
+                if sudo mkdir -p "$dir"; then
+                    [[ "$is_quiet" -ne 1 ]] && log "Directory '$dir' created successfully with sudo." success
+                else
+                    log "Failed to create directory '$dir' with sudo." error
+                    return 1
+                fi
+            fi
         fi
 
-        if [ "$el_exit" -eq 1 ]; then
-            exit 0
+        if [[ "$el_exit" -eq 1 ]]; then
+            exit 1
         fi
     fi
 }
