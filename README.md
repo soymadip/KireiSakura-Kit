@@ -4,6 +4,6 @@
 
 ---
 
- <h4 align="center"> This is Install script branch</h4>
- <p align="center"> This works as a mirror to download the install script</p>
+ <h4 align="center"> This is Documentation branch</h4>
+ <p align="center"> This holds the source code of the docs.</p>
 
