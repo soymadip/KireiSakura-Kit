@@ -1,149 +1,5 @@
-# This script contains various decorative UI elements 
-# used within the main script to make sctipt more visually appiling.
+#  CORE FUNCTIONS
 
-#____________________________________________UI Elements___________________________________________________
-
-# Color codes for various visuals
-NC='\033[0m' # No Color/escape code
-AQUA='\e[38;2;216;222;233m'
-LAVENDER='\u001b[38;5;147m'
-BLUE='\033[38;5;67m'
-YELLOW='\033[1;33m'
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-
-
-
-#welcome system
-welcome() {
-  local script_name=$1
-  clear
-  printf "\n\n${YELLOW}$(figlet "  Welcome") ${NC}.......to Init-Script\n\n\n"
-}
-
-
-
-
-# Log function
-log() {
-    local log_message=$1
-    local log_level=${2:-"  -  "}
-    local extra_info=$3
-
-
-    # Determine color based on log level
-    case "$log_level" in
-        "error")
-            color="${RED}"
-            ;;
-        "inform")
-            color="${YELLOW}"
-            ;;
-        "success")
-            color="${GREEN}"
-            ;;
-        *)
-            color="${BLUE}"
-            ;;
-    esac
-    
-
-    if starts_with "\n" "$log_message"; then
-      log_message=$(trim_char "\n" "$log_message" )
-      echo ""
-      echo -e "$(date +"%Y-%m-%d %H:%M:%S") " >> "$kirei_log_file"
-    fi
-
-    # Format the log message
-    if [ -n "$extra_info" ]; then
-        # Extra info case
-        formatted_message="${color}[ ${extra_info} ]-> ${log_message}${NC}"
-    else
-        # No extra info case
-        case "$log_level" in
-            "error")
-                prefix="[X]->"
-                ;;
-            "inform")
-                prefix="[!]->"
-                ;;
-            "success")
-                prefix="[✔]->"
-                ;;
-            *)
-                prefix="[-]->"
-                ;;
-        esac
-        formatted_message="${color}${prefix} ${log_message}${NC}"
-    fi
-
-    # Print to console
-    echo -e "$formatted_message"
-    # Log to file
-    echo -e "$(date +"%Y-%m-%d %H:%M:%S") [$log_level] $log_message" >> "$kirei_log_file"
-}
-
-
-
-
-
-
-
-
-
-# prompt asking for user authentication
-## prompt <message> <response_variable> [--no-separator]
-prompt() {
-    local message=$1
-    local response_var=$2
-    local flag=${3:-""}
-
-    if [ "$flag" != "--no-separator" ]; then
-        echo -e "${AQUA}--------------------------${NC}"
-    fi
-
-    echo -e "${LAVENDER}[?] ${message}${NC} (y/n)"
-    read -p "|==-> " $response_var
-}
-
-
-
-# footer after each module completes
-print_footer() {
-    if [ -n "$1" ]; then
-        if [ "$2" == "skipped" ]; then
-            echo -e "${RED}[x]-> $1${NC}"
-        else
-            echo -e "${GREEN}[✔]=> $1${NC}"
-        fi
-    fi
-    echo -e "${AQUA}---------------------------------------------------------------${NC}"
-    sleep 1
-}
-
-
-
-#______________________________________________Inbuilt Functions__________________________________________________
-
-
-# Deparciated
-load_util() {
-    local script_bases=("$@")
-    local script_dir
-    local script_path
-
-
-    for script_base in "${script_bases[@]}"; do
-        script_path="$script_dir/$script_base.sh"
-
-        if [ -f "$script_path" ]; then
-            source "$script_path"
-            log "Loaded $script_path"
-        else
-            log "Error: $script_path does not exist." error
-        fi
-    done
-}
 
 
 # Import  modules
@@ -157,7 +13,7 @@ kimport() {
     log "Importing modules....\n" inform kimport
 
     for module_name in "${called_modules[@]}"; do
-        module_path="$kirei_utils_dir/$module_name.sh"
+        module_path="$kirei_module_dir/$module_name.sh"
 
         if [ -f "$module_path" ]; then
             if source "$module_path"; then
@@ -194,8 +50,13 @@ load_all_from() {
     local directory=$1
     local file_ext=${2:-"sh"}
 
-    for script in ${directory}/*.${file_ext}; do
-        [ -e "$script" ] && [ "$(basename "$script")" != "core-functions.sh" ] && source "$script"
+    for script in "${directory}"/*.${file_ext}; do
+        if [ -e "$script" ]; then
+            if ! source "$script"; then
+                log "Failed to load $script" error
+                exit 1
+            fi
+        fi
     done
 }
 
@@ -339,4 +200,3 @@ trim_char() {
     echo "$string"
   fi
 }
-

@@ -1,0 +1,275 @@
+#!/usr/bin/env bash
+
+# Define color codes
+RED='\033[31m'
+LAVENDER='\u001b[38;5;147m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+RESET='\033[0m'
+
+#_____________________________________FUNCTIONS_____________________________________________
+
+
+# Log function
+logf() {
+  local message="$1"
+  local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+
+  # Replace '\n' with actual newlines
+  local formatted_message=$(echo -e "$message")
+
+  while IFS= read -r line; do
+    printf "%s %s\n" "$timestamp" "$line" >>"$log_file"
+  done <<<"$formatted_message"
+}
+
+
+# For no arguments
+show_man() {
+  local opt=${1:-" "}
+
+  if [ "$opt" != " " ]; then
+    printf "\n  ${RED}Unknown falg: "$opt" ${RESET}\n"
+  else
+    printf "\n  ${RED}No flag was given.${RESET}\n"
+  fi
+
+  printf "  Use '${LAVENDER}kireisakura -h${RESET}' for help.\n"
+
+  exit 1
+}
+
+
+# Help message
+show_help() {
+
+  printf "\n  Usage: ${LAVENDER}kireisakura {OPTIONS}${RESET}\n"
+  printf "  Usage: ${LAVENDER}eval \'\$(kireisakura --init {OPTIONS})\'${RESET}\n\n"
+
+  printf "  Options:\n"
+  printf "      -i,  --init            Set up the KireiSakura-Kit.\n"
+  printf "      -d,  --dir <path>      Set up a custom installation. Must use with -i.\n"
+  printf "      -h,  --help            Show this help message and exit.\n"
+  printf "      -v,  --version         Show version and exit.\n"
+  printf "      -u,  --update          Update to newest version if available.\n"
+  printf "      -ul, --update-url      Upstream url. Direct link to '.version'.\n"
+  printf "      -t,  --test            Run the test script to verify the setup.\n"
+
+  exit 0
+}
+
+
+# version
+show_version() {
+  local version_num=$(cat $kirei_dir/.version)
+
+  printf "\n  KireiSakura-Kit ${LAVENDER}v$version_num${RESET}\n"
+}
+
+
+# return 0 if $1 is equal to $2
+# return 1 if $1 is greater than $2
+# return 2 if $1 is less than $2
+compare() {
+  mapfile -t ver1 < <(echo "$1" | tr '.' '\n')
+  mapfile -t ver2 < <(echo "$2" | tr '.' '\n')
+
+  for i in {0..2}; do
+    local v1_part=${ver1[i]:-0}
+    local v2_part=${ver2[i]:-0}
+
+    if ((v1_part > v2_part)); then
+      return 1
+    elif ((v1_part < v2_part)); then
+      return 2
+    fi
+  done
+
+  return 0
+}
+
+
+update_kit() {
+  local upstream_version="$(curl -sSL $upstream_ver_url || echo "")"
+  local local_version="$(cat $kirei_dir/.version)"
+
+
+  if [[ -z "$upstream_version" ]]; then
+    printf " ${RED}Couldn't resolve upstream version. Please check your connection or the URL.${RESET}\n"
+    return 1
+  fi
+
+  compare "$local_version" "$upstream_version"
+  result=$?
+
+  if [ $result -eq 2 ]; then
+    printf "\n  ${YELLOW}New update available:${RESET} ${LAVENDER}v${local_version} -> v${upstream_version} ${RESET}\n"
+    printf " ${YELLOW}Updating....${RESET}\n"
+    curl -L https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh | bash -s
+  else
+    printf "\n  ${GREEN}No new update available.${RESET}\n"
+    printf "  KireiSakura-Kit ${LAVENDER}v$local_version${RESET}\n"
+  fi
+}
+
+
+# Setup process
+init() {
+  local kit_version
+
+  printf "\n\n" >>"$log_file"
+  logf "====================== NEW SESSION =======================\n"
+  logf "Initialization started."
+  printf "echo -e '\\n${YELLOW}[ INIT ]-> Starting Initialization..${RESET}\\n\\n'\n"
+
+  # Check if kit exists
+  if [ "$is_cstm_kit_dir" = true ]; then
+
+    logf "Custom Kit directory given."
+    printf "echo -e '${YELLOW}[!]-> Custom Kit directory given.${RESET}'\n"
+    printf "echo -e '${YELLOW}[!]-> Checking it....${RESET}'\n"
+  else
+    logf "Using default Kit installation."
+    printf "echo -e '${YELLOW}[!]-> Custom Kit directory not given.${RESET}'\n"
+    printf "echo -e '${YELLOW}[!]-> Using default Kit installation.${RESET}'\n"
+    printf "echo -e '${YELLOW}[!]-> Validating....${RESET}'\n"
+  fi
+
+  if [ ! -d "$kirei_dir" ]; then
+    if [ "$is_cstm_kit_dir" = true ]; then
+      logf "Error: given custom kit dir is not valid."
+      printf "echo -e '${RED}[X]-> Error: Custom Kit directory does not exist. Please check given directory path.${RESET}'\n"
+      printf "echo -e '${RED}[X]-> Exiting.....${RESET}'\n"
+      exit 1
+    else
+      logf "Error: Default installation is missing"
+      printf "echo -e '${RED}[X]-> Error: Default installation is missing. Please re-install the kit.${RESET}'\n"
+      printf "echo -e '${RED}[X]-> Exiting.....${RESET}'\n"
+      exit 1
+    fi
+  else
+    if [ "$is_cstm_kit_dir" = true ]; then
+      logf "Custom kit dir exists."
+      printf "echo -e '${GREEN}[✔]-> Custom Kit directory exists.${RESET}'\n"
+    else
+      printf "echo -e '${GREEN}[✔]-> Validated default installation.${RESET}'\n"
+    fi
+  fi
+
+  # Check if core file exists
+  if [ ! -f "$kirei_core" ]; then
+    logf "Error: Core file is missing in kit."
+    printf "echo -e '${RED}[X]-> Error: Core file is missing in Kit. Please check installation or re-install.${RESET}'\n"
+    printf "Exiting..... \n"
+    exit 1
+  fi
+
+  kit_version=$(cat $kirei_dir/.version)
+
+  # Output environment variable setup commands
+  printf "kirei_dir=\"%s\"\n" "$kirei_dir"
+  printf "kirei_core_dir=\"%s\"\n" "$kirei_core_dir"
+  printf "kirei_core=\"%s\"\n" "$kirei_core"
+  printf "kirei_module_dir=\"%s\"\n" "$kirei_module_dir"
+
+  printf "kirei_log_file=\"\${LOG_FILE:-$log_file}\"\n"
+  printf "kirei_cache_dir=\"\${CACHE_DIR:-$cache_dir}\"\n"
+
+  # Print source and check_dir commands
+  printf "sleep 1\n"
+  logf "Loading core....."
+  printf "echo \"${YELLOW}[!]-> Loading core.${RESET}\" \n"
+  printf "source \"\$kirei_core\" \n"
+  printf "log 'Loaded core.' success \n"
+  logf "Loaded core."
+
+  # This was the issue part
+  printf "sleep 1\n"
+  printf "log \"Checking cache directory.....\" inform \n"
+  printf "check_dir \"\${kirei_cache_dir}\" -q \n"
+  printf "log \"Cache directory exists.\" success \n"
+  printf "echo "" \n"
+  printf "log \"KireiSakura-Kit v${kit_version}\"  \n"
+  printf "sleep 1\n"
+  printf "echo \" \\n \" \n"
+  printf "log \"Initialization complete.\" success INIT\n"
+  logf "Initialization complete."
+}
+
+
+run_tester() {
+  clear -x
+  bash "$kirei_dir/core/_test.sh" || exit 1
+}
+
+
+#_________________________________INITIALISATION_____________________________________________
+
+# Initialize variables
+kirei_dir="$HOME/.local/share/KireiSakura-Kit"
+kirei_core_dir="$kirei_dir/core"
+kirei_core="$kirei_core_dir/_loader.sh"
+kirei_module_dir="$kirei_dir/modules"
+
+cache_dir="${CACHE_DIR:-$HOME/.cache/KireiSakura-Kit}"
+log_file="${LOG_FILE:-KireiSakura-Kit.log}"
+
+init_flag=false
+is_cstm_kit_dir=false
+upstream_ver_url='https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/main/.version'
+
+
+# Check if no arguments are provided
+if [ "$#" -eq 0 ]; then
+  show_man
+fi
+
+# Parse options
+while [[ "$#" -gt 0 ]]; do
+
+  case "$1" in
+  -h | --help)
+    show_help
+    ;;
+  -u | --update)
+    update_kit
+    ;;
+  -ul | --update-url)
+    if [ -n "$2" ]; then
+      upstream_ver_url="$2"
+      shift # Shift past the directory path
+    else
+      printf "\n  ${RED}Error: Upstream URL must be specified after '-ul' or '--update-url'.${RESET}\n"
+      exit 1
+    fi
+    ;;
+  -v | --version)
+    show_version
+    ;;
+  -i | --init)
+    init_flag=true
+    ;;
+  -d | --dir)
+    if [ -n "$2" ]; then
+      is_cstm_kit_dir=true
+      kirei_dir="$2"
+      shift
+    else
+      printf "\n  ${RED}Error: Directory path must be specified after '-d' or '--dir'.${RESET}\n"
+      exit 1
+    fi
+    ;;
+  -t | --test)
+    run_tester
+    ;;
+  *)
+    show_man "$1"
+    ;;
+  esac
+  shift
+done
+
+# Perform setup if --init flag is set
+if [ "$init_flag" = true ]; then
+  init "$kirei_dir"
+fi
