@@ -15,9 +15,9 @@ export MAGENTA="$(tput setaf 5 2>/dev/null || printf '')"
 export NO_COLOR="$(tput sgr0 2>/dev/null || printf '')"
 
 export KIT_NAME="KireiSakura-Kit"
-export LIB_DIR="${HOME}/.local/lib"
-export BIN_DIR="${HOME}/.local/bin"
+export LIB_DIR="${HOME}/.local/share"
 export KIT_DIR="${LIB_DIR}/${KIT_NAME}"
+export BIN_DIR="${KIT_DIR}/bin"
 export TEMP_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/${KIT_NAME}"
 
 export KIT_REPO="soymadip/${KIT_NAME}"
@@ -111,7 +111,7 @@ install_package() {
     sudo pacman -S --noconfirm --needed "$package" > /dev/null || return 1
     ;;
   apt)
-    sudo apt update > /dev/null
+    sudo apt update > /dev/null || return 1
     sudo apt install -y "$package" > /dev/null || return 1
     ;;
   dnf)
@@ -225,7 +225,7 @@ check_update() {
         fi
         ;;
       1)
-        eror "Your local installation version is greater than the latest release."
+        eror "Your local installation is greater than the latest release?"
         warn "Do you wanna reinstall? [y/n]"
         read -p "> " cfrm_rnstl1
         if [[ "$cfrm_rnstl1" =~ ^[yY]$ || -z "$cfrm_rnstl1" ]]; then
@@ -271,20 +271,6 @@ check_update() {
 }
 
 
-check_dir() {
-  local DIR="$1"
-
-  if ! mkdir -p "$DIR"; then
-    warn "Failed to create directory. Attempting with sudo..."
-    if ! sudo mkdir -p "$DIR"; then
-      error "Failed to create cache directory."
-      error "Please manually create: $DIR"
-      exit 1
-    fi
-  fi
-}
-
-
 rm_dir() {
   local DIR="$1"
 
@@ -295,13 +281,36 @@ rm_dir() {
 }
 
 
+check_dir() {
+  local DIR="$1"
+
+  if [ -d "$DIR" ]; then
+    completed "Directory already exists."
+    return 0
+  fi
+
+  if mkdir -p "$DIR"; then
+    return 0
+  else
+    warn "Failed to create directory. Attempting with sudo..."
+    if ! sudo mkdir -p "$DIR"; then
+      error "Failed to create directory."
+      error "Please manually create: $DIR"
+      exit 1
+    else
+        return 0
+    fi
+  fi
+}
+
+
 download_pkg() {
-  local VERSION=${latest:-$1}
+  local VERSION=${1:-latest}
   local DOWN_URL="${KIT_URL}/releases/latest/download/${KIT_NAME}.tar.gz"
   
   print_header
 
-  [[ "${VERSION}" != "latest" ]] && DOWN_URL="${KIT_URL}/releases/download/${TAG}/${KIT_NAME}.tar.gz"
+  [[ "${VERSION}" != "latest" ]] && DOWN_URL="${KIT_URL}/releases/download/${VERSION}/${KIT_NAME}.tar.gz"
 
   warn "Creating Cache directory..."
   check_dir "$TEMP_DIR"
@@ -477,13 +486,13 @@ sayonada() {
 
 main() {
   local direct_source=false
-  
+
   [[ "$1" == "-ds" ]] && direct_source=true
 
   print_header 
   warn 'Welcome to KireiSakura-Kit installer.'; sleep 1
   info 'KireiSakura-Kit will soon be installed in your system.'; sleep 2
-  check_deps tr curl grep
+  check_deps tr curl grep figlet
   check_update
   download_pkg latest
   install_pkg; sleep 2
