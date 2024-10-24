@@ -420,14 +420,10 @@ install_pkg() {
   fi
 
   info "Checking local BIN directory...."
-  check_dir "$BIN_DIR"
+  check_dir   "$BIN_DIR"
   add_in_path "$BIN_DIR"
   completed "Local BIN dir check complete."
   echo "" && sleep 0.9
-
-  info "Adding entry in local BIN directory...."
-  rlink "${KIT_DIR}/init.sh" "${BIN_DIR}/kireisakura"
-  completed "Added entry in BIN directory."
 
   completed "Installation complete."
   sleep 1.5
