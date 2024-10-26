@@ -463,13 +463,15 @@ sayonada() {
 
   print_header "GREEN"
   completed "Latest release version is now installed in your system."
-  completed "Use 'kireisakura -h' for help."
-  echo -e "\n"
 
   if [[ "$1" == "-s" ]]; then
+    sleep 3
+    print_header "GREEN"
     completed "Sourcing Kit...."
     eval "$(bash "$BIN_DIR/kireisakura" -i)"
   else
+    completed "Use 'kireisakura -h' for help."
+    echo -e "\n\n"
     warn "Please restart your shell to apply changes."
     sleep 3; exit
   fi
