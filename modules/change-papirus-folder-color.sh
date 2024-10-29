@@ -4,14 +4,15 @@ change_papirus_folder_color() {
     local color_name=$1
     local theme_name=${2:-Papirus-Dark}
 
+    #header
     if ! command -v papirus-folders >/dev/null 2>&1; then
-        log "Papirus-folders is not installed, installing..." inform
-        install_package papirus-folders-catppuccin-git 
+        log.warn "Papirus-folders is not installed, installing..."
+        install_package papirus-folders-catppuccin-git
     fi
 
-    log "Changing Papirus folder color to $color_name with theme $theme_name." inform
+    log.warn "Changing Papirus folder color to $color_name with theme $theme_name."
     command papirus-folders -v -C $color_name --theme $theme_name
 
-    log "Papirus folder color changed to $color_name." success
-    print_footer
+    log.success "Papirus folder color changed to $color_name."
+    footer
 }

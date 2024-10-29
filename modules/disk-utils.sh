@@ -1,19 +1,19 @@
 
 check_entry() {
-  local disk_id="$1" 
+  local disk_id="$1"
   local mount_dir="$2"
   local fstab_file="/etc/fstab"
 
   # Check if the disk_id or mount_dir is already in fstab
   if grep -q "$disk_id" "$fstab_file"; then
       mount_point="$(grep $disk_id $fstab_file | sed -E 's/^[^ ]+ +([^ ]+).*/\1/')"
-      log "The Drive has entry to already Mount in : $mount_point" inform
+      log.warn "The Drive has entry to already Mount in : $mount_point"
       return 1
   elif grep -q "$mount_dir" $fstab_file; then
       local disk_to_mount="$(grep $mount_dir $fstab_file | sed -E 's/^([^ ]+).*/\1/')"
-      log "Dir is in entry to be used for Mounting: $disk_to_mount" inform
+      log.warn "Dir is in entry to be used for Mounting: $disk_to_mount"
       return 1
-  else 
+  else
       return 0
   fi
 
@@ -26,7 +26,6 @@ mount_external_drive() {
   local disk_id
   local mount_config
 
-  # Parse options
   while [[ "$#" -gt 1 ]]; do
     case "$1" in
         -md|--mount-dir)
@@ -46,7 +45,7 @@ mount_external_drive() {
             shift 2
             ;;
         *)
-            log "Invalid flag." error
+            log.error "Invalid flag."
             exit 1
             ;;
     esac
@@ -54,36 +53,36 @@ mount_external_drive() {
 
 
   # Make mount folder
-  log "Checking given Mount directory." inform
-  check_dir "$mount_dir" --needed || { log "Error creating dir." error; exit 1 }
+  log.warn "Checking given Mount directory."
+  check_dir "$mount_dir" --needed || { log.error "Error creating dir."; exit 1 }
 
 
   # Get ownership of the dir & drive
-  log "Getting ownership of the Mount directory." inform
-  sudo chown -R $username:$user_group $mount_dir || { log "Error ownership." error; exit 1 }
-  sudo chmod -R 744 $mount_dir || { log "Error Getting writing permission." error; exit 1 }
+  log.warn "Getting ownership of the Mount directory."
+  sudo chown -R $username:$user_group $mount_dir || { log.error "Error ownership."; exit 1 }
+  sudo chmod -R 744 $mount_dir || { log.error "Error Getting writing permission."; exit 1 }
 
-  log "Getting ownership of the External Drive." inform
-  sudo chown -R $username:$user_group $disk_id || { log "Error owning External Drive." error; exit 1 }
+  log.warn "Getting ownership of the External Drive."
+  sudo chown -R $username:$user_group $disk_id || { log.error "Error owning External Drive."; exit 1 }
 
 
   # Backup fstab file
-  log "Backing up current fstab file." inform
-  sudo cp /etc/fstab /etc/fstab.bak || { log "Failed to back up current fstab file." error; exit 1 }
+  log.warn "Backing up current fstab file."
+  sudo cp /etc/fstab /etc/fstab.bak || { log.error "Failed to back up current fstab file."; exit 1 }
 
 
   # Mounting device
   mount_config="$disk_id                                 $mount_dir      auto    noatime,x-systemd.automount,x-systemd.device-timeout=10,x-systemd.idle-timeout=1min 0 2"
 
-  log "Adding Drive entry in fstab file." inform
+  log.warn "Adding Drive entry in fstab file."
   echo "$mount_config" | sudo tee -a /etc/fstab
 
-  log "Reloading systemd configuration." inform
+  log.warn "Reloading systemd configuration."
   sudo systemctl daemon-reload
 
-  log "Mounting Drive." inform
-  sudo mount -a || { log "Failed to mount device." error; exit 1 }
+  log.warn "Mounting Drive."
+  sudo mount -a || { log.error "Failed to mount device."; exit 1; }
 
-  log "External Drive '$disk_id' mounted at '$mount_dir'" success 
+  log.success "External Drive '$disk_id' mounted at '$mount_dir'"
 }
 

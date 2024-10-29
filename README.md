@@ -1,14 +1,14 @@
 <p align="center">
-    <img src="Assets/icon.png">
+    <img src="Assets/icon.png" width="190px">
+    <h1 align="center">KireiSakura-Kit</h1>
 </p>
-<h1 align="center">KireiSakura-Kit</h1>
 
 <p align="center">
-    KireiSakura-Kit is a library/framework based on <a href="https://www.gnu.org/software/bash">Bash</a> for making powerful shell scripts.
+    <big>KireiSakura-Kit is a library written in <a href="https://www.gnu.org/software/bash">Bash</a> for making powerful shell scripts.</big>
 </p>
+<br>
 
-> "KireiSakuraKit" is combination of two Japanese words, "Kirei" and "Sakura," along with the suffix "Kit".
-
+> "KireiSakura-Kit" is combination of two Japanese words, "Kirei" and "Sakura," along with the suffix "Kit".</br>
 > `Kirei(綺麗)` means "clean" & `Sakura(桜)` refers to cherry blossoms. Together, "KireiSakura-Kit" could be interpreted as a library that emphasizes a beautiful and clean design inspired by the elegance of cherry blossoms.
 
 ## Features
@@ -26,12 +26,12 @@
 
 - Follow below steps to Install Kireisakura-Kit
 
-### For system wide:-
+### For system wide
 
 - In terminal run:-
 
   ```bash
-  curl -L https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh | bash -s -- -ds
+  curl -L https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh | bash -s
   ```
 
 - Then in your script, include this line at the top:-
@@ -40,15 +40,17 @@
   eval "$(kireisakura --init)"
   ```
 
-### Or directly in script:-
+### For directly using in script
+
+- This will check if Kit is installed or download & setup KireiSakura-Kit.
 
 ```bash
   if command -v kireisakura &> /dev/null; then
     eval "$(kireisakura --init)"
   else
     echo "> Installing KireiSakura-Kit"
-    curl -sL https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh -o kirestaller.sh
-    bash kirestaller.sh
+    curl -sSL https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh -o kirestaller.sh
+    bash kirestaller.sh -ds
   fi
 ```
 
@@ -56,9 +58,10 @@
 
 - Docs To be done.
 - Run `kireisakura -h` for help.
-- See [my dotfiles](https://github.com/soymadip/Dotfiles/blob/dotfiles/install/start.sh) for example.
+- See [my dotfiles](https://github.com/soymadip/Dotfiles) for example.
 
 ## Warning
 
+- MAJOR CHANGES ARE BEING MADE as this project is in alpha, so be careful.
 - As of now, some part of this library is Arch-linux centric, but can be extended to any distro.
 - Contribute if you find this useful and wanna make this more powerful.

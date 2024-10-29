@@ -38,7 +38,7 @@ prompt() {
 
 
 # footer after each module completes
-print_footer() {
+footer() {
     if [ -n "$1" ]; then
         if [ "$2" == "skipped" ]; then
             echo -e "${RED}[x]-> $1${NC}"
@@ -49,6 +49,3 @@ print_footer() {
     echo -e "${AQUA}---------------------------------------------------------------${NC}"
     sleep 1
 }
-
-
-

@@ -8,14 +8,14 @@ function enable_librewolf_ntv_msging {
   local firefox_dir2='/usr/lib/mozilla/native-messaging-hosts'
 
   if [ -e "$librewolf_dir1" ]; then
-    log "The destination directory '$librewolf_dir1' already exists."
+    log.warn "The destination directory '$librewolf_dir1' already exists."
     read -p "Do you want to overwrite it? (y/n): " overwrite
     if [ "$overwrite" = "y" ]; then
-      rm -i "$librewolf_dir1" 
-      ln -s -r -i "$firefox_dir1" "$librewolf_dir1" 
+      rm -i "$librewolf_dir1"
+      ln -s -r -i "$firefox_dir1" "$librewolf_dir1"
     else
       echo "Aborting..."
-      return 0 
+      return 0
     fi
   fi
 
@@ -23,8 +23,8 @@ function enable_librewolf_ntv_msging {
     echo "The destination directory '$librewolf_dir2' already exists."
     read -p "Do you want to overwrite it? (y/n): " overwrite2
     if [ "$overwrite2" = "y" ]; then
-      sudo rm -i "$librewolf_dir2" 
-      sudo ln -s "$firefox_dir2" "$librewolf_dir2" 
+      sudo rm -i "$librewolf_dir2"
+      sudo ln -s "$firefox_dir2" "$librewolf_dir2"
     else
       echo "Aborting..."
       return 0

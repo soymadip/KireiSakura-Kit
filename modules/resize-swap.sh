@@ -8,25 +8,25 @@ resize_swap() {
     read -p "=>"   rsz_swapf
     if [ "$rsz_swapf" == "y" ] || [ "$rsz_swapf" == "Y" ] || [ -z "$rsz_swapf" ]; then
         if [ -f "$swap_file" ]; then
-            print_header "Swapfile already exists. Resizing to $swap_file_size..."
-            log "turning off swaps"  #log
+            log.info "Swapfile already exists. Resizing to $swap_file_size..."
+            log.warn "turning off swaps"
             sudo swapoff -a
-            log "removing already present swapfile."   #log
+            log.warn "removing already present swapfile."
             sudo rm "$swap_file"
         else
-            print_header "Creating swapfile of size $swap_file_size..."
+            log.info "Creating swapfile of size $swap_file_size..."
         fi
-        log "creating new file of ${swap_file_size}B for swap."   #log
+        log.warn "creating new file of ${swap_file_size}B for swap."
         sudo fallocate -l "$swap_file_size" "$swap_file"
-        log "changing permissions." #log
+        log.warn "changing permissions."
         sudo chmod 600 "$swap_file"
-        log "making the ${swap_file} a swapfile."   #log
+        log.warn "making the ${swap_file} a swapfile."
         sudo mkswap "$swap_file"
-        log "turning new swapfile on" #log
+        log.warn "turning new swapfile on"
         sudo swapon "$swap_file"
-        log "please check if everything is good:" #log
+        log.warn "please check if everything is good:"
         swapon --show
-        print_footer "Swapfile created and activated." #log
+        footer "Swapfile created and activated."
     else
         echo -e "${RED}swapfile size change skipped.${NC}"
     fi
