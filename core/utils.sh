@@ -44,7 +44,7 @@ kimport() {
 
 
 # Import all files from a directory
-load_all_from() {
+load-all-from() {
     local directory=$1
     local file_ext=${2:-"sh"}
 
