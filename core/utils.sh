@@ -3,29 +3,56 @@
 # Import  modules
 # kimport <module1> <module2>
 kimport() {
-    local called_modules=("$@")
+    local load_all=false
+    local called_modules=()
     local module_path
     local failed_imports=()
-    # local is_quiet=0
 
-    log.warn "Importing modules....\n" kimport
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -a|--all)
+                load_all=true
+                shift
+                ;;
+            *)
+                called_modules+=("$1")
+                shift
+                ;;
+        esac
+    done
 
-    for module_name in "${called_modules[@]}"; do
-        module_path="$kirei_module_dir/$module_name.sh"
 
-        if [ -f "$module_path" ]; then
+    if [ "$load_all" = true ]; then
+        log.warn "Importing All modules....\n" kimport
+        for module_path in "$kirei_module_dir"/*.sh; do
+            module_name="$(basename "${module_path%.*}")"
             if source "$module_path"; then
                 log "Imported: '$module_name'"
             else
                 log.warn "Failed to import: '$module_name'"
                 failed_imports+=("$module_name")
             fi
-        else
-            log.warn "Failed to import '$module_name': doesn't exist."
-            failed_imports+=("$module_name")
-        fi
-        sleep 0.3
-    done
+            sleep 0.3
+        done
+    else
+        log.warn "Importing modules....\n" kimport
+        for module_name in "${called_modules[@]}"; do
+            module_path="$kirei_module_dir/$module_name.sh"
+
+            if [ -f "$module_path" ]; then
+                if source "$module_path"; then
+                    log "Imported: '$module_name'"
+                else
+                    log.warn "Failed to import: '$module_name'"
+                    failed_imports+=("$module_name")
+                fi
+            else
+                log.warn "Failed to import '$module_name': doesn't exist."
+                failed_imports+=("$module_name")
+            fi
+            sleep 0.3
+        done
+    fi
 
     if [ "${#failed_imports[@]}" -gt 0 ]; then
         echo ""

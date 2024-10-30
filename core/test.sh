@@ -3,7 +3,7 @@ clear -x
 echo -e "\n--------------------- KireiSakura Kit Test Utility ----------------------\n\n"
 
 
-export LOG_FILE="test_script.log"
+export LOG_FILE="Kirei-test.log"
 export CACHE_DIR="$HOME/.cache/test_setup_dir"
 
 
@@ -11,7 +11,7 @@ eval "$(kireisakura -i)"; echo -e "\n"
 
 
 
-log.warn "Set variables:------\n"
+log.warn "EXPORTED VARIABLES:------\n"
 echo  -e " ${GREEN}Log file name${NC} (kirei_log_file):   $kirei_log_file"
 echo  -e " ${GREEN}Cache dir${NC}    (kirei_cache_dir):   $kirei_cache_dir"
 echo  -e " ${GREEN}Installation dir${NC}   (kirei_dir):   $kirei_dir"
@@ -21,7 +21,7 @@ echo  -e " ${GREEN}Module dir${NC}  (kirei_module_dir):   $kirei_module_dir"
 echo  -e "\n\n"
 
 
-log.warn "Logs:------\n"
+log.warn "LOGS:------\n"
 
 log.success "Log level: success"
 log.error "Log level: error"
@@ -29,14 +29,13 @@ log.warn "Log level: inform"
 echo  -e "\n\n"
 
 
-log.warn "Importing modules:------\n"
+log.warn "IMPORTING ALL MODULES:------\n"
 
-kimport restore-dotfiles install-fonts kde-plasma-utils disk-utils
+kimport -a # loads all
 echo  -e "\n\n"
 
 
-rm -rf $kirei_cache_dir
-rm $kirei_log_file
+log.success "\nTEST SUCCESSFULLY COMPLETED.\n"
 
 
 echo -e "\n\n------------------------- END ----------------------------\n"

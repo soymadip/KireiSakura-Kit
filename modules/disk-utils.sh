@@ -54,21 +54,21 @@ mount_external_drive() {
 
   # Make mount folder
   log.warn "Checking given Mount directory."
-  check_dir "$mount_dir" --needed || { log.error "Error creating dir."; exit 1 }
+  check_dir "$mount_dir" --needed || { log.error "Error creating dir."; exit 1; }
 
 
   # Get ownership of the dir & drive
   log.warn "Getting ownership of the Mount directory."
-  sudo chown -R $username:$user_group $mount_dir || { log.error "Error ownership."; exit 1 }
-  sudo chmod -R 744 $mount_dir || { log.error "Error Getting writing permission."; exit 1 }
+  sudo chown -R $username:$user_group $mount_dir || { log.error "Error ownership."; exit 1; }
+  sudo chmod -R 744 $mount_dir || { log.error "Error Getting writing permission."; exit 1; }
 
   log.warn "Getting ownership of the External Drive."
-  sudo chown -R $username:$user_group $disk_id || { log.error "Error owning External Drive."; exit 1 }
+  sudo chown -R $username:$user_group $disk_id || { log.error "Error owning External Drive."; exit 1; }
 
 
   # Backup fstab file
   log.warn "Backing up current fstab file."
-  sudo cp /etc/fstab /etc/fstab.bak || { log.error "Failed to back up current fstab file."; exit 1 }
+  sudo cp /etc/fstab /etc/fstab.bak || { log.error "Failed to back up current fstab file."; exit 1; }
 
 
   # Mounting device
