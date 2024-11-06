@@ -18,10 +18,10 @@
 
 - [ ]  Make a clearer Design guide.
 
-- [ ] Revamp project.
+- [x] Revamp project.
   - [x] Better directory structure.
   - [x] Clearer naming conventions.
-  - [ ] Make old Modules compatible.
+  - [x] Make old Modules compatible.
 
 ## For Another Time:
 

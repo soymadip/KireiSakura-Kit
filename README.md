@@ -13,12 +13,15 @@
 
 ## Features
 
-- **Written in purely bash**, can be used in any POSIX shell script.
+- **Written in purely bash**, can be used in POSIX*[^1] shell script.
 - **Mudular**, import only stuff you need.
 - **Log support**, with various levels.
 - **Many in-built functions**, no need to write from scratch.
 - See [TODO](./TODO.md) for planned stuff.
 <!-- - Various **UI elements**. -->
+
+
+[^1]: We officially support Bash and Zsh. Other POSIX-compliant shells should work too but are not officially supported. However, any pull requests will be accepted.
 
 ## Installation & setup
 
