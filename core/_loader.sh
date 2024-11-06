@@ -6,12 +6,15 @@ shopt -s expand_aliases
 #------------------------------------
 
 remove-command-conflict() {
+    local command="$1"
 
-    if type loader &> /dev/null; then
-        unset -f loader
+    if type "$command" &> /dev/null; then
+        if type "$command" | grep -q -E 'is a (shell )?function'; then
+            unset -f "$command"
+        fi
 
-        if type -t loader | grep -q alias; then
-            unalias loader
+        if alias "$command" &> /dev/null; then
+            unalias "$command"
         fi
     fi
 }
