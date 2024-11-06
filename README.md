@@ -17,7 +17,7 @@
 - **Mudular**, import only stuff you need.
 - **Log support**, with various levels.
 - **Many in-built functions**, no need to write from scratch.
-- See [TODO](./TODO.md) for planned stuff.
+- See [TODO](https://github.com/soymadip/KireiSakura-Kit/wiki/TODO) for planned stuff.
 <!-- - Various **UI elements**. -->
 
 
