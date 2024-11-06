@@ -13,15 +13,13 @@
 
 ## Features
 
-- **Written in purely bash**, can be used in POSIX*[^1] shell script.
+- **Written in purely bash**, can be used in POSIX[*][sprtd_shl] shell script.
 - **Mudular**, import only stuff you need.
 - **Log support**, with various levels.
 - **Many in-built functions**, no need to write from scratch.
-- See [TODO](https://github.com/soymadip/KireiSakura-Kit/wiki/TODO) for planned stuff.
+- See [TODO][todo] for planned stuff.
 <!-- - Various **UI elements**. -->
 
-
-[^1]: We officially support Bash and Zsh. Other POSIX-compliant shells should work too but are not officially supported. However, any pull requests will be accepted.
 
 ## Installation & setup
 
@@ -61,10 +59,17 @@
 
 - Docs To be done.
 - Run `kireisakura -h` for help.
-- See [my dotfiles](https://github.com/soymadip/Dotfiles) for example.
+- See [my dotfiles][dtfls] for example.
 
 ## Warning
 
 - MAJOR CHANGES ARE BEING MADE as this project is in alpha, so be careful.
 - As of now, some part of this library is Arch-linux centric, but can be extended to any distro.
 - Contribute if you find this useful and wanna make this more powerful.
+
+
+
+<!---------------- links --------------->
+[sprtd_shl]: https://github.com/soymadip/KireiSakura-Kit/wiki/FAQ#1-which-shells-are-supported
+[dtfls]:     https://github.com/soymadip/Dotfiles
+[todo]:      https://github.com/soymadip/KireiSakura-Kit/wiki/TODO
