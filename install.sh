@@ -49,11 +49,9 @@ completed() {
   printf '%s\n' "${GREEN}✓${NO_COLOR} $*"
 }
 
-
 has() {
   command -v "$1" >/dev/null 2>&1
 }
-
 
 clearx() {
   if [[ "$(uname)" == "Darwin" ]]; then
@@ -71,7 +69,6 @@ print_header() {
   echo -e " ${!ktcolor}$KIT_LOGO ${NO_COLOR}\n\n"
   sleep 0.3
 }
-
 
 get_package_manager() {
 
@@ -101,27 +98,26 @@ get_package_manager() {
   fi
 }
 
-
 install_package() {
   local package="$1"
   local pkg_manager="$(get_package_manager)"
 
   case $pkg_manager in
   pacman)
-    sudo pacman -S --noconfirm --needed "$package" > /dev/null || return 1
+    sudo pacman -S --noconfirm --needed "$package" >/dev/null || return 1
     ;;
   apt)
-    sudo apt update > /dev/null || return 1
-    sudo apt install -y "$package" > /dev/null || return 1
+    sudo apt update >/dev/null || return 1
+    sudo apt install -y "$package" >/dev/null || return 1
     ;;
   dnf)
-    sudo dnf install -y "$package" > /dev/null || return 1
+    sudo dnf install -y "$package" >/dev/null || return 1
     ;;
   zypper)
-    sudo zypper install -y "$package" > /dev/null || return 1
+    sudo zypper install -y "$package" >/dev/null || return 1
     ;;
   brew)
-    brew install "$package" > /dev/null || return 1
+    brew install "$package" >/dev/null || return 1
     ;;
   *)
     error "Unknown package manager."
@@ -134,34 +130,43 @@ install_package() {
   return 0
 }
 
-
 check_deps() {
   print_header
-  warn "Checking Installer Dependencies..."; sleep 0.3
-  echos; info "Package manager: $(get_package_manager)"; sleep 0.3
+  warn "Checking Installer Dependencies..."
+  sleep 0.3
+  echos
+  info "Package manager: $(get_package_manager)"
+  sleep 0.3
 
   for package in "$@"; do
     if has "$package"; then
-      echos; completed "Found: $package"
+      echos
+      completed "Found: $package"
       sleep 0.2
     else
-      echos; error "Missing: $package"
-      echo -n "    "; info "Installing..." 
+      echos
+      error "Missing: $package"
+      echo -n "    "
+      info "Installing..."
       install_package "$package" || {
-        echos; error "Couldn't install dependency: $package"
-        echos; error "Please manually install it."
+        echos
+        error "Couldn't install dependency: $package"
+        echos
+        error "Please manually install it."
         exit 1
       }
-      echo -n "    "; completed "Done." 
-      echos; completed "Installed: $package" 
+      echo -n "    "
+      completed "Done."
+      echos
+      completed "Installed: $package"
     fi
   done
 
-  completed "All dependencies are present."; echo ""
+  completed "All dependencies are present."
+  echo ""
   sleep 1.5
-  return 0 
+  return 0
 }
-
 
 compare() {
   mapfile -t ver1 < <(echo "$1" | tr '.' '\n')
@@ -181,7 +186,6 @@ compare() {
   return 0
 }
 
-
 check_update() {
   local LATEST_VERSION=""
   local LOCAL_VERSION=""
@@ -192,19 +196,23 @@ check_update() {
   if command -v kireisakura &>/dev/null; then
     completed "KireiSakura-Kit is already installed."
     sleep 0.6
-    echo ""; info "Checking for updates..."
+    echo ""
+    info "Checking for updates..."
 
     LOCAL_VERSION="$(kireisakura -v | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+')"
-    echos; info "Local:  $LOCAL_VERSION"
+    echos
+    info "Local:  $LOCAL_VERSION"
 
     LATEST_VERSION="$(curl -s https://raw.githubusercontent.com/${KIT_REPO}/main/.version)"
     if [[ -z "$LATEST_VERSION" ]]; then
-      echos; error "Failed."
+      echos
+      error "Failed."
       error "Couldn't resolve upstream version."
       error "Please check your internet connection."
       exit 1
     fi
-    echos; info "Latest: $LATEST_VERSION"
+    echos
+    info "Latest: $LATEST_VERSION"
 
     if [[ -n "$LOCAL_VERSION" ]]; then
       compare "$LOCAL_VERSION" "$LATEST_VERSION"
@@ -212,7 +220,8 @@ check_update() {
       case $? in
       0)
         completed "KireiSakura-Kit is up-to-date."
-        echo; sleep 0.6 
+        echo
+        sleep 0.6
         warn "Do you wanna reinstall? [y/n]"
         read -p "> " cfrm_rnstl
         if [[ "$cfrm_rnstl" =~ ^[yY]$ || -z "$cfrm_rnstl" ]]; then
@@ -253,12 +262,13 @@ check_update() {
       warn "Do you wanna reinstall? [y/n]"
       read -p "> " cfrm_rnstl2
       if [[ "$cfrm_rnstl2" =~ ^[yY]$ || -z "$cfrm_rnstl2" ]]; then
-          warn "Reinstalling..."
-          sleep 0.5
+        warn "Reinstalling..."
+        sleep 0.5
       else
         error "Installation Cancelled by user."
         warn "Sayodada..."
-        sleep 2; clearx 
+        sleep 2
+        clearx
         exit 1
       fi
     fi
@@ -267,19 +277,19 @@ check_update() {
     info "Starting Installation..."
   fi
 
-  sleep 1.5 
+  sleep 1.5
 }
-
 
 rm_dir() {
   local DIR="$1"
 
-  { rm -rf $TEMP_DIR && sleep 0.7; }|| {
-    echos; error "Failed.";
-    echos; error "Please manually delete: $TEMP_DIR"
+  { rm -rf $TEMP_DIR && sleep 0.7; } || {
+    echos
+    error "Failed."
+    echos
+    error "Please manually delete: $TEMP_DIR"
   }
 }
-
 
 check_dir() {
   local DIR="$1"
@@ -298,16 +308,15 @@ check_dir() {
       error "Please manually create: $DIR"
       exit 1
     else
-        return 0
+      return 0
     fi
   fi
 }
 
-
 download_pkg() {
   local VERSION=${1:-latest}
   local DOWN_URL="${KIT_URL}/releases/latest/download/${KIT_NAME}.tar.gz"
-  
+
   print_header
 
   [[ "${VERSION}" != "latest" ]] && DOWN_URL="${KIT_URL}/releases/download/${VERSION}/${KIT_NAME}.tar.gz"
@@ -322,10 +331,10 @@ download_pkg() {
   info "Downloading package..."
   curl -L "${DOWN_URL}" -o "${TEMP_DIR}/${KIT_NAME}.tar.gz"
   echo ""
-  completed "Downloaded package in Cache dir."; echo ""
+  completed "Downloaded package in Cache dir."
+  echo ""
   sleep 1.5
 }
-
 
 rlink() {
   local SOURCE="$1"
@@ -342,12 +351,10 @@ rlink() {
   return 0
 }
 
-
-login_shell() { 
+login_shell() {
   local SHELL_PATH=$(which "$SHELL")
   echo "$(basename "$SHELL_PATH")"
 }
-
 
 add_in_path() {
   local DIR="$1"
@@ -360,51 +367,51 @@ add_in_path() {
   else
     info "Directory is not in PATH. Adding it..."
     case "$LSHELL" in
-      zsh)
-        info "Shell: ZSH"
-        if [ -e "$HOME/.zshenv" ]; then
-          SHELL_FILE="$HOME/.zshenv"
-          info "Using .zshenv"
-        else
-          SHELL_FILE="$HOME/.zshrc"
-          info "Using .zshrc"
-        fi
-        ;;
-      bash)
-        info "Shell: Bash"
-        if [ -e "$HOME/.bash_profile" ]; then
-          SHELL_FILE="$HOME/.bash_profile"
-          info "Using .bash_profile"
-        else
-          SHELL_FILE="$HOME/.bashrc"
-          info "Using .bashrc"
-        fi
-        ;;
-      *)
-        error "Current shell is not supported."
-        exit 1
-        ;;
+    zsh)
+      info "Shell: ZSH"
+      if [ -e "$HOME/.zshenv" ]; then
+        SHELL_FILE="$HOME/.zshenv"
+        info "Using .zshenv"
+      else
+        SHELL_FILE="$HOME/.zshrc"
+        info "Using .zshrc"
+      fi
+      ;;
+    bash)
+      info "Shell: Bash"
+      if [ -e "$HOME/.bash_profile" ]; then
+        SHELL_FILE="$HOME/.bash_profile"
+        info "Using .bash_profile"
+      else
+        SHELL_FILE="$HOME/.bashrc"
+        info "Using .bashrc"
+      fi
+      ;;
+    *)
+      error "Current shell is not supported."
+      exit 1
+      ;;
     esac
 
     info "Adding directory to: $(basename "$SHELL_FILE")"
     if string_present "export PATH=\"$DIR:\$PATH\"" "$SHELL_FILE"; then
       completed "PATH entry is already in $SHELL_FILE."
     else
-      echo -e "\n#__ Added by KireiSakura-Kit____" >> "$SHELL_FILE"
-      echo -e "export PATH=\"$DIR:\$PATH\"" >> "$SHELL_FILE"
+      echo -e "\n#__ Added by KireiSakura-Kit____" >>"$SHELL_FILE"
+      echo -e "export PATH=\"$DIR:\$PATH\"" >>"$SHELL_FILE"
       completed "Added directory to PATH."
       info "Shell will be reloaded later."
     fi
   fi
 }
 
-
 install_pkg() {
 
   print_header
   warn "Checking installation directory...."
   check_dir "${KIT_DIR}"
-  completed "Installation directory is OK."; echo ""
+  completed "Installation directory is OK."
+  echo ""
   sleep 1.5
 
   print_header
@@ -414,13 +421,13 @@ install_pkg() {
   if ! tar -xzf "${TEMP_DIR}/${KIT_NAME}.tar.gz" -C "${KIT_DIR}"; then
     error "Failed to extract package to $KIT_DIR"
     exit 1
-  else 
+  else
     completed "Extracted Successfully."
     echo "" && sleep 0.9
   fi
 
   info "Checking local BIN directory...."
-  check_dir   "$BIN_DIR"
+  check_dir "$BIN_DIR"
   add_in_path "$BIN_DIR"
   completed "Local BIN dir check complete."
   echo "" && sleep 0.9
@@ -428,7 +435,6 @@ install_pkg() {
   completed "Installation complete."
   sleep 1.5
 }
-
 
 string_present() {
   local string="$1"
@@ -441,23 +447,26 @@ string_present() {
   fi
 }
 
-
 cleanup() {
 
   print_header
   warn "Cleaning up...."
 
-  echos; info "Cleaning Cache dir.." 
+  echos
+  info "Cleaning Cache dir.."
   rm_dir "$TEMP_DIR"
-  echos; completed "Done."
+  echos
+  completed "Done."
 
-  echos; info "Cleaning LIB dir.."; sleep 1
-  echos; completed "Done."
+  echos
+  info "Cleaning LIB dir.."
+  sleep 1
+  echos
+  completed "Done."
 
   completed "Done cleaning up."
   sleep 2
 }
-
 
 sayonada() {
 
@@ -472,13 +481,11 @@ sayonada() {
   else
     completed "Use 'kireisakura -h' for help."
     echo -e "\n\n"
-    warn "Please restart your shell to apply changes."
-    sleep 3; exit
+    warn "Please relogin to apply changes."
+    sleep 3
+    exit
   fi
 }
-
-
-
 
 #________________ Main Func ________________
 
@@ -487,13 +494,16 @@ main() {
 
   [[ "$1" == "-ds" ]] && direct_source=true
 
-  print_header 
-  warn 'Welcome to KireiSakura-Kit installer.'; sleep 1
-  info 'KireiSakura-Kit will soon be installed in your system.'; sleep 2
+  print_header
+  warn 'Welcome to KireiSakura-Kit installer.'
+  sleep 1
+  info 'KireiSakura-Kit will soon be installed in your system.'
+  sleep 2
   check_deps tr curl grep figlet
   check_update
   download_pkg latest
-  install_pkg; sleep 2
+  install_pkg
+  sleep 2
   cleanup
   if [ "$direct_source" = true ]; then
     sayonada -s
