@@ -7,19 +7,7 @@ YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
 RESET='\033[0m'
 
-KIT_LOGO="$(
-  cat <<"EOF"
- _  ___          _ ____        _                          _  ___ _
- | |/ (_)_ __ ___(_) ___|  __ _| | ___   _ _ __ __ _      | |/ (_) |_
- | ' /| | '__/ _ \ \___ \ / _` | |/ / | | | '__/ _` |_____| ' /| | __|
- | . \| | | |  __/ |___) | (_| |   <| |_| | | | (_| |_____| . \| | |_
- |_|\_\_|_|  \___|_|____/ \__,_|_|\_\\__,_,|_|  \__,_|     |_|\_\_|\__|
-EOF
-)"
-
-
 #_____________________________________FUNCTIONS_____________________________________________
-
 
 # Log function
 logf() {
@@ -34,7 +22,6 @@ logf() {
   done <<<"$formatted_message"
 }
 
-
 clearx() {
   if [[ "$(uname)" == "Darwin" ]]; then
     clear
@@ -43,13 +30,11 @@ clearx() {
   fi
 }
 
-
 print_header() {
   clearx
   printf "echo -e '$KIT_LOGO\n\n"
   sleep 0.3
 }
-
 
 # For no arguments
 show_man() {
@@ -65,7 +50,6 @@ show_man() {
 
   exit 1
 }
-
 
 # Help message
 show_help() {
@@ -85,14 +69,12 @@ show_help() {
   exit 0
 }
 
-
 # version
 show_version() {
   local version_num=$(cat $kirei_dir/.version)
 
   printf "\n  KireiSakura-Kit ${LAVENDER}v$version_num${RESET}\n"
 }
-
 
 # return 0 if $1 is equal to $2
 # return 1 if $1 is greater than $2
@@ -115,11 +97,9 @@ compare() {
   return 0
 }
 
-
 update_kit() {
   local upstream_version="$(curl -sSL $upstream_ver_url || echo "")"
   local local_version="$(cat $kirei_dir/.version)"
-
 
   if [[ -z "$upstream_version" ]]; then
     printf " ${RED}Couldn't resolve upstream version. Please check your connection or the URL.${RESET}\n"
@@ -139,16 +119,19 @@ update_kit() {
   fi
 }
 
-
 # Setup process
 init() {
   local kit_version
 
   printf "\n\n" >>"$log_file"
   logf "====================== NEW SESSION =======================\n"
-  logf "Started in: $(pwd)"
+  logf "Started in: $(pwd)/"
   logf "Initialization started."
+  printf "echo '======================  ======================='\n"
+  printf "clear -x\n"
+  printf "command cat $kirei_assets_dir/header.txt\n"
   printf "echo -e '\\n${YELLOW}[ INIT ]-> Starting Initialization..${RESET}\\n\\n'\n"
+  printf "sleep 1\n"
 
   # Check if kit exists
   if [ "$is_cstm_kit_dir" = true ]; then
@@ -192,21 +175,23 @@ init() {
     exit 1
   fi
 
-  kit_version=$(cat $kirei_dir/.version)
+  kit_version=$(cat "$kirei_dir"/.version)
 
   # Output environment variable setup commands
   printf "kirei_dir=\"%s\"\n" "$kirei_dir"
   printf "kirei_core_dir=\"%s\"\n" "$kirei_core_dir"
   printf "kirei_core=\"%s\"\n" "$kirei_core"
   printf "kirei_module_dir=\"%s\"\n" "$kirei_module_dir"
+  printf "kirei_assets_dir=\"%s\"\n" "$kirei_assets_dir"
 
-  printf "kirei_log_file=\"\${LOG_FILE:-$log_file}\"\n"
-  printf "kirei_cache_dir=\"\${CACHE_DIR:-$cache_dir}\"\n"
+  printf "kirei_project_name=\"%s\"\n" "$project_name"
+  printf "kirei_log_file=\"%s\"\n" "$log_file"
+  printf "kirei_cache_dir=\"%s\"\n" "$cache_dir"
 
   # Print source and check_dir commands
   printf "sleep 1\n"
   logf "Loading core....."
-  printf "echo \"${YELLOW}[!]-> Loading core.${RESET}\" \n"
+  printf "echo \"%s[!]-> Loading core.%s\" \n" "$YELLOW" "$RESET"
   printf "source \"\$kirei_core\" \n"
   printf "log.success 'Loaded core.' \n"
   logf "Loaded core."
@@ -217,19 +202,17 @@ init() {
   printf "check-dir \"\${kirei_cache_dir}\" -q \n"
   printf "log.success \"Cache directory exists.\"\n"
   printf "echo "" \n"
-  printf "log \"KireiSakura-Kit v${kit_version}\"  \n"
+  printf "log \"KireiSakura-Kit v%s\"  \n" "$kit_version"
   printf "sleep 1\n"
   printf "echo \" \\n \" \n"
   printf "log.success \"Initialization complete.\" INIT\n"
   logf "Initialization complete."
 }
 
-
 run_tester() {
   clear -x
   bash "$kirei_dir/core/test.sh" || exit 1
 }
-
 
 #_________________________________INITIALISATION_____________________________________________
 
@@ -238,14 +221,15 @@ kirei_dir="$HOME/.local/share/KireiSakura-Kit"
 kirei_core_dir="$kirei_dir/core"
 kirei_core="$kirei_core_dir/_loader.sh"
 kirei_module_dir="$kirei_dir/modules"
+kirei_assets_dir="$kirei_dir/Assets"
 
-cache_dir="${CACHE_DIR:-$HOME/.cache/KireiSakura-Kit}"
-log_file="${cache_dir}/${LOG_FILE_NAME:-KireiSakura-Kit.log}"
+project_name="${PROJECT_NAME:-KireiSakura-Kit}"
+cache_dir="${CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/${kirei_project_name}}"
+log_file="${cache_dir}/${LOG_FILE_NAME:-${kirei_project_name}.log}"
 
 init_flag=false
 is_cstm_kit_dir=false
 upstream_ver_url='https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/main/.version'
-
 
 # Check if no arguments are provided
 if [ "$#" -eq 0 ]; then
@@ -299,6 +283,6 @@ done
 
 # Perform setup if --init flag is set
 if [ "$init_flag" = true ]; then
-    mkdir -p "$cache_dir"
-    init "$kirei_dir"
+  mkdir -p "$cache_dir"
+  init "$kirei_dir"
 fi
