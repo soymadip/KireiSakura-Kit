@@ -71,7 +71,7 @@ show_help() {
 
 # version
 show_version() {
-  local version_num=$(cat $kirei_dir/.version)
+  local version_num=$(cat "$kirei_dir"/.version)
 
   printf "\n  KireiSakura-Kit ${LAVENDER}v$version_num${RESET}\n"
 }
@@ -191,7 +191,7 @@ init() {
   # Print source and check_dir commands
   printf "sleep 1\n"
   logf "Loading core....."
-  printf "echo \"%s[!]-> Loading core.%s\" \n" "$YELLOW" "$RESET"
+  printf "echo -e \"%s[!]-> Loading core.%s\" \n" "$YELLOW" "$RESET"
   printf "source \"\$kirei_core\" \n"
   printf "log.success 'Loaded core.' \n"
   logf "Loaded core."
@@ -211,7 +211,7 @@ init() {
 
 run_tester() {
   clear -x
-  bash "$kirei_dir/core/test.sh" || exit 1
+  bash "$kirei_dir/core/_test.sh" || exit 1
 }
 
 #_________________________________INITIALISATION_____________________________________________
