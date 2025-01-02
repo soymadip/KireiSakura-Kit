@@ -1,0 +1,17 @@
+{
+  "catppuccin-theme-settings@@catppuccin-theme-dark": "ctp-mocha",
+  "catppuccin-theme-settings@@catppuccin-theme-accents": "ctp-accent-maroon",
+  "catppuccin-interface-styles@@ctp-bold-folder-title": true,
+  "catppuccin-font-styles@@ctp-bold": "var(--ctp-peach)",
+  "catppuccin-font-styles@@ctp-italic": "var(--ctp-yellow)",
+  "catppuccin-font-styles@@ctp-blockquote": "var(--ctp-subtext0)",
+  "catppuccin-heading-settings@@ctp-page-title": "var(--ctp-subtext0)",
+  "catppuccin-heading-settings@@ctp-h1": "var(--ctp-red)",
+  "catppuccin-heading-settings@@ctp-h2": "var(--ctp-yellow)",
+  "catppuccin-heading-settings@@ctp-h3": "var(--ctp-green)",
+  "catppuccin-heading-settings@@ctp-h4": "var(--ctp-mauve)",
+  "catppuccin-heading-settings@@ctp-h5": "var(--ctp-teal)",
+  "catppuccin-heading-settings@@ctp-h6": "var(--ctp-blue)",
+  "catppuccin-icon-styles@@ctp-icon-hide": false,
+  "catppuccin-tag-styles@@ctp-tag-pill": true
+}

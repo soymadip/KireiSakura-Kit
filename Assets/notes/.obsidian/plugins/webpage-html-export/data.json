@@ -1,0 +1,220 @@
+{
+  "settingsVersion": "0.0.0",
+  "exportOptions": {
+    "createDocumentContainer": true,
+    "keepModHeaderFooter": false,
+    "addPageIcon": false,
+    "unifyTitleFormat": true,
+    "createPusherElement": true,
+    "makeHeadersTrees": true,
+    "postProcess": true,
+    "displayProgress": true,
+    "inlineHTML": false,
+    "exportPath": "/home/soymadip/Documents/git/KireiSakura-Kit/docs",
+    "filesToExport": [
+      "all"
+    ],
+    "addBodyClasses": true,
+    "addMathjaxStyles": true,
+    "addHeadTag": true,
+    "backlinkOptions": {
+      "featureId": "backlinks",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "displayTitle": "Backlinks",
+      "featurePlacement": {
+        "selector": ".footer",
+        "type": "start"
+      }
+    },
+    "tagOptions": {
+      "featureId": "tags",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "displayTitle": "",
+      "featurePlacement": {
+        "selector": ".header .data-bar",
+        "type": "end"
+      },
+      "showInlineTags": true,
+      "showFrontmatterTags": true
+    },
+    "aliasOptions": {
+      "featureId": "aliases",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "displayTitle": "",
+      "featurePlacement": {
+        "selector": ".header .data-bar",
+        "type": "start"
+      }
+    },
+    "propertiesOptions": {
+      "featureId": "properties",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "displayTitle": "Properties",
+      "featurePlacement": {
+        "selector": ".header",
+        "type": "start"
+      }
+    },
+    "fileNavigationOptions": {
+      "featureId": "file-navigation",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "displayTitle": "",
+      "featurePlacement": {
+        "selector": "#left-sidebar-content",
+        "type": "end"
+      },
+      "showCustomIcons": true,
+      "showDefaultFolderIcons": false,
+      "showDefaultFileIcons": false,
+      "defaultFolderIcon": "lucide//folder",
+      "defaultFileIcon": "lucide//file",
+      "defaultMediaIcon": "lucide//file-image",
+      "exposeStartingPath": false,
+      "includePath": "site-lib/html/file-tree.html"
+    },
+    "searchOptions": {
+      "featureId": "search",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "displayTitle": "Search Docs...",
+      "featurePlacement": {
+        "selector": "#left-sidebar .topbar-content",
+        "type": "start"
+      }
+    },
+    "outlineOptions": {
+      "featureId": "outline",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "displayTitle": "Outline",
+      "featurePlacement": {
+        "selector": "#right-sidebar-content",
+        "type": "end"
+      },
+      "startCollapsed": false,
+      "minCollapseDepth": "100"
+    },
+    "themeToggleOptions": {
+      "featureId": "theme-toggle",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "displayTitle": "",
+      "featurePlacement": {
+        "selector": "#right-sidebar .topbar-content",
+        "type": "start"
+      }
+    },
+    "graphViewOptions": {
+      "featureId": "graph-view",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "displayTitle": "Graph View",
+      "featurePlacement": {
+        "selector": "#right-sidebar-content",
+        "type": "start"
+      },
+      "showOrphanNodes": true,
+      "showAttachments": false,
+      "allowGlobalGraph": true,
+      "allowExpand": true,
+      "attractionForce": 1,
+      "linkLength": 15,
+      "repulsionForce": 85,
+      "centralForce": 2,
+      "edgePruning": 100,
+      "minNodeRadius": 3,
+      "maxNodeRadius": 7
+    },
+    "sidebarOptions": {
+      "featureId": "sidebar",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "allowResizing": true,
+      "allowCollapsing": true,
+      "rightDefaultWidth": "19em",
+      "leftDefaultWidth": "19em"
+    },
+    "customHeadOptions": {
+      "featureId": "custom-head",
+      "enabled": false,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "displayTitle": "",
+      "featurePlacement": {
+        "selector": "head",
+        "type": "end"
+      },
+      "sourcePath": "",
+      "includePath": "site-lib/html/custom-head.html"
+    },
+    "documentOptions": {
+      "featureId": "obsidian-document",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": true,
+      "allowFoldingLists": true,
+      "allowFoldingHeadings": true,
+      "documentWidth": "43em"
+    },
+    "rssOptions": {
+      "featureId": "obsidian-document",
+      "enabled": true,
+      "unavailable": false,
+      "alwaysEnabled": false,
+      "siteUrl": "http://soymadip.me/KireiSakura-Kit",
+      "siteName": "Docs | KireiSakura Kit",
+      "authorName": "soymadip"
+    },
+    "relativeHeaderLinks": false,
+    "includeJS": true,
+    "includeCSS": true,
+    "inlineMedia": false,
+    "inlineCSS": false,
+    "inlineJS": false,
+    "inlineFonts": false,
+    "inlineOther": false,
+    "combineAsSingleFile": false,
+    "offlineResources": false,
+    "themeName": "",
+    "slugifyPaths": true,
+    "flattenExportPaths": false,
+    "fixLinks": true,
+    "faviconPath": "../icon.png",
+    "iconEmojiStyle": "Native",
+    "exportRoot": "",
+    "includePluginCss": [],
+    "includeStyleCssIds": [],
+    "autoDisposeWebpages": true
+  },
+  "logLevel": "warning",
+  "titleProperty": "title",
+  "rssDateProperty": "date",
+  "onlyExportModified": true,
+  "deleteOldFiles": true,
+  "exportPreset": "online",
+  "openAfterExport": false,
+  "filePickerBlacklist": [
+    "(^|\\/)node_modules\\/",
+    "(^|\\/)dist\\/",
+    "(^|\\/)dist-ssr\\/",
+    "(^|\\/)\\.vscode\\/"
+  ],
+  "filePickerWhitelist": [
+    "\\.\\w+$"
+  ]
+}

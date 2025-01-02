@@ -1,0 +1,27 @@
+{
+	"nodes":[
+		{"id":"92fc74ae7d25d9b2","type":"text","text":"  <h6 align=\"center\">kireisakura</h5>","x":-20,"y":-705,"width":180,"height":50,"color":"4"},
+		{"id":"f12cbe8a5d7bcc3c","type":"text","text":"  <h5 align=\"center\">core</h5>","x":-269,"y":-410,"width":149,"height":60,"color":"2"},
+		{"id":"661390facd7454d5","type":"text","text":"  <h5 align=\"center\"><a href=\"assets/bin.html\">bin</a></h5>","x":-269,"y":-705,"width":149,"height":50,"color":"4"},
+		{"id":"ba8b83494daed7e0","type":"text","text":"---\n\n---\n<h2 align=\"center\">Kieisakura-Kit</h2>","x":-703,"y":-410,"width":289,"height":60,"color":"#a81515"},
+		{"id":"037c7a464341f6b7","type":"text","text":"  <h5 align=\"center\">modules</h5>","x":-269,"y":-92,"width":149,"height":50},
+		{"id":"f82def268fe29d6f","type":"text","text":"  <h6 align=\"center\">ui</h5>","x":-20,"y":-375,"width":180,"height":50,"color":"2"},
+		{"id":"512b168c8e4d9199","type":"text","text":"  <h6 align=\"center\">test</h5>","x":-20,"y":-435,"width":180,"height":50,"color":"2"},
+		{"id":"a247237d9309dd53","type":"text","text":"  <h6 align=\"center\">logging</h5>","x":-20,"y":-508,"width":180,"height":50,"color":"2"},
+		{"id":"abedd9945ebb4db2","type":"text","text":"  <h6 align=\"center\">utils</h5>","x":-20,"y":-301,"width":180,"height":50,"color":"2"},
+		{"id":"4f7173e260b9d200","type":"text","text":"  <h6 align=\"center\">updater</h5>","x":-20,"y":-229,"width":180,"height":50,"color":"2"},
+		{"id":"094120829294db50","type":"text","text":"  <h6 align=\"center\">_loader</h5>","x":-20,"y":-584,"width":180,"height":50,"color":"2"}
+	],
+	"edges":[
+		{"id":"f38c9c672a6d1367","fromNode":"ba8b83494daed7e0","fromSide":"right","toNode":"f12cbe8a5d7bcc3c","toSide":"left","color":"1"},
+		{"id":"a3b1d0b3bda33cca","fromNode":"f12cbe8a5d7bcc3c","fromSide":"right","toNode":"094120829294db50","toSide":"left","color":"1"},
+		{"id":"f846ba6c8e69c612","fromNode":"f12cbe8a5d7bcc3c","fromSide":"right","toNode":"a247237d9309dd53","toSide":"left","color":"1"},
+		{"id":"0eaaeace3b5f07ee","fromNode":"f12cbe8a5d7bcc3c","fromSide":"right","toNode":"512b168c8e4d9199","toSide":"left","color":"1"},
+		{"id":"421023bc312967d1","fromNode":"f12cbe8a5d7bcc3c","fromSide":"right","toNode":"f82def268fe29d6f","toSide":"left","color":"1"},
+		{"id":"c9f3a4821c537340","fromNode":"f12cbe8a5d7bcc3c","fromSide":"right","toNode":"abedd9945ebb4db2","toSide":"left","color":"1"},
+		{"id":"11553b94265bed52","fromNode":"ba8b83494daed7e0","fromSide":"right","toNode":"037c7a464341f6b7","toSide":"left","color":"6"},
+		{"id":"d1595ce7d15cb094","fromNode":"ba8b83494daed7e0","fromSide":"right","toNode":"661390facd7454d5","toSide":"left","color":"5"},
+		{"id":"0bfc44b7968ef1e2","fromNode":"f12cbe8a5d7bcc3c","fromSide":"right","toNode":"4f7173e260b9d200","toSide":"left","color":"1"},
+		{"id":"3eb185f0aab52d4c","fromNode":"661390facd7454d5","fromSide":"right","toNode":"92fc74ae7d25d9b2","toSide":"left","color":"5"}
+	]
+}

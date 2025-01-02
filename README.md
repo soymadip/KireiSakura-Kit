@@ -23,43 +23,8 @@
 
 ## Installation & setup
 
-- Make sure you have `curl`, `grep` installed.
+- Checkout [Dcoumentation](https://soymadip.github.io/KireiSakura-Kit) for installation & setup.
 
-- Follow below steps to Install Kireisakura-Kit
-
-### For system wide
-
-- In terminal run:-
-
-  ```bash
-  curl -L https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh | bash -s
-  ```
-
-- Then in your script, include this line at the top:-
-
-  ```bash
-  eval "$(kireisakura --init)"
-  ```
-
-### For directly using in script
-
-- This will check if Kit is installed or download & setup KireiSakura-Kit.
-
-```bash
-  if command -v kireisakura &> /dev/null; then
-    eval "$(kireisakura --init)"
-  else
-    echo "> Installing KireiSakura-Kit"
-    curl -sSL https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh -o kirestaller.sh
-    bash kirestaller.sh -ds
-  fi
-```
-
-## Methods & Docs
-
-- Docs To be done.
-- Run `kireisakura -h` for help.
-- See [my dotfiles][dtfls] for example.
 
 ## Warning
 
@@ -70,6 +35,5 @@
 
 
 <!---------------- links --------------->
-[sprtd_shl]: https://github.com/soymadip/KireiSakura-Kit/wiki/FAQ#1-which-shells-are-supported
-[dtfls]:     https://github.com/soymadip/Dotfiles
-[todo]:      https://github.com/soymadip/KireiSakura-Kit/wiki/TODO
+[sprtd_shl]: https://soymadip.github.io/KireiSakura-Kit/faq.html#1._Which_shells_are_Supported?_0
+[todo]:      https://soymadip.github.io/KireiSakura-Kit/todo.html

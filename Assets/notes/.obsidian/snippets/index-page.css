@@ -1,0 +1,9 @@
+.button.documentation {
+  border-color: var(--code-string);
+  color: var(--code-string);
+}
+
+.button.documentation:hover {
+  background-color: var(--code-string);
+  color: var(--background-primary);
+}

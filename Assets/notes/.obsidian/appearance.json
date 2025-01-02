@@ -1,0 +1,16 @@
+{
+  "cssTheme": "Catppuccin",
+  "accentColor": "#d5818f",
+  "theme": "obsidian",
+  "baseFontSizeAction": true,
+  "nativeMenus": false,
+  "enabledCssSnippets": [
+    "custom-callouts",
+    "callout-title-cneter",
+    "custom-button",
+    "custom-index-page-buttons",
+    "customm-elements",
+    "index-page"
+  ],
+  "baseFontSize": 17
+}
