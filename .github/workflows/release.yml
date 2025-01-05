@@ -1,67 +1,67 @@
 name: Release on Version Change
 
 on:
-    push:
-        paths:
-            - ".version"
+  push:
+    paths:
+      - ".version"
 
 jobs:
-    release:
-        runs-on: ubuntu-latest
+  release:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-            - name: Read version
-              id: get_version
-              run: echo "VERSION=$(cat .version)" >> $GITHUB_ENV
+      - name: Read version
+        id: get_version
+        run: echo "VERSION=$(cat .version)" >> $GITHUB_ENV
 
-            - name: Determine if it's a pre-release
-              id: pre_release_check
-              run: |
-                  if [[ "${{ env.VERSION }}" == 0* ]]; then
-                    echo "RELEASE_NAME=${{ env.VERSION }}-alpha" >> $GITHUB_ENV
-                  else
-                    echo "RELEASE_NAME=${{ env.VERSION }}" >> $GITHUB_ENV
-                  fi
+      - name: Determine if it's a pre-release
+        id: pre_release_check
+        run: |
+          if [[ "${{ env.VERSION }}" == 0* ]]; then
+            echo "RELEASE_NAME=${{ env.VERSION }}-alpha" >> $GITHUB_ENV
+          else
+            echo "RELEASE_NAME=${{ env.VERSION }}" >> $GITHUB_ENV
+          fi
 
-            - name: Get repository name
-              id: get_repo_name
-              run: echo "REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)" >> $GITHUB_ENV
+      - name: Get repository name
+        id: get_repo_name
+        run: echo "REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)" >> $GITHUB_ENV
 
-            - name: Create a tar.gz archive
-              run: |
-                  mkdir release
-                  rsync -av --progress . ./release \
-                        --exclude=".git"\
-                        --exclude=".github"\
-                        --exclude="TODO.md"\
-                        --exclude="README.md"\
-                        --exclude=".editorconfig"\
-                        --exclude=".prettierignore"
-                        --exclude="docs"
-                  tar -czvf ./${{ env.REPO_NAME }}.tar.gz -C release .
+      - name: Create a tar.gz archive
+        run: |
+          mkdir release
+          rsync -av --progress . ./release \
+                --exclude=".git"\
+                --exclude=".github"\
+                --exclude="TODO.md"\
+                --exclude="README.md"\
+                --exclude=".editorconfig"\
+                --exclude=".prettierignore"\
+                --exclude="docs"
+          tar -czvf ./${{ env.REPO_NAME }}.tar.gz -C release .
 
-            - name: Create GitHub Release
-              uses: softprops/action-gh-release@v1
-              with:
-                  tag_name: ${{ env.VERSION }}
-                  body: "version: ${{ env.VERSION }}."
-                  prerelease: false
-                  name: ${{ env.RELEASE_NAME }}
-                  files: "${{ env.REPO_NAME }}.tar.gz"
-              env:
-                  GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.VERSION }}
+          body: "version: ${{ env.VERSION }}."
+          prerelease: false
+          name: ${{ env.RELEASE_NAME }}
+          files: "${{ env.REPO_NAME }}.tar.gz"
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 
-            - name: Generate changelog from commits
-              id: generate_changelog
-              run: |
-                  CHANGELOG=$(git log -1 --pretty=%B | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/"/\\"/g')
-                  echo "CHANGELOG=${CHANGELOG}" >> $GITHUB_ENV
+      - name: Generate changelog from commits
+        id: generate_changelog
+        run: |
+          CHANGELOG=$(git log -1 --pretty=%B | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/"/\\"/g')
+          echo "CHANGELOG=${CHANGELOG}" >> $GITHUB_ENV
 
-            - name: Update release with changelog
-              run: |
-                  gh release edit ${{ env.VERSION }} --notes "$(echo -e "${{ env.CHANGELOG }}")"
-              env:
-                  GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+      - name: Update release with changelog
+        run: |
+          gh release edit ${{ env.VERSION }} --notes "$(echo -e "${{ env.CHANGELOG }}")"
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
