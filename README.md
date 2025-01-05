@@ -17,7 +17,7 @@
 - **Mudular**, import only stuff you need.
 - **Log support**, with various levels.
 - **Many in-built functions**, no need to write from scratch.
-- See [TODO][todo] for planned stuff.
+- See [TODO][todo] for upcomming features.
 <!-- - Various **UI elements**. -->
 
 

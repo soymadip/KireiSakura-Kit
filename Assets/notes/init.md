@@ -64,7 +64,7 @@ The log file will be created at:  `<CACHE_DIR>/<LOG_FILE_NAME>.log`
 
 >[!todo] Prerequisites
 >- Make sure you have `curl`, `grep`  installed.
-> - `figlet` will be installed later for header. you can install it now too.
+> - Install `figlet` too for the header. (optional)
 
 Add below lines to your script.
 This will check if KireiSakura Kit is installed or download & source the kit:-

@@ -24,10 +24,10 @@ icon: circle-help
     - Functions have comments showing how to use them(like args, output etc..).
     
 2. **For the Docs:-**
-    - Clone [this](https://github.com/soymadip/KireiSakura-Kit) repo & switch to `docs` branch
+    - Clone [this](https://github.com/soymadip/KireiSakura-Kit) repo.
     - Install obsidian.
+    - Open the [notes](https://github.com/soymadip/KireiSakura-Kit/tree/main/Assets/notes) as a obsidian vault. It contains plugins, settings.
     - Install [obsidian-webpage-export](https://github.com/KosmosisDire/obsidian-webpage-export) plugin.
-    - Use [these](https://github.com/soymadip/KireiSakura-Kit/tree/docs/docs/notes/.obsidian) settings for obsidian
-    - Then using export to html using obsidian-webpage-export form the ribbon.
+    - Then export to html using obsidian-webpage-export form the ribbon to the docs directory of the cloned repo.
 
 ---
