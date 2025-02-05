@@ -40,7 +40,8 @@ jobs:
                 --exclude="README.md"\
                 --exclude=".editorconfig"\
                 --exclude=".prettierignore"\
-                --exclude="docs"
+                --exclude="docs"\
+                --exclude="Assets"
           tar -czvf ./${{ env.REPO_NAME }}.tar.gz -C release .
 
       - name: Create GitHub Release

@@ -42,7 +42,7 @@ show_man() {
   local opt=${1:-" "}
 
   if [ "$opt" != " " ]; then
-    echo -e "\n  ${RED}Unknown flag: \'$opt\' ${RESET}\n"
+    echo -e "\n  ${RED}Unknown flag: '$opt' ${RESET}\n"
   else
     echo -e "\n  ${RED}No flag was given.${RESET}\n"
   fi
@@ -56,7 +56,7 @@ show_man() {
 show_help() {
 
   echo -e "\n  Usage: ${LAVENDER}kireisakura {OPTIONS}${RESET}"
-  echo -e "  Usage: ${LAVENDER}eval \'\$(kireisakura --init {OPTIONS})\'${RESET}\n"
+  echo -e "  Usage: ${LAVENDER}eval '\$(kireisakura --init {OPTIONS})'${RESET}\n"
 
   echo "  Options:"
   echo "      -i,  --init            Set up the KireiSakura-Kit."
