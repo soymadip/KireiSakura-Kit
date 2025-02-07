@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-    <big>KireiSakura-Kit is a library written in <a href="https://www.gnu.org/software/bash">Bash</a> for making powerful shell scripts.</big>
+    <big>KireiSakura-Kit is a framework written in <a href="https://www.gnu.org/software/bash">Bash</a> for making powerful shell scripts.</big>
 </p>
 <br>
 
@@ -28,8 +28,7 @@
 
 ## Warning
 
-- MAJOR CHANGES ARE BEING MADE as this project is in alpha, so be careful.
-- As of now, some part of this library is Arch-linux centric, but can be extended to any distro.
+- FREQUENT CHANGES ARE BEING MADE as this project is in beta, so be careful.
 - Contribute if you find this useful and wanna make this more powerful.
 
 
