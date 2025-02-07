@@ -191,12 +191,13 @@ init() {
 
   kit_version=$(cat "$kirei_dir"/.version)
 
-  # Output environment variable setup commands
+  # Output SUPER variables
   printf "kirei_dir=\"%s\"\n" "$kirei_dir"
   printf "kirei_core_dir=\"%s\"\n" "$kirei_core_dir"
   printf "kirei_core=\"%s\"\n" "$kirei_core"
   printf "kirei_module_dir=\"%s\"\n" "$kirei_module_dir"
   printf "kirei_assets_dir=\"%s\"\n" "$kirei_assets_dir"
+  printf "kirei_docs_url=\"%s\"\n" "$docs_url"
 
   printf "kirei_project_name=\"%s\"\n" "$project_name"
   printf "kirei_cache_dir=\"%s\"\n" "$cache_dir"
@@ -237,6 +238,7 @@ run_tester() {
 #_________________________________INITIALISATION_____________________________________________
 
 upstream_ver_url="${UPSTREAM_VERSION_URL:-https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/main/.version}"
+docs_url="https://kireisakura.soymadip.me"
 
 # Initialize variables
 kirei_dir="$HOME/.local/share/KireiSakura-Kit"

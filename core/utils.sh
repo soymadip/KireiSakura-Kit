@@ -3,20 +3,32 @@
 #| |   / _ \| '__/ _ \ | |_ | | | | '_ \ / __| __| |/ _ \| '_ \/ __|
 #| |__| (_) | | |  __/ |  _|| |_| | | | | (__| |_| | (_) | | | \__ \
 # \____\___/|_|  \___| |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
+ 
+
 
 #
-# Import  modules
-# kimport <module1> <module2>
-#   -l flag for user modules
-#   -a flag for all modules
+#-----------------------------------------------------------
+# NAME: Kimport
+# DESC: Import user/plugin modules.
+# USAGE: kimport <flags>
+# FLAGS:
+#     -l,--local Import user modules instead of plugin modules.
+#     -a,--all   Import all modules from the modules directory.
+#-----------------------------------------------------------
 kimport() {
+  local user_module=false
   local load_all=false
   local called_modules=()
-  local module_path
   local failed_imports=()
+  local module_path
+  local modules_dir="$kirei_module_dir"
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
+    -l | --local)
+      user_module=true
+      shift
+      ;;
     -a | --all)
       load_all=true
       shift
@@ -28,15 +40,25 @@ kimport() {
     esac
   done
 
+  if [ "$user_module" == true ]; then
+    modules_dir="$(pwd)/modules"
+
+    if [ ! -d "$modules_dir" ]; then
+      log.error "User modules directory not found."
+      log.warn "$(echo -e "Check docs: $kirei_docs_url/terminology.html#3._User_modules_0" | sed $'s/\x1b\[[0-9;]*m//g')"
+      exit 1
+    fi
+  fi
+
   if [ "$load_all" = true ]; then
     log.warn "Importing All modules....\n" kimport
-    for module_path in "$kirei_module_dir"/*.sh; do
+    for module_path in "$modules_dir"/*.sh; do
       module_name="$(basename "${module_path%.*}")"
 
       [[ "$module_name" == "_EXAMPLE" ]] && continue
 
       if source "$module_path"; then
-        log "Imported: '$module_name'"
+        log "Imported:- '$module_name'"
       else
         log.warn "Failed to import: '$module_name'"
         failed_imports+=("$module_name")
@@ -46,11 +68,11 @@ kimport() {
   else
     log.warn "Importing modules....\n" kimport
     for module_name in "${called_modules[@]}"; do
-      module_path="$kirei_module_dir/$module_name.sh"
+      module_path="$modules_dir/$module_name.sh"
 
       if [ -f "$module_path" ]; then
         if source "$module_path"; then
-          log "Imported: '$module_name'"
+          log "Imported:- '$module_name'"
         else
           log.warn "Failed to import: '$module_name'"
           failed_imports+=("$module_name")
@@ -78,8 +100,10 @@ kimport() {
 
 #
 #
+#----------------------------------------------------------
+# DEPARCIATED: use kimport -a
 # Import all files from a directory
-# DEPARCIATED. use kimport -a
+#----------------------------------------------------------
 load-all-from() {
   local directory=$1
   local file_ext=${2:-"sh"}
@@ -94,11 +118,18 @@ load-all-from() {
   done
 }
 
+
 #
-# Compare two numbers, also works for version numbers.
-# return 0 if $1 is equal to $2
-# return 1 if $1 is greater than $2
-# return 2 if $1 is less than $2
+#
+#-----------------------------------------------------------------------
+# NAME:  compare-num
+# DESC:  Compare 2 numbers. also works for version numbers.
+# USAGE: compare-num <number1> <number2>
+# Return values:
+#    0 :- $1 is equal to $2
+#    1 :- $1 is greater than $2
+#    2 :- $1 is less than $2
+#----------------------------------------------------------------------
 compare-num() {
   local ver1
   local ver2
@@ -128,18 +159,23 @@ compare-num() {
   return 0
 }
 
-# Checks which package manager is available
-# though this is not full proof method, it works for most of the cases.
+#
+#
+#-----------------------------------------------------------------------------------
+# NAME: get-package-manager
+# DESC: Determine the package manager based on the OS.
+# USAGE: get-package-manager
+#-----------------------------------------------------------------------------------
 get-package-manager() {
 
   if [[ "$(uname)" == "Linux" ]]; then
-    if has pacman; then
+    if check-dep -q pacman; then
       echo "pacman"
-    elif has apt; then
+    elif check-dep -q apt; then
       echo "apt"
-    elif has dnf; then
+    elif check-dep -q dnf; then
       echo "dnf"
-    elif has zypper; then
+    elif check-dep -q zypper; then
       echo "zypper"
     else
       error "Unsupported Linux distribution."
@@ -157,10 +193,17 @@ get-package-manager() {
     exit 1
   fi
 }
+ 
 
 #
-# Install a package using package manager
-# uses get-package-manager() to determine package manager
+#
+#------------------------------------------------------------------------------------
+# NAME: install-package
+# DESC: uses get-package-manager() to determine package manager.
+#       & installs the package using the package manager.
+# USAGE: install-package <package>
+# TODO: add support for group install
+#------------------------------------------------------------------------------------
 install-package() {
   local package="$1"
   local pkg_manager
@@ -185,8 +228,8 @@ install-package() {
     brew install "$package" >/dev/null || return 1
     ;;
   *)
-    log.error "Unknown package manager."
     log.error "Unsupported Linux distribution."
+    log.error "No suppoeted package manager found."
     log.warn "Use one (or derivatives) of below distros: "
     log.warn "Debian, Ubuntu, Fedora, Arch, SUSE"
     return 1
@@ -197,34 +240,71 @@ install-package() {
 
 #
 #
-# Check if a dependency is installed
+#---------------------------------------------------------------------------------
+# NAME:  check-dep
+# DESC:  Check if a dependency is installed.
+# USAGE: check_dir <directory> <flags>
+# FLAGS:
+#     -q, --quiet    Suppress output
+# TODO: reimplement -n/--needed
+#---------------------------------------------------------------------------------
 check-dep() {
-  local dependency=$1
-  local required=$2
+  local dependency=()
+  local not_found=()
+  local be_quiet=false 
 
-  if pacman -Q "$dependency" &>/dev/null; then
-    log.success "$dependency is installed."
+  log.warn "Checking dependencies." check-dep
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -q|--quiet)
+      be_quiet=true
+      shift
+      ;;
+    *)
+      dependency+=("$1")
+      shift
+      ;;
+    esac
+  done
+
+  if [[ "${#dependency[@]}" -eq 0 ]]; then
+    log.error "No dependencies provided." check-dep
+    return 1
   else
-    log.warn "$dependency is not installed." inform
-    if [ -n "$required" ] && [ "$required" == "--needed" ]; then
-      log.warn "installing $dependency...."
-      install_package "$dependency"
-      log.success "$dependency installed."
-    else
-      prompt "Do you want to install $dependency?" confirm_install --no-separator
-      if [ "$confirm_install" == "y" ] || [ "$confirm_install" == "Y" ] || [ -z "$confirm_install" ]; then
-        install_package "$dependency"
-        log.success "$dependency installed."
+    for dep in "${dependency[@]}"; do
+      if command -v "$dep" &>/dev/null; then
+        [[ "$be_quiet" = false ]] && log.success "$dep is installed."
       else
-        log.warn "$dependency installation was declined by the user."
+        [[ "$be_quiet" = false ]] && log.warn "$dep is not installed."
+        not_found+=("$dep")
       fi
+    done
+
+    if [[ "${#not_found[@]}" -gt 0 ]]; then
+      log.error "Not installed dependency(s):"
+      for ndep in "${not_found[@]}"; do
+        echo -e "\t\t${LAVENDER}$ndep ${NC}"
+      done
+      return 1
+    else
+      return 0
     fi
   fi
 }
 
+
 #
-# check if a directory exists (make it if it doesn't):
-## check_dir <directory> [--needed || --el_exit] [--quiet]
+#
+#-------------------------------------------------------------------------------
+# FUNC:  check_dir
+# DESC:  Check if a directory exists and optionally create it.
+# USAGE: check_dir <directory> <flags>
+# FLAGS:
+#     -n, --needed   Create the directory if it doesn't exist
+#     -e, --el_exit  Exit if the directory doesn't exist
+#     -q, --quiet    Suppress output
+#-------------------------------------------------------------------------------
 check-dir() {
   local dir=$1
   local is_needed=0
@@ -289,46 +369,114 @@ check-dir() {
   fi
 }
 
-#
-# Check if a message strats with given char. if yes, srccessfull..
-# strats_with <character_to_check> <message_in_which_to_check>
+
+#------------------------------------------------------------------------------
+# NAME: starts-with
+# DESC: Check if a string starts with a given prefix.
+# USAGE: starts-with <string> <prefix>
+#------------------------------------------------------------------------------
 starts-with() {
-  local character=$1
-  local string=$2
-
-  if [[ "$string" == "$character"* ]]; then
-    return 0
-  else
-    return 1
-  fi
+  local string="$1"
+  local prefix="$2"
+  [[ "${string#"$prefix"}" != "$string" ]]
 }
 
 #
 #
-trim-char() {
-  local character=$1
-  local string=$2
-  local trimmed_message
-
-  if starts-with "$character" "$string"; then
-    trimmed_message="${string#"$character"}"
-    echo "$trimmed_message"
-  else
-    echo "$string"
-  fi
+#------------------------------------------------------------------------------
+# NAME: ends-with
+# DESC: Check if a string ends with a given suffix.
+# USAGE: ends-with <string> <suffix>
+#------------------------------------------------------------------------------
+ends-with() {
+  local string="$1"
+  local suffix="$2"
+  [[ "${string%"$suffix"}" != "$string" ]]
 }
 
 #
 #
-cfrm-reboot() {
-  log.warn "!" prompt "Reboot is recommended, Do you wanna Reboot?" cfrm_reboot
-  if [ "$cfrm_reboot" == "y" ] || [ "$cfrm_reboot" == "Y" ] || [ -z "$cfrm_reboot" ]; then
-    log.warn "rebooting..."
-    sleep 2
-    sudo reboot
-  else
-    log.success "Ok, Enjoy your system! and don't forget to reboot later.."
-    sleep 2
-    clear
+#--------------------------------------------------------------------------
+# NAME: len
+# DESC: gets the length of a string.
+# USAGE: len <string>
+#--------------------------------------------------------------------------
+len() {
+echo "${#1}"
+}
+
+#
+#
+#-----------------------------------------------------------------------
+# NAME: strip
+# DESC: Trim a leading & trailing character from a string.
+# USAGE: strip <string from to remove> <character to strip> 
+#        if no arg, strip whitespaces.
+# FLAGS:
+#   -s,--start  Strip only leading char.
+#   -e,--end    Strip only trailing char.
+#-------------------------------------------------------------------------
+strip() {
+  local string character
+  local strip_start=false strip_end=false
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -s | --start)
+        strip_start=true
+        shift
+        ;;
+      -e | --end)
+        strip_end=true
+        shift
+        ;;
+      *)
+        if [[ -z "$string" ]]; then
+          string="$1"
+        elif [[ -z "$character" ]]; then
+          character="$1"
+        fi
+        shift
+        ;;
+    esac
+  done
+
+  character="${character:- }"
+
+  # Default to stripping whitespace
+  if [[ "$strip_start" == false && "$strip_end" == false ]]; then
+    strip_start=true
+    strip_end=true
   fi
+
+
+  # Strip leading occurrences of character
+  if [[ "$strip_start" == true ]]; then
+    while [[ "$string" == "$character"* ]]; do
+      string="${string#"$character"}"
+    done
+  fi
+
+  # Strip trailing occurrences of character
+  if [[ "$strip_end" == true ]]; then
+    while [[ "$string" == *"$character" ]]; do
+      string="${string%"$character"}"
+    done
+  fi
+
+  echo "$string"
+}
+
+
+#
+#
+#--------------------------------------------------------------------------
+# NAME:  hyprlink
+# DESC:  Print hyprlink in terminal.
+# USAGE: hyprlink <url> <text>
+#-------------------------------------------------------------------------
+hyperlink() {
+    local url="$1"
+    local text="${2:-$1}" 
+    echo -e "\e]8;;${url}\e\\${text}\e]8;;\e\\"
 }

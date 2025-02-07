@@ -1,3 +1,17 @@
+#
+#
+#--------------------------------------------------------------------------
+# Name: logger
+# Desc: Logs the message to the console and log file.
+# USAGE: logger <arguments>
+# ARGS:
+#       - log_level: The log level of the message. (error, warn, success, info)
+#       - log_message: The message to log.
+#       - extra_info: Extra information to log.
+# FIXME:
+#     \t is putting space after log symbol.
+#     hyprlink is putting color code when using.
+#--------------------------------------------------------------------------
 logger() {
     local log_level=$1
     local log_message=$2
@@ -22,7 +36,7 @@ logger() {
     esac
 
     if starts-with "\n" "$log_message"; then
-        log_message=$(trim-char "\n" "$log_message")
+        log_message=$(strip "\n" "$log_message")
         echo ""
         echo -e "[$(date '+%Y.%m.%d %H:%M:%S')] " >>"$kirei_log_file"
     fi
@@ -48,8 +62,8 @@ logger() {
     fi
 
     {
-        echo -e "$formatted_message" &&
-            echo -e "[$(date +"%Y.%m.%d %H:%M:%S")] [$log_level] $log_message" >>"$kirei_log_file"
+      echo -e "$formatted_message" &&
+      echo -e "[$(date +"%Y.%m.%d %H:%M:%S")] [$log_level] $log_message" >>"$kirei_log_file"
     } && return 0 || return 1
 }
 

@@ -1,0 +1,22 @@
+{
+  "Function Template ": {
+    "prefix": "function",
+    "scope": "shellscript",
+    "body": [
+      "",
+      "#",
+      "#",
+      "#---------------------------------------------------------------------------------",
+      "# NAME:  ${1:Function-Name}",
+      "# DESC:  ${2:Function-Description.}",
+      "# USAGE: ${1:Function-Name} ${3:<arguments>}",
+      "# ${4:FLAGS:}",
+      "#${5:      -1st,--full1st  flag desc}.",
+      "#---------------------------------------------------------------------------------",
+      "${1:Function-Name}() {",
+      "",
+      "$0",
+      "}",
+    ]
+  }
+}

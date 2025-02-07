@@ -10,7 +10,7 @@ change_shell() {
         else
             log "Changing shell"
             log "Checking if ${shell_name} is installed."
-            check-deps "${shell_name}" needed
+            check-dep "${shell_name}" needed
             log "${shell_name} is installed."
             log "Changing SHELL to ${shell_name}.."
             chsh -s $(which "${shell_name}")
