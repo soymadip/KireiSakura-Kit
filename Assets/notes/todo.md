@@ -6,7 +6,7 @@ icon: circle-dot
 
 ## Initial Release
 
-- [x] Make `init.sh` in kit root for initialization.
+- [x] Make `init.sh` in kit root for initialisation.
 - [x] Make setup command: `eval "$(kireisakura --init)"`
 - [x] Make other commands:
     - [x] `kireisakura -h`
@@ -21,10 +21,10 @@ icon: circle-dot
     - [x] Better directory structure.
     - [x] Clearer naming conventions.
     - [x] Make old Modules compatible.
-- [ ]  Make a clearer Design guide.
 - [x] Implement Auto-Update.
+- [ ]  Make a clearer Design guide.
 ---
-## Another Time:
+## Another Time
 
 - [ ] Make use of log file in more functions (for more detailed logs).
 - [ ] Check if core functions & dependency functions are loaded and set that script load flag true using a variable.

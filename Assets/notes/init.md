@@ -8,8 +8,8 @@ icon: rocket
 
 >[!warning]
 > Although Kit is stable enough now
-> - **Things are subject to change** as this *project is in alpha* stage .
-> - Major changes are being made until stable release.
+> - **Things are subject to change** as this *project is in beta* stage .
+> - Frequent changes are being made until stable release.
 
 ^6c74f6
 

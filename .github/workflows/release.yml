@@ -36,12 +36,13 @@ jobs:
           rsync -av --progress . ./release \
                 --exclude=".git"\
                 --exclude=".github"\
-                --exclude="TODO.md"\
-                --exclude="README.md"\
                 --exclude=".editorconfig"\
                 --exclude=".prettierignore"\
-                --exclude="docs"\
+                --exclude=".vscode"
+                --exclude="TODO.md"\
+                --exclude="README.md"\
                 --exclude="Assets"
+                --exclude="docs"\
           tar -czvf ./${{ env.REPO_NAME }}.tar.gz -C release .
 
       - name: Create GitHub Release

@@ -17,16 +17,26 @@ icon: circle-help
 - When all planned features for [[todo#Initial Release|initial release]] will be completed.
 
 --- 
-## 3. How to help writing docs?
+## 3. Why are there are methods for one line commands?
+
+- Whole point of this framework is to simplify, beautify shell scripting. 
+- Even though some methods are basically one line command, they are hassle to write or getting correctly, having method drastically simplifies that.
+
+---
+## 4. How to help writing docs?
 
 1. **For the methods:-**
-    - If you know shell scripting, browse the source code starting from [executable script](https://github.com/soymadip/KireiSakura-Kit)
-    - Functions have comments showing how to use them(like args, output etc..).
+    - Browse the source code in starting from [core dir](https://github.com/soymadip/KireiSakura-Kit/tree/main/core)
+    - Functions have comments showing how to use them (like args, flags, output etc..).
     
 2. **For the Docs:-**
     - Clone [this](https://github.com/soymadip/KireiSakura-Kit) repo.
     - Install obsidian.
     - Open the [notes](https://github.com/soymadip/KireiSakura-Kit/tree/main/Assets/notes) as a obsidian vault. It contains plugins, settings.
+    -  Edit the notes & submit PR, it will be checked & accepted.
+    
+3. __Generate site code:-___
+    - Optionally,
     - Install [obsidian-webpage-export](https://github.com/KosmosisDire/obsidian-webpage-export) plugin.
     - Then export to html using obsidian-webpage-export form the ribbon to the docs directory of the cloned repo.
 

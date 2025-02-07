@@ -3,14 +3,14 @@
 		{"id":"92fc74ae7d25d9b2","type":"text","text":"  <h6 align=\"center\">kireisakura</h5>","x":-20,"y":-705,"width":180,"height":50,"color":"4"},
 		{"id":"f12cbe8a5d7bcc3c","type":"text","text":"  <h5 align=\"center\">core</h5>","x":-269,"y":-410,"width":149,"height":60,"color":"2"},
 		{"id":"661390facd7454d5","type":"text","text":"  <h5 align=\"center\"><a href=\"assets/bin.html\">bin</a></h5>","x":-269,"y":-705,"width":149,"height":50,"color":"4"},
-		{"id":"ba8b83494daed7e0","type":"text","text":"---\n\n---\n<h2 align=\"center\">Kieisakura-Kit</h2>","x":-703,"y":-410,"width":289,"height":60,"color":"#a81515"},
 		{"id":"037c7a464341f6b7","type":"text","text":"  <h5 align=\"center\">modules</h5>","x":-269,"y":-92,"width":149,"height":50},
 		{"id":"f82def268fe29d6f","type":"text","text":"  <h6 align=\"center\">ui</h5>","x":-20,"y":-375,"width":180,"height":50,"color":"2"},
 		{"id":"512b168c8e4d9199","type":"text","text":"  <h6 align=\"center\">test</h5>","x":-20,"y":-435,"width":180,"height":50,"color":"2"},
 		{"id":"a247237d9309dd53","type":"text","text":"  <h6 align=\"center\">logging</h5>","x":-20,"y":-508,"width":180,"height":50,"color":"2"},
 		{"id":"abedd9945ebb4db2","type":"text","text":"  <h6 align=\"center\">utils</h5>","x":-20,"y":-301,"width":180,"height":50,"color":"2"},
 		{"id":"4f7173e260b9d200","type":"text","text":"  <h6 align=\"center\">updater</h5>","x":-20,"y":-229,"width":180,"height":50,"color":"2"},
-		{"id":"094120829294db50","type":"text","text":"  <h6 align=\"center\">_loader</h5>","x":-20,"y":-584,"width":180,"height":50,"color":"2"}
+		{"id":"094120829294db50","type":"text","text":"  <h6 align=\"center\">_loader</h5>","x":-20,"y":-584,"width":180,"height":50,"color":"2"},
+		{"id":"ba8b83494daed7e0","type":"text","text":"---\n\n---\n<h2 align=\"center\">Kieisakura-Kit</h2>","x":-655,"y":-410,"width":289,"height":60,"color":"#a81515"}
 	],
 	"edges":[
 		{"id":"f38c9c672a6d1367","fromNode":"ba8b83494daed7e0","fromSide":"right","toNode":"f12cbe8a5d7bcc3c","toSide":"left","color":"1"},

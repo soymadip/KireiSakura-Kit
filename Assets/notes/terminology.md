@@ -31,9 +31,9 @@ These are required to be [[init#3. Loading modules|loaded]] implicitly using `ki
 ### 3.  User modules
 These are similar to [[terminology#2. Plugin modules|plugin modules]] except these are designed  & implemented by the user.
 
->[!info]
+>[!danger] Info
 >**Create user modules** by making a directory called `modules` in the project root.
->```dir
+>```sh
 ><PROJECT_ROOT>
 >   |-main.sh
 >   |-modules/
@@ -41,6 +41,31 @@ These are similar to [[terminology#2. Plugin modules|plugin modules]] except the
 >       |-module1.sh
 >       |-module2.sh
 >```
+
+
+---
+
+## Super Variables
+
+KireiSakura-Kit defines several key environment variables, known as **Super Variables**, which store important paths and project-related information. 
+__Super Variables__ start with `kirei_`. 
+
+
+Currently there are below super vars: - 
+### Project & Metadata
+- **`kirei_docs_url`**         → URL to the official documentation.  
+- **`kirei_project_name`** → Name of the project.  
+
+### Core Directories
+- **`kirei_dir`**                 → Root directory of KireiSakura-Kit.  
+- **`kirei_core_dir`**      → Directory containing core scripts.  
+- **`kirei_core`**               → Path to the main entry script.  
+- **`kirei_module_dir`**  → Directory containing additional modules.  
+- **`kirei_assets_dir`**  → Directory for assets like icons and themes.  
+
+### Runtime & Logging
+- **`kirei_cache_dir`** → Directory for caching temporary files.  
+- **`kirei_log_file`**    → Path to the log file for debugging and tracking.  
 
 
 ---
