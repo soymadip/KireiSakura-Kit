@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+
+#  _
+# | | ___ __  _ __ ___
+# | |/ / '_ \| '_ ` _ \
+# |   <| |_) | | | | | |
+# |_|\_\ .__/|_| |_| |_|
+#      |_|
+#
+# KireiSakura Package Manager
+
+
+# Define color codes
+RED='\033[31m'
+LAVENDER='\u001b[38;5;147m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+RESET='\033[0m'
+
+
+show_help() {
+  echo -e "\n  ${YELLOW}KireiSakura Package Manager${RESET}\n"
+  echo -e "  ${LAVENDER}Usage:${RESET}"
+  echo -e "    kpm [command/flag] [options]\n"
+  echo -e "  ${GREEN}Commands:${RESET}"
+  echo -e "    ${LAVENDER}-i,  install${RESET}    Install a plugin"
+  echo -e "    ${LAVENDER}-ui, uninstall${RESET}  Uninstall a plugin"
+  echo -e "    ${LAVENDER}-u,  update${RESET}     Update plugins"
+  echo -e "    ${LAVENDER}-l,  list${RESET}       List all installed plugins"
+  # echo -e "    ${LAVENDER}search${RESET}     Search for a plugin\n"
+  echo -e "\n  ${GREEN}Options:${RESET}"
+  echo -e "    ${LAVENDER}-h, --help${RESET}      Show this help message\n"
+  exit 0
+}
+
+
+
+install_plugin() {
+
+  echo -e "\n  ${YELLOW}Not yet implemented${RESET}\n"
+  exit 1
+}
+
+
+update_plugins() {
+  echo -e "\n  ${YELLOW}Not yet implemented${RESET}\n"
+
+}
+
+show_version() {
+  local version="$(cat $(dirname $0)/../.version)"
+
+  echo -e "\n  KireiSakura Plugin Manager ${LAVENDER}v${version}${RESET}"
+  exit 0
+}
+
+#--------------------------------------------------------------------------------------
+
+
+
+
+# Check if no arguments are provided
+if [ "$#" -eq 0 ]; then
+  show_help
+fi
+
+# Parse options
+while [[ "$#" -gt 0 ]]; do
+
+  case "$1" in
+  -h | --help)
+    show_help
+    ;;
+  -v | --version)
+    show_version
+    ;;
+  -i | install)
+    if [ -n "$2" ]; then
+      install_plugin "$2"
+      shift
+    else
+      echo -e "\n  ${RED}Error: Plugin name must be specified after '-i' or '--install'.${RESET}\n"
+      exit 1
+    fi
+    ;;
+  -ui | uninstall)
+    if [ -n "$2" ]; then
+      uninstall_plugin "$2"
+      shift
+    else
+      echo -e "\n  ${RED}Error: Plugin name must be specified after '-ui' or '--uninstall'.${RESET}\n"
+      exit 1
+    fi
+    ;;
+  -u | update)
+    update_plugins
+    ;;
+  *)
+    show_help "$1"
+    ;;
+  esac
+  shift
+done

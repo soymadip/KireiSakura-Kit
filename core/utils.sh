@@ -10,13 +10,16 @@
 #-----------------------------------------------------------
 # NAME: Kimport
 # DESC: Import user/plugin modules.
-# USAGE: kimport <flags>
+# USAGE: kimport <flags> moduleName
+#                 OR
+#        kimport packageName.moduleName 
 # FLAGS:
-#     -l,--local Import user modules instead of plugin modules.
+#     -l,--local Import local modules instead of plugin modules.
 #     -a,--all   Import all modules from the modules directory.
+# TODO:  Support for packages. (see todo)
 #-----------------------------------------------------------
 kimport() {
-  local user_module=false
+  local local_module=false
   local load_all=false
   local called_modules=()
   local failed_imports=()
@@ -26,7 +29,7 @@ kimport() {
   while [[ $# -gt 0 ]]; do
     case "$1" in
     -l | --local)
-      user_module=true
+      local_module=true
       shift
       ;;
     -a | --all)
@@ -40,7 +43,7 @@ kimport() {
     esac
   done
 
-  if [ "$user_module" == true ]; then
+  if [ "$local_module" == true ]; then
     modules_dir="$(pwd)/modules"
 
     if [ ! -d "$modules_dir" ]; then

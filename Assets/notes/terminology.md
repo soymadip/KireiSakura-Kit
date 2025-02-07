@@ -28,11 +28,11 @@ These are optional modules used to extend the functionality of the framework.
 
 These are required to be [[init#3. Loading modules|loaded]] implicitly using `kimport` function.
 
-### 3.  User modules
+### 3.  Local modules
 These are similar to [[terminology#2. Plugin modules|plugin modules]] except these are designed  & implemented by the user.
 
 >[!danger] Info
->**Create user modules** by making a directory called `modules` in the project root.
+>**Create local modules** by making a directory called `modules` in the project root.
 >```sh
 ><PROJECT_ROOT>
 >   |-main.sh
@@ -45,6 +45,15 @@ These are similar to [[terminology#2. Plugin modules|plugin modules]] except the
 
 ---
 
+## Packages
+
+packages are directories containing plugin modules. 
+packages allow people to share modules.
+
+>[!info]
+> Packages are in concept stage and not yet implemented.
+
+---
 ## Super Variables
 
 KireiSakura-Kit defines several key environment variables, known as **Super Variables**, which store important paths and project-related information. 

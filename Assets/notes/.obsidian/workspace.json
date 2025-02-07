@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "methods.md",
+                "file": "terminology.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "methods"
+              "title": "terminology"
             }
           }
         ]
@@ -141,13 +141,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "methods.md",
+                "file": "terminology.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of methods"
+              "title": "Outline of terminology"
             }
           },
           {
@@ -199,12 +199,12 @@
   },
   "active": "f83280bf510440be",
   "lastOpenFiles": [
-    "methods.md",
     "todo.md",
+    "terminology.md",
+    "methods.md",
     "maintainance.md",
     "init.md",
     "faq.md",
-    "terminology.md",
     "Project Structure.canvas",
     "index.md",
     "Pasted image 20250102161612.png",

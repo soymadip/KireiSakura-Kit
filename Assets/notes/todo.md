@@ -33,6 +33,11 @@ icon: circle-dot
     - [ ] use of [YQ](https://chatgpt.com/share/671ab466-aaf0-8001-ba21-ae748636e88b)?
 - [ ] Add `-q` or `--quiet` flag to all possible functions.
 - [ ] Write documentation (help needed).
+- [ ] Add support for packages.
+    - move existing modules to modules/kirei
+    - 3rd party packages will be at modules/package_name
+        -  can be imported with package_name.module_name syntax.  
+        
 - [ ] Enable completions (still thinking if useful):
     - Make script.
     - Source the file.
