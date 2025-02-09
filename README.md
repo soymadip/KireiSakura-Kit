@@ -9,14 +9,14 @@
 <br>
 
 > "KireiSakura-Kit" is combination of two Japanese words, "Kirei" and "Sakura," along with the suffix "Kit".</br>
-> `Kirei(綺麗)` means "clean" & `Sakura(桜)` refers to cherry blossoms. Together, "KireiSakura-Kit" could be interpreted as a library that emphasizes a beautiful and clean design inspired by the elegance of cherry blossoms.
+> `Kirei(綺麗)` means "clean" & `Sakura(桜)` refers to cherry blossoms. Together, "KireiSakura-Kit" could be interpreted as a framework that emphasizes a beautiful and clean design inspired by the elegance of cherry blossoms.
 
 ## Features
 
-- **Written in purely bash**, can be used in POSIX[*][sprtd_shl] shell script.
+- **Written purely in bash**, can be used in POSIX[*][sprtd_shl] shell script.
 - **Mudular**, import only stuff you need.
 - **Log support**, with various levels.
-- **Many in-built functions**, no need to write from scratch.
+- **Many in-built methods**, no need to write from scratch.
 - See [TODO][todo] for upcomming features.
 <!-- - Various **UI elements**. -->
 
