@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "terminology.md",
+                "file": "methods.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "terminology"
+              "title": "methods"
             }
           }
         ]
@@ -141,13 +141,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "terminology.md",
+                "file": "methods.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of terminology"
+              "title": "Outline of methods"
             }
           },
           {
@@ -181,7 +181,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 206
+    "width": 223.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -191,7 +191,6 @@
       "daily-notes:Open today's daily note": false,
       "command-palette:Open command palette": false,
       "markdown-importer:Open format converter": false,
-      "obsidian-git:Open Git source control": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "webpage-html-export:Export as HTML": false,
       "obsidian42-brat:BRAT": false
@@ -199,11 +198,11 @@
   },
   "active": "f83280bf510440be",
   "lastOpenFiles": [
-    "todo.md",
-    "terminology.md",
-    "methods.md",
     "maintainance.md",
     "init.md",
+    "terminology.md",
+    "todo.md",
+    "methods.md",
     "faq.md",
     "Project Structure.canvas",
     "index.md",

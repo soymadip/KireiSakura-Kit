@@ -23,10 +23,10 @@ show_help() {
   echo -e "  ${LAVENDER}Usage:${RESET}"
   echo -e "    kpm [command/flag] [options]\n"
   echo -e "  ${GREEN}Commands:${RESET}"
-  echo -e "    ${LAVENDER}-i,  install${RESET}    Install a plugin"
-  echo -e "    ${LAVENDER}-ui, uninstall${RESET}  Uninstall a plugin"
-  echo -e "    ${LAVENDER}-u,  update${RESET}     Update plugins"
-  echo -e "    ${LAVENDER}-l,  list${RESET}       List all installed plugins"
+  echo -e "    ${LAVENDER}-i,  install${RESET}    Install a package"
+  echo -e "    ${LAVENDER}-ui, uninstall${RESET}  Uninstall a package"
+  echo -e "    ${LAVENDER}-u,  update${RESET}     Update packages"
+  echo -e "    ${LAVENDER}-l,  list${RESET}       List all installed packages"
   # echo -e "    ${LAVENDER}search${RESET}     Search for a plugin\n"
   echo -e "\n  ${GREEN}Options:${RESET}"
   echo -e "    ${LAVENDER}-h, --help${RESET}      Show this help message\n"
@@ -50,7 +50,7 @@ update_plugins() {
 show_version() {
   local version="$(cat $(dirname $0)/../.version)"
 
-  echo -e "\n  KireiSakura Plugin Manager ${LAVENDER}v${version}${RESET}"
+  echo -e "\n  KireiSakura Package Manager ${LAVENDER}v${version}${RESET}"
   exit 0
 }
 
