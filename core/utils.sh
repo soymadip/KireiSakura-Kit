@@ -108,10 +108,10 @@ kimport() {
 # Import all files from a directory
 #----------------------------------------------------------
 load-all-from() {
-  local directory=$1
+  local dir=$1
   local file_ext=${2:-"sh"}
 
-  for script in "${directory}"/*.${file_ext}; do
+  for script in "${dir}"/*.${file_ext}; do
     if [ -e "$script" ]; then
       if ! source "$script"; then
         log.error "Failed to load $script"
@@ -208,27 +208,27 @@ get-package-manager() {
 # TODO: add support for group install
 #------------------------------------------------------------------------------------
 install-package() {
-  local package="$1"
-  local pkg_manager
+  local pkg="$1"
+  local pkg_mngr
 
-  pkg_manager="$(get-package-manager)"
+  pkg_mngr="$(get-package-manager)"
 
-  case $pkg_manager in
+  case $pkg_mngr in
   pacman)
-    sudo pacman -S --noconfirm --needed "$package" >/dev/null || return 1
+    sudo pacman -S --noconfirm --needed "$pkg" >/dev/null || return 1
     ;;
   apt)
     sudo apt update >/dev/null || return 1
-    sudo apt install -y "$package" >/dev/null || return 1
+    sudo apt install -y "$pkg" >/dev/null || return 1
     ;;
   dnf)
-    sudo dnf install -y "$package" >/dev/null || return 1
+    sudo dnf install -y "$pkg" >/dev/null || return 1
     ;;
   zypper)
-    sudo zypper install -y "$package" >/dev/null || return 1
+    sudo zypper install -y "$pkg" >/dev/null || return 1
     ;;
   brew)
-    brew install "$package" >/dev/null || return 1
+    brew install "$pkg" >/dev/null || return 1
     ;;
   *)
     log.error "Unsupported Linux distribution."
@@ -252,7 +252,7 @@ install-package() {
 # TODO: reimplement -n/--needed
 #---------------------------------------------------------------------------------
 check-dep() {
-  local dependency=()
+  local dep=()
   local not_found=()
   local be_quiet=false 
 
@@ -265,27 +265,27 @@ check-dep() {
       shift
       ;;
     *)
-      dependency+=("$1")
+      dep+=("$1")
       shift
       ;;
     esac
   done
 
-  if [[ "${#dependency[@]}" -eq 0 ]]; then
+  if [[ "${#dep[@]}" -eq 0 ]]; then
     log.error "No dependencies provided." check-dep
     return 1
   else
-    for dep in "${dependency[@]}"; do
-      if command -v "$dep" &>/dev/null; then
-        [[ "$be_quiet" = false ]] && log.success "$dep is installed."
+    for pkg in "${dep[@]}"; do
+      if command -v "$pkg" &>/dev/null; then
+        [[ "$be_quiet" = false ]] && log.success "$pkg is installed."
       else
-        [[ "$be_quiet" = false ]] && log.warn "$dep is not installed."
-        not_found+=("$dep")
+        [[ "$be_quiet" = false ]] && log.warn "$pkg is not installed."
+        not_found+=("$pkg")
       fi
     done
 
     if [[ "${#not_found[@]}" -gt 0 ]]; then
-      log.error "Not installed dependency(s):"
+      log.error "Not installed dependency(s):" check-dep
       for ndep in "${not_found[@]}"; do
         echo -e "\t\t${LAVENDER}$ndep ${NC}"
       done
@@ -379,9 +379,9 @@ check-dir() {
 # USAGE: starts-with <string> <prefix>
 #------------------------------------------------------------------------------
 starts-with() {
-  local string="$1"
-  local prefix="$2"
-  [[ "${string#"$prefix"}" != "$string" ]]
+  local str="$1"
+  local prfx="$2"
+  [[ "${str#"$prfx"}" != "$str" ]]
 }
 
 #
@@ -392,9 +392,9 @@ starts-with() {
 # USAGE: ends-with <string> <suffix>
 #------------------------------------------------------------------------------
 ends-with() {
-  local string="$1"
+  local str="$1"
   local suffix="$2"
-  [[ "${string%"$suffix"}" != "$string" ]]
+  [[ "${str%"$suffix"}" != "$str" ]]
 }
 
 #
