@@ -52,6 +52,29 @@ fi
 
 #
 
+echo -e "\n${LAVENDER}---------- COLORS ----------${NC}\n"
+
+echo -e "${RED}Red${RESET} | ${BOLD_RED}Bold Red${RESET}"
+echo -e "${GREEN}Green${RESET} | ${BOLD_GREEN}Bold Green${RESET}"
+echo -e "${BLUE}Blue${RESET} | ${BOLD_BLUE}Bold Blue${RESET}"
+echo -e "${YELLOW}Yellow${RESET} | ${BOLD_YELLOW}Bold Yellow${RESET}"
+echo -e "${MAGENTA}Magenta${RESET} | ${BOLD_MAGENTA}Bold Magenta${RESET}"
+echo -e "${CYAN}Cyan${RESET} | ${BOLD_CYAN}Bold Cyan${RESET}"
+echo -e "${WHITE}White${RESET} | ${BOLD_WHITE}Bold White${RESET}"
+echo -e "${ORANGE}Orange${RESET} | ${BOLD_ORANGE}Bold Orange${RESET}"
+echo -e "${PINK}Pink${RESET} | ${BOLD_PINK}Bold Pink${RESET}"
+echo -e "${PURPLE}Purple${RESET} | ${BOLD_PURPLE}Bold Purple${RESET}"
+echo -e "${TEAL}Teal${RESET} | ${BOLD_TEAL}Bold Teal${RESET}"
+echo -e "${LIME}Lime${RESET} | ${BOLD_LIME}Bold Lime${RESET}"
+echo -e "${GRAY}Gray${RESET} | ${BOLD_GRAY}Bold Gray${RESET}"
+echo -e "${BROWN}Brown${RESET} | ${BOLD_BROWN}Bold Brown${RESET}"
+echo -e "${GOLD}Gold${RESET} | ${BOLD_GOLD}Bold Gold${RESET}"
+echo -e "${NAVY}Navy${RESET} | ${BOLD_NAVY}Bold Navy${RESET}"
+echo -e "${MAROON}Maroon${RESET} | ${BOLD_MAROON}Bold Maroon${RESET}"
+echo -e "${SILVER}Silver${RESET} | ${BOLD_SILVER}Bold Silver${RESET}"
+
+#
+
 echo -e "\n${LAVENDER}------------: LOGS :-----------${NC}\n"
 
 log.info "Log level: info"

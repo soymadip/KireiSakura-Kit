@@ -9,8 +9,11 @@
 #       - log_message: The message to log.
 #       - extra_info: Extra information to log.
 # FIXME:
-#     \t is putting space after log symbol.
-#     hyprlink is putting color code when using.
+#       - \t is putting space after log symbol.
+#       - \n is printing the symbol then message in new line with empty symbol.
+#       - hyprlink is putting color code when using.
+# TODO:
+#       - bold, italics and underline text.
 #--------------------------------------------------------------------------
 logger() {
     local log_level=$1

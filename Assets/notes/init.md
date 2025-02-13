@@ -15,9 +15,11 @@ icon: rocket
 
 <br><br>
 
-## 1. Metadata Initialization
+## 1. Config Initialization
 
 ```bash
+# <project_root>/config.sh
+
 # Required
 export PROJECT_NAME="Project Name"
 
@@ -26,36 +28,29 @@ export CACHE_DIR="/path/to/cache/dir"
 export LOG_FILE_NAME="log_file_name"
 ```
 
-
-Some variable(s) must be exported *at the very top of your script,* even before sourcing KireiSakura-Kit. 
+Some variable(s) must be exported at the [[terminology#Config file|config file]] even before sourcing KireiSakura-Kit. 
 It provides essential metadata that the kit uses during setup.
 
-### Variables:-
-
-#### `PROJECT_NAME`
+#### PROJECT_NAME
 Specifies the name of your project.  
 ⚠️ *KireiSakura-Kit won't start without this one.*  
 
 - **Default:** `NULL` (Kit will throw an error if not set.)
 
-<br>
 
-#### `CACHE_DIR` *(Optional)*  
+#### CACHE_DIR *(Optional)*  
 Defines the directory path where KireiSakura-Kit will store temporary files.  
 
 - **Default:**  
     - If `$XDG_CONFIG_HOME` is set: `$XDG_CONFIG_HOME/<project name>`  
     - Otherwise: `~/.config/<project name>`
 
-<br>
-
-#### `LOG_FILE_NAME` *(Optional)*  
+#### LOG_FILE_NAME *(Optional)*  
 Specifies the name of the log file. 
 The log file will be created at:  `<CACHE_DIR>/<LOG_FILE_NAME>.log`
 
 - **Default:** `<PROJECT_NAME>.log`
 
-<br>
 
 -------
 

@@ -10,18 +10,11 @@
 # KireiSakura Package Manager
 
 
-# Define color codes
-RED='\033[31m'
-LAVENDER='\u001b[38;5;147m'
-YELLOW='\033[1;33m'
-GREEN='\033[0;32m'
-RESET='\033[0m'
-
 
 show_help() {
   echo -e "\n  ${YELLOW}KireiSakura Package Manager${RESET}\n"
-  echo -e "  ${LAVENDER}Usage:${RESET}"
-  echo -e "    kpm [command/flag] [options]\n"
+  echo -e "  ${GREEN}Usage:${RESET}"
+  echo -e "    kpm [command/flag] [input]\n"
   echo -e "  ${GREEN}Commands:${RESET}"
   echo -e "    ${LAVENDER}-i,  install${RESET}    Install a package"
   echo -e "    ${LAVENDER}-ui, uninstall${RESET}  Uninstall a package"
@@ -45,6 +38,7 @@ install_plugin() {
 update_plugins() {
   echo -e "\n  ${YELLOW}Not yet implemented${RESET}\n"
 
+  exit 1
 }
 
 show_version() {
@@ -56,7 +50,8 @@ show_version() {
 
 #--------------------------------------------------------------------------------------
 
-
+# source colors
+source "$(dirname "$(realpath "$0")")"/lib/colors.sh
 
 
 # Check if no arguments are provided

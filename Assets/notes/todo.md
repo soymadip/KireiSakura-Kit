@@ -12,7 +12,7 @@ icon: circle-dot
     - [x] `kireisakura -h`
     - [x] `kireisakura -v`
     - [x] `kireisakura -d`
-    - [x] `kireisakura -i`.
+    - [x] `kireisakura -i`
     - [x] `kireisakura -u`
 - [x] Make a test script.
 - [x] Make install script.
@@ -22,22 +22,24 @@ icon: circle-dot
     - [x] Clearer naming conventions.
     - [x] Make old Modules compatible.
 - [x] Implement Auto-Update.
-- [ ]  Make a clearer Design guide.
+- [ ] Make a clearer Design guide.
+- [x] Config file support.
+    - [ ] ~~toml as format?~~
+    - [ ] ~~use of [YQ](https://chatgpt.com/share/671ab466-aaf0-8001-ba21-ae748636e88b)?~~
+    - [x] Use `config.sh` & variables. 
+
 ---
 ## Another Time
 
+- [ ] Add support for packages.
+    - [ ] Add kmp command for managing package.
+    - [ ] move existing modules to modules/kirei
+    - [ ] 3rd party packages will be at modules/package_name
+        - [ ] can be imported with package_name.module_name syntax.  
 - [ ] Make use of log file in more functions (for more detailed logs).
 - [ ] Check if core functions & dependency functions are loaded and set that script load flag true using a variable.
-- [ ] Config file support.
-    - [ ] toml as format?
-    - [ ] use of [YQ](https://chatgpt.com/share/671ab466-aaf0-8001-ba21-ae748636e88b)?
 - [ ] Add `-q` or `--quiet` flag to all possible functions.
 - [ ] Write documentation (help needed).
-- [ ] Add support for packages.
-    - move existing modules to modules/kirei
-    - 3rd party packages will be at modules/package_name
-        -  can be imported with package_name.module_name syntax.  
-        
 - [ ] Enable completions (still thinking if useful):
     - Make script.
     - Source the file.

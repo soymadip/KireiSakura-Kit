@@ -8,6 +8,12 @@ icon: book-a
 
 <br>
 
+## Config file
+
+Config file holds configuration options like project name etc. 
+It's location should be `<project root>/config.sh`
+
+---
 ## Methods
 **Methods** are the functions exposed by [[terminology#Modules|Modules.]] 
 They are the primary API for interacting with KireiSakura-Kit.

@@ -3,7 +3,7 @@
 #| |   / _ \| '__/ _ \ | |_ | | | | '_ \ / __| __| |/ _ \| '_ \/ __|
 #| |__| (_) | | |  __/ |  _|| |_| | | | | (__| |_| | (_) | | | \__ \
 # \____\___/|_|  \___| |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
- 
+# 
 
 
 #
@@ -16,7 +16,9 @@
 # FLAGS:
 #     -l,--local Import local modules instead of plugin modules.
 #     -a,--all   Import all modules from the modules directory.
-# TODO:  Support for packages. (see todo)
+# TODO:
+#      - Support for packages. (see todo)
+#      - Shift this to _loader and adapt to dependency related todos.
 #-----------------------------------------------------------
 kimport() {
   local local_module=false
@@ -134,8 +136,7 @@ load-all-from() {
 #    2 :- $1 is less than $2
 #----------------------------------------------------------------------
 compare-num() {
-  local ver1
-  local ver2
+  local ver1 ver2
 
   if [[ $BASH_VERSION ]]; then
     IFS='.' read -r -a ver1 <<<"$1"
@@ -181,9 +182,9 @@ get-package-manager() {
     elif check-dep -q zypper; then
       echo "zypper"
     else
-      error "Unsupported Linux distribution."
-      error "Use one (or derivatives) of below distros: "
-      error "Debian, Ubuntu, Fedora, Arch, SUSE"
+      log.error "Unsupported Linux distribution."
+      log.error "Use one (or derivatives) of below distros: "
+      log.error "Debian, Ubuntu, Fedora, Arch, SUSE"
       exit 1
     fi
     return 0
@@ -191,8 +192,8 @@ get-package-manager() {
     echo "brew"
     return 0
   else
-    error "Unsupported OS."
-    error "Only Linux and macOS are supported."
+    log.error "Unsupported OS."
+    log.error "Only Linux and macOS are supported."
     exit 1
   fi
 }
@@ -295,7 +296,6 @@ check-dep() {
     fi
   fi
 }
-
 
 #
 #
@@ -480,6 +480,6 @@ strip() {
 #-------------------------------------------------------------------------
 hyperlink() {
     local url="$1"
-    local text="${2:-$1}" 
+    local text="${2:-$1}"
     echo -e "\e]8;;${url}\e\\${text}\e]8;;\e\\"
 }

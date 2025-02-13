@@ -8,7 +8,7 @@ icon: circle-help
 
 ## 1. Which shells are Supported?
 
-- **Officially supported**:`Bash` & `Zsh`
+- **Officially supported**:`Bash` 
 - Other POSIX-compliant shells should work but are not officially tested. However, any fixes will be accepted.
 
 ---
@@ -35,7 +35,7 @@ icon: circle-help
     - Open the [notes](https://github.com/soymadip/KireiSakura-Kit/tree/main/Assets/notes) as a obsidian vault. It contains plugins, settings.
     -  Edit the notes & submit PR, it will be checked & accepted.
     
-3. __Generate site code:-___
+3. __Generate site code:-__
     - Optionally,
     - Install [obsidian-webpage-export](https://github.com/KosmosisDire/obsidian-webpage-export) plugin.
     - Then export to html using obsidian-webpage-export form the ribbon to the docs directory of the cloned repo.
