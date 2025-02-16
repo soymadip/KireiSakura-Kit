@@ -23,13 +23,12 @@
 
 ## Installation & setup
 
+> [!WARNING]
+> FREQUENT CHANGES ARE BEING MADE as this project is in beta, so be careful.
+> Contribute if you find this useful and wanna make this more powerful.
+
 - Checkout [Dcoumentation](https://soymadip.github.io/KireiSakura-Kit) for installation & setup.
 
-
-## Warning
-
-- FREQUENT CHANGES ARE BEING MADE as this project is in beta, so be careful.
-- Contribute if you find this useful and wanna make this more powerful.
 
 
 
