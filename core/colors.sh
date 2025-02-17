@@ -1,5 +1,25 @@
+#  ____      _
+# / ___|___ | | ___  _ __ ___
+#| |   / _ \| |/ _ \| '__/ __|
+#| |__| (_) | | (_) | |  \__ \
+# \____\___/|_|\___/|_|  |___/
+#
+# Detect terminal color support and define color codes
 
-# Detect terminal color support
+
+
+#
+#
+#---------------------------------------------------------------------------------
+# NAME:  detech-ansi-support
+# DESC:  Detect terminal color support.
+# USAGE: detech-ansi-support
+# Returns:
+#         none:   If terminal does not support colors.
+#         8bit:   If terminal supports 8-bit colors.
+#         16bit:  If terminal supports 16-bit colors.
+#         256bit: If terminal supports 256-bit colors.
+#---------------------------------------------------------------------------------
 detect-ansi-support() {
     local colors=$(tput colors 2>/dev/null)
 
@@ -19,6 +39,17 @@ detect-ansi-support() {
     esac
 }
 
+#
+#
+#---------------------------------------------------------------------------------
+# NAME:  generate-colors
+# DESC:  Generate color vars based on terminal color support.
+# USAGE: generate-colors
+# Returns:
+#         none:   If terminal does not support colors.
+#         8bit:   If terminal supports 8-bit colors.
+#         16bit:  If terminal supports 16-bit colors.
+#         256bit: If terminal supports 256-bit colors.
 generate-colors() {
     local COLOR_MODE=$(detect-ansi-support)
 
@@ -103,7 +134,5 @@ generate-colors() {
 }
 
 
-
 #_____ Export color codes ______
 generate-colors
-

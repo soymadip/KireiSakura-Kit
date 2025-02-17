@@ -12,17 +12,17 @@
 
 
 show_help() {
-  echo -e "\n  ${YELLOW}KireiSakura Package Manager${RESET}\n"
-  echo -e "  ${GREEN}Usage:${RESET}"
+  echo -e "\n  ${YELLOW}KireiSakura Package Manager${NC}\n"
+  echo -e "  ${GREEN}Usage:${NC}"
   echo -e "    kpm [command/flag] [input]\n"
-  echo -e "  ${GREEN}Commands:${RESET}"
-  echo -e "    ${LAVENDER}-i,  install${RESET}    Install a package"
-  echo -e "    ${LAVENDER}-ui, uninstall${RESET}  Uninstall a package"
-  echo -e "    ${LAVENDER}-u,  update${RESET}     Update packages"
-  echo -e "    ${LAVENDER}-l,  list${RESET}       List all installed packages"
-  # echo -e "    ${LAVENDER}search${RESET}     Search for a plugin\n"
-  echo -e "\n  ${GREEN}Options:${RESET}"
-  echo -e "    ${LAVENDER}-h, --help${RESET}      Show this help message\n"
+  echo -e "  ${GREEN}Commands:${NC}"
+  echo -e "    ${LAVENDER}-i,  install${NC}    Install a package"
+  echo -e "    ${LAVENDER}-ui, uninstall${NC}  Uninstall a package"
+  echo -e "    ${LAVENDER}-u,  update${NC}     Update packages"
+  echo -e "    ${LAVENDER}-l,  list${NC}       List all installed packages"
+  # echo -e "    ${LAVENDER}search${NC}     Search for a plugin\n"
+  echo -e "\n  ${GREEN}Options:${NC}"
+  echo -e "    ${LAVENDER}-h, --help${NC}      Show this help message\n"
   exit 0
 }
 
@@ -30,13 +30,13 @@ show_help() {
 
 install_plugin() {
 
-  echo -e "\n  ${YELLOW}Not yet implemented${RESET}\n"
+  echo -e "\n  ${YELLOW}Not yet implemented${NC}\n"
   exit 1
 }
 
 
 update_plugins() {
-  echo -e "\n  ${YELLOW}Not yet implemented${RESET}\n"
+  echo -e "\n  ${YELLOW}Not yet implemented${NC}\n"
 
   exit 1
 }
@@ -44,7 +44,7 @@ update_plugins() {
 show_version() {
   local version="$(cat $(dirname $0)/../.version)"
 
-  echo -e "\n  KireiSakura Package Manager ${LAVENDER}v${version}${RESET}"
+  echo -e "\n  KireiSakura Package Manager ${LAVENDER}v${version}${NC}"
   exit 0
 }
 
@@ -74,7 +74,7 @@ while [[ "$#" -gt 0 ]]; do
       install_plugin "$2"
       shift
     else
-      echo -e "\n  ${RED}Error: Plugin name must be specified after '-i' or '--install'.${RESET}\n"
+      echo -e "\n  ${RED}Error: Plugin name must be specified after '-i' or '--install'.${NC}\n"
       exit 1
     fi
     ;;
@@ -83,7 +83,7 @@ while [[ "$#" -gt 0 ]]; do
       uninstall_plugin "$2"
       shift
     else
-      echo -e "\n  ${RED}Error: Plugin name must be specified after '-ui' or '--uninstall'.${RESET}\n"
+      echo -e "\n  ${RED}Error: Plugin name must be specified after '-ui' or '--uninstall'.${NC}\n"
       exit 1
     fi
     ;;

@@ -22,7 +22,6 @@ change_meta_to_krunner() {
 }
 
 
-
 # Change wallpaper: [change_wallpaper absolute/path/to/wallpaper]
 change_wallpaper() {
 
@@ -80,6 +79,7 @@ change_cursor_theme() {
 
 
 # Function to change the SDDM theme
+# TODO: check if sddm is installed & is default display manager
 change_sddm_theme() {
     local theme_name="$1"
     local config_file="${2:-/etc/sddm.conf.d/kde_settings.conf}"

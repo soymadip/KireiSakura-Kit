@@ -1,5 +1,5 @@
 ---
-title: 4. FAQ
+title: 5. FAQ
 forVersion: 0.6.5
 icon: circle-help
 ---

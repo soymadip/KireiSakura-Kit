@@ -1,15 +1,6 @@
 # VARIOUS UI ELEMENTS
 
 
-# Color codes for various visuals
-NC='\033[0m' # No Color/escape code
-AQUA='\e[38;2;216;222;233m'
-LAVENDER='\u001b[38;5;147m'
-BLUE='\033[38;5;67m'
-YELLOW='\033[1;33m'
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-
 
 
 #welcome system

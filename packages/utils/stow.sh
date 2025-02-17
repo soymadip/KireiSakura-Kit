@@ -1,6 +1,5 @@
-# Function to restore dotfiles using stow
 
-# This function estimates that dotfiles folder is in $HOME dir.
+# TODO: just re-implement this. I was to immature when wrote this.
 function stow_restore {
     local cwd=$(pwd)
     local dot_dir="$HOME/${1:-Dotfiles}"

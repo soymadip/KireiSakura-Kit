@@ -1,7 +1,7 @@
 # Function to install packages from multiple groups
 
 
-
+# TODO: merge this with the install-package function
 function install_all_packages {
 
     for group_name in "$@"; do

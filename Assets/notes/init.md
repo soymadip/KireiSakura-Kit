@@ -110,5 +110,5 @@ kimport -l -a
 ---
 
 >[!success] Done
-> Now that Initialization is complete, you can use [[methods]] to build script.
+> Now that Initialization is complete, you can use [[moduels]] to build script.
 

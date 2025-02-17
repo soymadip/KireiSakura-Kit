@@ -6,102 +6,6 @@
 # 
 
 
-#
-#-----------------------------------------------------------
-# NAME: Kimport
-# DESC: Import user/plugin modules.
-# USAGE: kimport <flags> moduleName
-#                 OR
-#        kimport packageName.moduleName 
-# FLAGS:
-#     -l,--local Import local modules instead of plugin modules.
-#     -a,--all   Import all modules from the modules directory.
-# TODO:
-#      - Support for packages. (see todo)
-#      - Shift this to _loader and adapt to dependency related todos.
-#-----------------------------------------------------------
-kimport() {
-  local local_module=false
-  local load_all=false
-  local called_modules=()
-  local failed_imports=()
-  local module_path
-  local modules_dir="$kirei_module_dir"
-
-  while [[ $# -gt 0 ]]; do
-    case "$1" in
-    -l | --local)
-      local_module=true
-      shift
-      ;;
-    -a | --all)
-      load_all=true
-      shift
-      ;;
-    *)
-      called_modules+=("$1")
-      shift
-      ;;
-    esac
-  done
-
-  if [ "$local_module" == true ]; then
-    modules_dir="$(pwd)/modules"
-
-    if [ ! -d "$modules_dir" ]; then
-      log.error "User modules directory not found."
-      log.warn "$(echo -e "Check docs: $kirei_docs_url/terminology.html#3._User_modules_0" | sed $'s/\x1b\[[0-9;]*m//g')"
-      exit 1
-    fi
-  fi
-
-  if [ "$load_all" = true ]; then
-    log.warn "Importing All modules....\n" kimport
-    for module_path in "$modules_dir"/*.sh; do
-      module_name="$(basename "${module_path%.*}")"
-
-      [[ "$module_name" == "_EXAMPLE" ]] && continue
-
-      if source "$module_path"; then
-        log "Imported:- '$module_name'"
-      else
-        log.warn "Failed to import: '$module_name'"
-        failed_imports+=("$module_name")
-      fi
-      sleep 0.3
-    done
-  else
-    log.warn "Importing modules....\n" kimport
-    for module_name in "${called_modules[@]}"; do
-      module_path="$modules_dir/$module_name.sh"
-
-      if [ -f "$module_path" ]; then
-        if source "$module_path"; then
-          log "Imported:- '$module_name'"
-        else
-          log.warn "Failed to import: '$module_name'"
-          failed_imports+=("$module_name")
-        fi
-      else
-        log.warn "Failed to import '$module_name': doesn't exist."
-        failed_imports+=("$module_name")
-      fi
-      sleep 0.3
-    done
-  fi
-
-  if [ "${#failed_imports[@]}" -gt 0 ]; then
-    echo ""
-    log.error " Failed to import modules:" kimport
-    for failed_import in "${failed_imports[@]}"; do
-      echo -e "\t\t${LAVENDER}$failed_import ${NC}"
-    done
-    log.warn "Please check your imports." kimport
-    exit 1
-  else
-    log.success "\nImported all modules successfully." kimport
-  fi
-}
 
 #
 #
@@ -381,7 +285,7 @@ check-dir() {
 starts-with() {
   local str="$1"
   local prfx="$2"
-  [[ "${str#"$prfx"}" != "$str" ]]
+  [[ "${str#"$prfx"}" != "$str" ]] 
 }
 
 #
@@ -470,6 +374,18 @@ strip() {
   echo "$string"
 }
 
+#
+#
+#---------------------------------------------------------------------------------
+# NAME:  split (This one is AI generated, so no credit for me :D)
+# DESC:  Split a string by a delimiter & store the result in an array.
+# USAGE: split <string> <delimiter>
+#---------------------------------------------------------------------------------
+split() {
+  local string="$1"
+  local delimiter="$2"
+  mapfile -t split_result < <(awk -v d="$delimiter" '{ n = split($0, parts, d); for (i = 1; i <= n; i++) print parts[i] }' <<< "$string")
+}
 
 #
 #

@@ -1,5 +1,5 @@
 ---
-title: 3. Methods
+title: 3. Modules, Methods
 forVersion: 0.6.5
 icon: webhook
 ---

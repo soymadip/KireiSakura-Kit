@@ -12,6 +12,7 @@
 #       - \t is putting space after log symbol.
 #       - \n is printing the symbol then message in new line with empty symbol.
 #       - hyprlink is putting color code when using.
+#       - Change log.info to something else.
 # TODO:
 #       - bold, italics and underline text.
 #--------------------------------------------------------------------------

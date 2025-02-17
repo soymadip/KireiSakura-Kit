@@ -1,0 +1,98 @@
+---
+title: 4. Packages
+icon: box
+---
+
+
+<h1 align="center"> Packages</h1>
+<br>
+>[!warning]
+> <center>Packages are not yet fully implemented. They need some more work.</center>
+<br>
+
+As discussed before, Packages are directories containing [[terminology#2. Plugin modules|plugin modules]].
+
+
+Packages allow to group related plugin modules & enable easily sharing plugin modules as installable pack.
+
+## Structure of package
+
+<big> Structure of a package looks like this: -</big>
+
+```sh
+<PACKAGE_ROOT | PACKAGE_NAME>
+    |
+    |-module1.sh
+    |-module2.sh
+    |-mosule3.sh
+```
+
+- The package dir name should be of desired name for the package. 
+- Version detection & updating will be added later.
+
+---
+## Import package & modules 
+
+To use a package, import modules of that package, we need to use `kimport` function.
+
+- Like this: -
+```sh
+kimport package1.module2   # import module2 from packge1
+kimport package1           # import all modules from packge1
+
+kimport .module3           # import LOCAL module: module3 
+kimport .                  # import all local mosules.
+```
+
+>[!info]
+> - The local modules directory, `modules` is also considered as a package named `local` but is not necessary to mention the package name. 
+> - `.module_name` is considered as `local.module_name`.
+
+---
+## Install a package
+
+To install a package, we use `kpm` or KireiSakura Package Manager.
+
+```sh
+kpm install <git_username>/<package_name>
+```
+
+- By default, kpm assumes the package is at github 
+- So the above is expressed as  `<git_username>/<package_name>@github.com` -> `https://github.com/<git_username>/<package_name>`
+- To install from other sources: - 
+```sh
+kpm install <git_username>/<package_name>@domain_name
+
+# to install a packge from gitlab:
+kpm install <git_username>/<package_name>@gitlab.com
+```
+
+--- 
+## List all packages
+To list all installed packages, 
+```sh
+kpm list
+```
+
+---
+## Update packages
+
+To update all packages use: -
+```
+kpm update
+```
+
+---
+## Uninstall package
+
+To uninstall a package use: -
+```
+kpm remove <package_name>
+```
+
+Or to uninstall all packages: -
+```sh
+kpm remove all
+```
+
+---

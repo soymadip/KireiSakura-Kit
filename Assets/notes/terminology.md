@@ -21,20 +21,20 @@ They are the primary API for interacting with KireiSakura-Kit.
 
 ---
 ## Modules
- **Modules** are self-contained scripts that store methods. Each module performs a specific task and can be sourced as needed.
+ **Modules** are shell scripts that store methods. Each module performs a specific task and can be sourced as needed.
  
- There are 3 types are modules:-
+ There are 3 types are modules: -
 ### 1. Core modules
 These are essential components of the KireiSakura-Kit providing the foundational functionality required for the framework to operate. 
 
- These are automatically loaded at start. 
+These are automatically loaded at start. 
  
 ### 2. Plugin modules
 These are optional modules used to extend the functionality of the framework.
 
-These are required to be [[init#3. Loading modules|loaded]] implicitly using `kimport` function.
+These are required to be [[init#3. Loading modules|loaded]] explicitly using `kimport` method.
 
-### 3.  Local modules
+### 3. Local modules
 These are similar to [[terminology#2. Plugin modules|plugin modules]] except these are designed  & implemented by the user.
 
 >[!danger] Info
@@ -53,12 +53,12 @@ These are similar to [[terminology#2. Plugin modules|plugin modules]] except the
 
 ## Packages
 
-packages are directories containing plugin modules. 
-packages allow people to share modules.
 
->[!info]
-> Packages are in concept stage and not yet implemented.
+Packages are directories containing [[terminology#2. Package modules|package modules]]. 
 
+There are inbuilt packages as well as external packages that can be installed with [[packages#kpm|KireiSakura Package Manger]].
+
+- More on the package in [[packages]] page.
 ---
 ## Super Variables
 
@@ -81,6 +81,8 @@ Currently there are below super vars: -
 ### Runtime & Logging
 - **`kirei_cache_dir`** → Directory for caching temporary files.  
 - **`kirei_log_file`**    → Path to the log file for debugging and tracking.  
+- **`kirei_loaded_modules`**    → Array containing list of loaded modules.  
+
 
 
 ---
