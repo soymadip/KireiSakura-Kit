@@ -38,10 +38,10 @@ jobs:
                 --exclude=".github"\
                 --exclude=".editorconfig"\
                 --exclude=".prettierignore"\
-                --exclude=".vscode"
+                --exclude=".vscode"\
                 --exclude="TODO.md"\
                 --exclude="README.md"\
-                --exclude="Assets"
+                --exclude="Assets"\
                 --exclude="docs"\
           tar -czvf ./${{ env.REPO_NAME }}.tar.gz -C release .
 
