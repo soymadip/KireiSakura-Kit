@@ -4,6 +4,11 @@ on:
   push:
     paths:
       - ".version"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Enter a custom version (leave empty to use .version file)"
+        required: false
 
 jobs:
   release:
@@ -15,7 +20,12 @@ jobs:
 
       - name: Read version
         id: get_version
-        run: echo "VERSION=$(cat .version)" >> $GITHUB_ENV
+        run: |
+          if [[ -n "${{ inputs.version }}" ]]; then
+            echo "VERSION=${{ inputs.version }}" >> $GITHUB_ENV
+          else
+            echo "VERSION=$(cat .version)" >> $GITHUB_ENV
+          fi
 
       - name: Determine if it's a pre-release
         id: pre_release_check
@@ -42,25 +52,28 @@ jobs:
                 --exclude="TODO.md"\
                 --exclude="README.md"\
                 --exclude="Assets"\
-                --exclude="docs"\
+                --exclude="docs"
           tar -czvf ./${{ env.REPO_NAME }}.tar.gz -C release .
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ env.VERSION }}
-          body: "version: ${{ env.VERSION }}."
-          prerelease: false
-          name: ${{ env.RELEASE_NAME }}
-          files: "${{ env.REPO_NAME }}.tar.gz"
-        env:
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 
       - name: Generate changelog from commits
         id: generate_changelog
         run: |
           CHANGELOG=$(git log -1 --pretty=%B | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/"/\\"/g')
           echo "CHANGELOG=${CHANGELOG}" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: ${{ env.RELEASE_NAME }}
+          body: "${{ env.CHANGELOG }}"
+          prerelease: false
+          files: "${{ env.REPO_NAME }}.tar.gz"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install GitHub CLI
+        run: sudo apt update && sudo apt install -y gh
 
       - name: Update release with changelog
         run: |
