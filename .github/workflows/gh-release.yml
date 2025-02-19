@@ -17,6 +17,9 @@ on:
         description: "Enter release Changelog (leave empty to use last commit message)"
         required: false
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
