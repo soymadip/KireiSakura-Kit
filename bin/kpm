@@ -50,9 +50,8 @@ show_version() {
 
 #--------------------------------------------------------------------------------------
 
-# source colors
-source "$(dirname "$(realpath "$0")")"/lib/colors.sh
-
+# Generate colors
+eval "$(_kirei-colors)"
 
 # Check if no arguments are provided
 if [ "$#" -eq 0 ]; then

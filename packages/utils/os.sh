@@ -32,7 +32,9 @@ install-font() {
 # TODO:
 #      - 1st determine distro with get-package-manager then install the repo.
 #      - install only os specific repos, else give error.
-# FIXME: This function is not up-to-date.
+# FIXME: 
+#      - This function is not up-to-date.
+#      - Just Rewrite. It needs too much changes.
 #---------------------------------------------------------------------------------
 install-additional-repo() {
 
@@ -102,6 +104,24 @@ install-additional-repo() {
     log.error "Failed to update repositories"
     return 1
   }
+  
+    log.warn "Enabling RPM Fusion Repository"
+    sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+    log.warn "enabling fedora-cisco-openh264 Repo"
+    sudo dnf config-manager --enable fedora-cisco-openh264
+
+    log.warn "installing appstream-data"
+    sudo dnf groupupdate core
+
+    log.warn "Enabling FlatHub"
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+    log.warn "Installing Multimedia Plugins"
+    sudo dnf install gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
+    sudo dnf install lame\* --exclude=lame-devel
+    sudo dnf group upgrade --with-optional Multimedia
+
   log "Update complete."
   log.success "Chaotic AUR, ArcoLinux, and Garuda repos are successfully installed."
   return 0

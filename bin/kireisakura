@@ -247,7 +247,7 @@ run_tester() {
 ## Why not use the colors module(& also some other functons too) in the core directly?
 #  - I wanna keep this & kpm (basically the launch scripts) as independent as possible.
 #  - So, if the core is corrupted, the launch scripts can still work.
-source "$(dirname "$(realpath "$0")")"/lib/colors.sh
+eval "$(_kirei-colors)"
 
 # Source config file 
 [ -f config.sh ] && source config.sh && config_file=true

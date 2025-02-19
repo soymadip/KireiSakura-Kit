@@ -9,27 +9,6 @@
 
 #
 #
-#----------------------------------------------------------
-# DEPARCIATED: use kimport -a
-# Import all files from a directory
-#----------------------------------------------------------
-load-all-from() {
-  local dir=$1
-  local file_ext=${2:-"sh"}
-
-  for script in "${dir}"/*.${file_ext}; do
-    if [ -e "$script" ]; then
-      if ! source "$script"; then
-        log.error "Failed to load $script"
-        exit 1
-      fi
-    fi
-  done
-}
-
-
-#
-#
 #-----------------------------------------------------------------------
 # NAME:  compare-num
 # DESC:  Compare 2 numbers. also works for version numbers.
@@ -119,29 +98,29 @@ install-package() {
   pkg_mngr="$(get-package-manager)"
 
   case $pkg_mngr in
-  pacman)
-    sudo pacman -S --noconfirm --needed "$pkg" >/dev/null || return 1
-    ;;
-  apt)
-    sudo apt update >/dev/null || return 1
-    sudo apt install -y "$pkg" >/dev/null || return 1
-    ;;
-  dnf)
-    sudo dnf install -y "$pkg" >/dev/null || return 1
-    ;;
-  zypper)
-    sudo zypper install -y "$pkg" >/dev/null || return 1
-    ;;
-  brew)
-    brew install "$pkg" >/dev/null || return 1
-    ;;
-  *)
-    log.error "Unsupported Linux distribution."
-    log.error "No suppoeted package manager found."
-    log.warn "Use one (or derivatives) of below distros: "
-    log.warn "Debian, Ubuntu, Fedora, Arch, SUSE"
-    return 1
-    ;;
+    pacman)
+      sudo pacman -S --noconfirm --needed "$pkg" >/dev/null || return 1
+      ;;
+    apt)
+      sudo apt update >/dev/null || return 1
+      sudo apt install -y "$pkg" >/dev/null || return 1
+      ;;
+    dnf)
+      sudo dnf install -y "$pkg" >/dev/null || return 1
+      ;;
+    zypper)
+      sudo zypper install -y "$pkg" >/dev/null || return 1
+      ;;
+    brew)
+      brew install "$pkg" >/dev/null || return 1
+      ;;
+    *)
+      log.error "Unsupported Linux distribution."
+      log.error "No suppoeted package manager found."
+      log.warn "Use one (or derivatives) of below distros: "
+      log.warn "Debian, Ubuntu, Fedora, Arch, SUSE"
+      return 1
+      ;;
   esac
   return 0
 }
