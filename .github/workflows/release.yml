@@ -7,7 +7,10 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Enter a custom version (leave empty to use .version file)"
+        description: "Enter custom version (leave empty to use .version file)"
+        required: false
+      release_body:
+        description: "Enter release Changelog (leave empty to use last commit message)"
         required: false
 
 jobs:
@@ -15,9 +18,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
       - name: Read version
         id: get_version
         run: |
@@ -74,6 +74,10 @@ jobs:
 
       - name: Update release with changelog
         run: |
+          if [[ -n "${{ inputs.release_body }}" ]]; then
+            echo "CHANGELOG=$(echo ${{ inputs.release_body }})" >> $GITHUB_ENV
+          else
+          fi
           gh release edit ${{ env.VERSION }} --notes "$(echo -e "${{ env.CHANGELOG }}")"
         env:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
