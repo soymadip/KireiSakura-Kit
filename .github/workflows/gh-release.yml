@@ -1,9 +1,13 @@
-name: Release on Version Change
+name: Make GitHub Release
 
 on:
   push:
     paths:
       - ".version"
+      - ".github/workflows/gh-release.yml"
+    branches:
+      - main
+
   workflow_dispatch:
     inputs:
       version:
