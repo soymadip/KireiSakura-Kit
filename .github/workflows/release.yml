@@ -64,7 +64,7 @@ jobs:
           name: ${{ env.RELEASE_NAME }}
           files: "${{ env.REPO_NAME }}.tar.gz"
         env:
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 
       - name: Generate changelog from commits
         id: generate_changelog
