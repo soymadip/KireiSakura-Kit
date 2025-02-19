@@ -27,8 +27,10 @@ jobs:
           echo "Build docs if needed."
           echo "Documentation compiled successfully."
 
-      - name: Create .nojekyll file
-        run: echo "" > docs/build/.nojekyll
+      - name: Create .nojekyll & README file
+        run: |
+          echo "" > docs/build/.nojekyll
+          echo '<h1 align="center">THIS BRANCH IS AUTO-GENERATED</h1>' > docs/build/README.md
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
