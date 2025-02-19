@@ -22,6 +22,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Read version
         id: get_version
         run: |
@@ -30,6 +35,18 @@ jobs:
           else
             echo "VERSION=$(cat .version)" >> $GITHUB_ENV
           fi
+
+      - name: Create tag
+        run: |
+          if git rev-parse ${{ env.VERSION }} >/dev/null 2>&1; then
+            echo "Tag ${{ env.VERSION }} already exists. Skipping tag creation."
+          else
+            echo "Creating new tag: ${{ env.VERSION }}"
+            git tag ${{ env.VERSION }}
+            git push origin ${{ env.VERSION }}
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Determine if beta release
         id: pre_release_check
@@ -63,9 +80,9 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.VERSION }}
+          name: ${{ env.RELEASE_NAME }}
           body: "version: ${{ env.VERSION }}."
           prerelease: false
-          name: ${{ env.RELEASE_NAME }}
           files: "${{ env.REPO_NAME }}.tar.gz"
         env:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
@@ -80,7 +97,6 @@ jobs:
         run: |
           if [[ -n "${{ inputs.release_body }}" ]]; then
             echo "CHANGELOG=$(echo ${{ inputs.release_body }})" >> $GITHUB_ENV
-          else
           fi
           gh release edit ${{ env.VERSION }} --notes "$(echo -e "${{ env.CHANGELOG }}")"
         env:
