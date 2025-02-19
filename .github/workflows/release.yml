@@ -27,7 +27,7 @@ jobs:
             echo "VERSION=$(cat .version)" >> $GITHUB_ENV
           fi
 
-      - name: Determine if it's a pre-release
+      - name: Determine if beta release
         id: pre_release_check
         run: |
           if [[ "${{ env.VERSION }}" == 0* ]]; then
@@ -55,25 +55,22 @@ jobs:
                 --exclude="docs"
           tar -czvf ./${{ env.REPO_NAME }}.tar.gz -C release .
 
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.VERSION }}
+          body: "version: ${{ env.VERSION }}."
+          prerelease: false
+          name: ${{ env.RELEASE_NAME }}
+          files: "${{ env.REPO_NAME }}.tar.gz"
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }
+
       - name: Generate changelog from commits
         id: generate_changelog
         run: |
           CHANGELOG=$(git log -1 --pretty=%B | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/"/\\"/g')
           echo "CHANGELOG=${CHANGELOG}" >> $GITHUB_ENV
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ env.VERSION }}
-          name: ${{ env.RELEASE_NAME }}
-          body: "${{ env.CHANGELOG }}"
-          prerelease: false
-          files: "${{ env.REPO_NAME }}.tar.gz"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install GitHub CLI
-        run: sudo apt update && sudo apt install -y gh
 
       - name: Update release with changelog
         run: |
