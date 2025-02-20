@@ -24,7 +24,10 @@ jobs:
       - name: Compile docs
         run: |
           echo "Compiling documentation..."
-          echo "Build docs if needed."
+          
+          pip install -r docs/requirements.txt
+          python -m mkdocs build --config-file docs/mkdocs.yml --site-dir build
+
           echo "Documentation compiled successfully."
 
       - name: Create .nojekyll & README file

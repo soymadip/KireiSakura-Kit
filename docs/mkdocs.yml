@@ -1,0 +1,81 @@
+site_name: KireiSakura Kit
+site_url: https://soymadip.github.io/KireiSakura-Kit/
+
+repo_url: https://github.com/soymadip/KireiSakura-Kit
+repo_name: soymadip/KireiSakura-Kit
+edit_uri: edit/main/docs/docs
+
+exclude_docs: |
+  maintainance.md
+  
+nav: 
+  - index.md
+  - terminology.md
+  - config.md
+  - init.md
+  - methods.md
+  - packages.md
+  - roadmap.md
+  - faq.md
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: purple 
+    accent: deep orange
+
+  icon:
+    repo: fontawesome/brands/github
+
+  logo: https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/main/Assets/icon.png
+  favicon: https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/main/Assets/icon.png
+
+  plugins:
+    - search 
+
+  features:
+    # - header.autohide
+    - navigation.tracking
+    - navigation.path
+    - navigation.top
+    - navigation.instant
+    - navigation.purne
+    - navigation.indexes
+    # - toc.integrate
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    # - content.action.view
+    - content.action.edit
+  
+  # extra:
+  #   version:
+  #     provider: mike
+
+extra_css:
+  - custom.css
+
+markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
