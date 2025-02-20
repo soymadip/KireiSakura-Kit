@@ -12,7 +12,7 @@ icon: material/rocket-launch
 
 There are two ways to Install & source the kit :-
 
-=== "Install & Source directly in the script"
+=== "Install & Source directly within script"
 
     This option :-
  
