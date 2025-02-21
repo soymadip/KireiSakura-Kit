@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     paths:
-      - 'docs/source/**'
+      - 'docs/**'
       - '.github/workflows/doploy-pages.yml'
     branches:
       - main
