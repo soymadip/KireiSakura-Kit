@@ -4,8 +4,7 @@ icon: octicons/package-16
 ---
 
 
-<h1 align="center"> Packages</h1>
-<br>
+<h1 align="center"><b> Packages</b></h1>
 
 !!! warning
     <center><big>Packages are not yet fully implemented. They need some more work.</big></center>
@@ -37,7 +36,8 @@ Packages allow to group related plugin modules & enable easily sharing plugin mo
 To use a package, import modules of that package, we need to use `kimport` function.
 
 - Like this: -
-```sh
+
+```bash
 kimport package1.module2   # import module2 from packge1
 kimport package1           # import all modules from packge1
 
@@ -54,14 +54,15 @@ kimport .                  # import all local mosules.
 
 To install a package, we use `kpm` or KireiSakura Package Manager.
 
-```sh
+```bash
 kpm install <git_username>/<package_name>
 ```
 
 - By default, kpm assumes the package is at github 
 - So the above is expressed as  `<git_username>/<package_name>@github.com` -> `https://github.com/<git_username>/<package_name>`
 - To install from other sources: - 
-```sh
+
+```bash
 kpm install <git_username>/<package_name>@domain_name
 
 # to install a packge from gitlab:
@@ -71,7 +72,8 @@ kpm install <git_username>/<package_name>@gitlab.com
 --- 
 ## List all packages
 To list all installed packages, 
-```sh
+
+```bash
 kpm list
 ```
 
@@ -79,7 +81,8 @@ kpm list
 ## Update packages
 
 To update all packages use: -
-```
+
+```bash
 kpm update
 ```
 
@@ -92,7 +95,7 @@ kpm remove <package_name>
 ```
 
 Or to uninstall all packages: -
-```sh
+```bash
 kpm remove all
 ```
 

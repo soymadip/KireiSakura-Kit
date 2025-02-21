@@ -3,49 +3,70 @@ title: Configuration
 icon: fontawesome/solid/gear
 ---
 
-## Config file
+<h1 align="center"><b>Config file</b></h1>
 
-Config file holds configuration options like project name etc. 
-It's location should be `<project root>/config.sh`
+📌 **Location:** `<project_root>/config.sh`  
+
+The config file stores essential options, such as the project name and other settings used by KireiSakura-Kit.
+
+
+
+Configuration is done by exporting variables.
+
+```bash title="Example config.sh"
+# <project_root>/config.sh
+
+
+export PROJECT_NAME="Project Name" # Set Project name
+export CACHE_DIR="/path/to/cache/dir" # Set Cache dir location
+export LOG_FILE_NAME="log_file_name" # Set log file name
+```
 
 ---
 
-Some variable(s) must be exported at the [[terminology#Config file|config file]] even before sourcing KireiSakura-Kit. 
-It provides essential metadata that the kit uses during setup.
+## **Available Config options**
 
-```bash title="config.sh"
-# <project_root>/config.sh
+###
 
-# Required
-export PROJECT_NAME="Project Name"
+### ==`PROJECT_NAME`==
 
-# Optional
-export CACHE_DIR="/path/to/cache/dir"
-export LOG_FILE_NAME="log_file_name"
-```
+- **Desc**: Specifies the name of your project.
+- **Type**: string
+- **Optional**: yes
+- **Default**: `KireiSakura-Kit`
 
 
-### PROJECT_NAME
-Specifies the name of your project.  
-⚠️ *KireiSakura-Kit won't start without this one.*  
+---
 
-- **Default:** `NULL` (Kit will throw an error if not set.)
+### ==`CACHE_DIR`==
 
-
-### CACHE_DIR *(Optional)*  
-Defines the directory path where KireiSakura-Kit will store temporary files.  
-
-- **Default:**  
+- **Desc**: Defines the directory path where KireiSakura-Kit will store temporary files.
+- **Type**: string
+- **Optional**: yes
+- **Default**:
     - If `$XDG_CONFIG_HOME` is set: `$XDG_CONFIG_HOME/<project name>`  
-    - Otherwise: `~/.config/<project name>`
+    - Else: `~/.config/<project name>`
 
-### LOG_FILE_NAME *(Optional)*  
-Specifies the name of the log file. 
-The log file will be created at:  `<CACHE_DIR>/<LOG_FILE_NAME>.log`
+---
 
-- **Default:** `<PROJECT_NAME>.log`
+### ==`LOG_FILE_NAME`==  
 
+- **Desc**: Specifies the name of the log file.
+- **Type**: string
+- **Location**: CACHE_DIR/
+- **Optional**: yes
+- **Default**: `<PROJECT_NAME>.log`
 
--------
+---
+
+### ==`DEBUG_MODE`==  
+
+- **Desc**: Enable Debug mode. In this mode, kit prints extra messages helpful for debugging.
+- **Type**: bool
+- **Optional**: yes
+- **Default**: false
+
+---
+
 
 

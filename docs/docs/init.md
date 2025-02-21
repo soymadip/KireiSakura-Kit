@@ -44,30 +44,27 @@ There are two ways to Install & source the kit :-
 
 ## Loading modules
 
-By default KireiSakura Kit only imports core modules.
+By default KireiSakura Kit only imports [core modules](./terminology.md#1-core-modules).
 
 Modules are imported using `kimport` method.
 
-- To import [[terminology#2. Plugin modules|plugin modules]]:-
+- To import [plugin modules](./terminology.md#2-plugin-modules):-
 ```bash
-#import specific modules
-kimport disk-utils change-shell enable-os-prober
+# import specific modules of a package.
+kimport packageName.ModuleName
+kimport utils.disk utils.shell
 
-#import all modules at once
-kimport -a
+# import all modules of a package
+kimport PackageName.
+kimport utils.
 ```
 
-- To import [[terminology#3. User modules|user modules]] use `-l` flag:-
+- To import [local modules](./terminology.md#3-local-modules) use `-l` flag:-
 ```bash 
-kimport -l module1 module2 module3
+# import local modules
+kimport .ModuleName
+kimport .module1 .module2 .module3
 
-#to import all modules
-kimport -l -a
+# import all local modules
+kimport .
 ```
-
-
----
-
-!!! success "Done"
-    Now that Initialization is complete, you can use [[moduels]] to build script.
-

@@ -2,7 +2,7 @@
 title: Terminologies
 icon: fontawesome/solid/book
 ---
-<h1 align="center">Temninology</h1>
+<h1 align="center"><b>Temninology</b></h1>
 <br><p align="center">1st, let's understand some terms used throughout the Docs.</p>
 
 <br>
@@ -29,10 +29,10 @@ These are optional modules used to extend the functionality of the framework.
 These are required to be [loaded](./init.md#loading-modules) explicitly using `kimport` method.
 
 ### 3. Local modules
-These are similar to [[terminology#2. Plugin modules|plugin modules]] except these are designed  & implemented by the user.
+These are similar to [plugin modules](./terminology.md#2-plugin-modules) except these are designed  & implemented by the user.
 
-!!! info 
-    **Create local modules** by making a directory called `modules` in the project root.
+!!! info "**Create local modules** by making a directory called `modules` in the project root."
+
     ```sh
     <PROJECT_ROOT>
        |-main.sh
@@ -84,5 +84,3 @@ Currently there are below super vars: -
 
 !!! success "Done"
     Now that you know  the terms, head to [Initialization](./init.md) to start sourcing Kit.
-
-<br>
