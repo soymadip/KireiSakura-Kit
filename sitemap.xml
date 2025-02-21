@@ -2,34 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://soymadip.github.io/KireiSakura-Kit/</loc>
-         <lastmod>2025-02-20</lastmod>
+         <lastmod>2025-02-21</lastmod>
     </url>
     <url>
          <loc>https://soymadip.github.io/KireiSakura-Kit/config/</loc>
-         <lastmod>2025-02-20</lastmod>
+         <lastmod>2025-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://soymadip.github.io/KireiSakura-Kit/contributing/</loc>
+         <lastmod>2025-02-21</lastmod>
     </url>
     <url>
          <loc>https://soymadip.github.io/KireiSakura-Kit/faq/</loc>
-         <lastmod>2025-02-20</lastmod>
+         <lastmod>2025-02-21</lastmod>
     </url>
     <url>
          <loc>https://soymadip.github.io/KireiSakura-Kit/init/</loc>
-         <lastmod>2025-02-20</lastmod>
+         <lastmod>2025-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://soymadip.github.io/KireiSakura-Kit/maintainance/</loc>
+         <lastmod>2025-02-21</lastmod>
     </url>
     <url>
          <loc>https://soymadip.github.io/KireiSakura-Kit/methods/</loc>
-         <lastmod>2025-02-20</lastmod>
+         <lastmod>2025-02-21</lastmod>
     </url>
     <url>
          <loc>https://soymadip.github.io/KireiSakura-Kit/packages/</loc>
-         <lastmod>2025-02-20</lastmod>
+         <lastmod>2025-02-21</lastmod>
     </url>
     <url>
          <loc>https://soymadip.github.io/KireiSakura-Kit/roadmap/</loc>
-         <lastmod>2025-02-20</lastmod>
+         <lastmod>2025-02-21</lastmod>
     </url>
     <url>
          <loc>https://soymadip.github.io/KireiSakura-Kit/terminology/</loc>
-         <lastmod>2025-02-20</lastmod>
+         <lastmod>2025-02-21</lastmod>
     </url>
 </urlset>
