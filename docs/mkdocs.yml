@@ -64,7 +64,7 @@ theme:
     - search.share
     - content.code.copy
     - content.code.annotate
-    - announce.dismiss
+    # - announce.dismiss
     # - content.action.view
     # - content.action.edit
   
