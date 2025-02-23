@@ -4,67 +4,81 @@ icon: material/rocket-launch
 ---
 <h1 align="center"><b>Initialization</b></h1>
 
-## Installing Kit
 
-!!! info "Prerequisites"
+## **Directory Structure**
+
+!!! info "About this.."
+    - The default structure is intended (& recomended) to provide a great starting point & is followed by documentation.  
+    - **Except modules dir**, you are free to organize your project however you like.
+
+```markdown
+Project-Root-Dir
+│
+├── src/
+│     └── packages.sh
+├── modules/
+└── main.sh
+```
+
+### **1. `main.sh`**
+
+- **Location:** Project Root
+- **Desc:**  
+    - This is entry point of the project.  
+    - This file holds all steps. initializing kit, importing modules, using methods, is done in this method.
+
+??? example "Example main.sh"
+
+    ```bash
+    #!/bin/bash
+
+    # Init Kit
+    eval "$(kireisakura -i)"
+
+    # Import modules
+    kimport utils.os utils.font
+
+    # list all installed fonts & find one
+    font.list | grep "jetbrains"
+
+    # Rest of the script
+
+    ```
+
+### **2. `modules` dir**
+
+- **Location:** Project Root
+- **Desc:**  This directory holds [local modules](./api/methods-modules.md#__tabbed_1_3). This directory is interpreted as `local` package within the kit.
+
+---
+
+## **Install & source Kit**
+
+!!! abstract "Before everything"
     - Make sure you have `curl`, `grep`  installed.
-    - Install `figlet` too for the header. (optional)
+    - Optionally `figlet` too for the header.
 
-There are two ways to Install & source the kit :-
+#### There are two ways to Install & source the kit : -
 
 === "Install & Source directly within script"
 
-    This option :-
- 
-    - Installs & sources the kit in your script.
-    - Suitable for auto checking, installing & source the kit. (ex. in a dotfiles install script)
+    - Just execute your entry script, initialization will be done automatically.
+    - Suitable for portable scripts. (ex. in a dotfiles install script)
 
     ```bash title="Add these lines at top of your script"
     if command -v kireisakura &> /dev/null; then
       eval "$(kireisakura --init)"
     else
-      clear -x && echo
-      echo "> Downloading KireiSakura-Kit"
-      curl -sSL https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh -o kirestaller.sh
-      bash kirestaller.sh -ds
+      clear -x
+      printf "\n> Downloading KireiSakura-Kit\n"
+      curl -sSL https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh | bash -s -ds
     fi
     ```
 === "Only install in System"
 
-    This option :-
-
-    - Installs the kit in your system **but Doesn't source kit if executed inside a script**.
+    - Installs the kit in your system **but Doesn't source kit even if executed inside a script**.
     - Suitable if only needed to install.
 
     ```bash title="Run this in terminal"
     curl -L https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh | bash -s
     ```
-
----
-
-## Loading modules
-
-By default KireiSakura Kit only imports [core modules](./terminology.md#1-core-modules).
-
-Modules are imported using `kimport` method.
-
-- To import [plugin modules](./terminology.md#2-plugin-modules):-
-```bash
-# import specific modules of a package.
-kimport packageName.ModuleName
-kimport utils.disk utils.shell
-
-# import all modules of a package
-kimport PackageName.
-kimport utils.
-```
-
-- To import [local modules](./terminology.md#3-local-modules) use `-l` flag:-
-```bash 
-# import local modules
-kimport .ModuleName
-kimport .module1 .module2 .module3
-
-# import all local modules
-kimport .
-```

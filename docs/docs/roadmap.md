@@ -34,7 +34,8 @@ icon: material/clipboard-text-clock-outline
     
     - [ ] Add support for packages.
         - [x] Add `kmp` command for managing package.
-        - [ ] Packages will reside in /packages dir.
+              - [ ] make package registry in separate branch.
+        - [x] Packages will reside in /packages dir.
         - [x] move existing modules to `utils` package.
         - [ ] Update `kimport` for importing plugin modules:
             - [x] For single plugin module:            `packageName.moduleName`
@@ -42,7 +43,7 @@ icon: material/clipboard-text-clock-outline
             - [ ] For all module in a package:  `packageName.`
             - [ ] For all local module:          `.`
 
-    - [ ] Write documentation (help needed).
+    - [ ] Write documentation [(help needed)](./contributing.md#how-to-help-writing-docs).
         - [x] Terms, Initialization, todo, faq.
         - [ ] Methods.
 
@@ -61,3 +62,4 @@ icon: material/clipboard-text-clock-outline
         - Make script.
         - Source the file.
         - In install script: `printf "echo \"fpath+=(\"${kirei_dir}/completions\")\" >> \"${zsh_rc}\""`
+    - [ ] check for internet connection: `ping -c 2 soymadip.github.com &>/dev/null`
