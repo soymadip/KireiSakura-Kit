@@ -47,7 +47,7 @@ theme:
     - tags
 
   features:
-    # - header.autohide
+    - header.autohide
     - navigation.tracking
     - navigation.path
     - navigation.top
@@ -63,6 +63,7 @@ theme:
     - search.share
     - content.code.copy
     - content.code.annotate
+    - announce.dismiss
     # - content.action.view
     # - content.action.edit
   

@@ -15,7 +15,7 @@ As discussed before, Packages are directories containing [plugin modules](./term
 
 Packages allow to group related plugin modules & enable easily sharing plugin modules as installable pack.
 
-## Structure of package
+## **Structure of package**
 
 <big> Structure of a package looks like this: -</big>
 
@@ -31,7 +31,7 @@ Packages allow to group related plugin modules & enable easily sharing plugin mo
 - Version detection & updating will be added later.
 
 ---
-## Import package & modules 
+## **Import package & modules**
 
 To use a package, import modules of that package, we need to use `kimport` function.
 
@@ -50,7 +50,7 @@ kimport .                  # import all local mosules.
     - `.module_name` is actually interprited as `local.module_name`.
 
 ---
-## Install a package
+## **Install a package**
 
 To install a package, we use `kpm` or KireiSakura Package Manager.
 
@@ -70,7 +70,7 @@ kpm install <git_username>/<package_name>@gitlab.com
 ```
 
 --- 
-## List all packages
+## **List all packages**
 To list all installed packages, 
 
 ```bash
@@ -78,7 +78,7 @@ kpm list
 ```
 
 ---
-## Update packages
+## **Update packages**
 
 To update all packages use: -
 
@@ -87,7 +87,7 @@ kpm update
 ```
 
 ---
-## Uninstall package
+## **Uninstall package**
 
 To uninstall a package use: -
 ```
