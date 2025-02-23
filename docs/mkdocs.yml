@@ -1,7 +1,7 @@
 site_name: KireiSakura Kit
 site_url: &SITE_URL https://soymadip.github.io/KireiSakura-Kit/
 
-repo_url: *SITE_URL
+repo_url: &REPO_URL https://gitHub.com/soymadip/KireiSakura-Kit 
 repo_name: soymadip/KireiSakura-Kit
 edit_uri: edit/main/docs/docs
 
