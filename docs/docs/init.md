@@ -14,10 +14,12 @@ icon: material/rocket-launch
 ```markdown
 Project-Root-Dir
 │
+├── main.sh
 ├── src/
-│     └── packages.sh
-├── modules/
-└── main.sh
+│   └── packages.sh
+└── modules/
+    ├── Module1.sh
+    └── Module2.sh
 ```
 
 ### **1. `main.sh`**
@@ -49,6 +51,30 @@ Project-Root-Dir
 
 - **Location:** Project Root
 - **Desc:**  This directory holds [local modules](./api/methods-modules.md#__tabbed_1_3). This directory is interpreted as `local` package within the kit.
+
+
+### **3. `src` dir**
+
+- **Location:** Project Root
+- **Desc:**  
+    - This directory is intended to hold source files and scripts that are part of your project.
+    - You can organize your source files in this directory as per your project requirements.
+
+??? example "Example src/packages.sh"
+
+    ```bash
+    #!/bin/bash
+
+    # Example function in packages.sh
+    install_package() {
+      local package_name="$1"
+      echo "Installing package: $package_name"
+      # Add package installation logic here
+    }
+
+    # Call the function with a package name
+    install_package "example-package"
+    ```
 
 ---
 

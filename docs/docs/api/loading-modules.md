@@ -19,8 +19,8 @@ kimport packageName.ModuleName
 kimport utils.disk utils.shell
 
 # import all modules of a package
-kimport PackageName.
-kimport utils.
+kimport PackageName
+kimport utils
 ```
 
 ## **Import Local Modules**
