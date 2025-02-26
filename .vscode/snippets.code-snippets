@@ -22,14 +22,15 @@
     "prefix": "config",
     "scope": "markdown",
     "body": [
+      "---",
       "",
       "### ==`${1:CONFIG_VAR}`==",
-      "- **Desc**: ${1:Description of the option} ",
-      "- **Type**: ${2:Type}",
-      "- **Optional**: ${3:Yes or Not}",
-      "- **Default**:${4:Default Value}",
       "",
-      "---",
+      "${2:Description of the option} ",
+      "",
+      "- **Type**: ${3:Type}",
+      "- **Optional**: ${4:Yes or Not}",
+      "- **Default**:${5:Default Value}",
     ]
   }
 }

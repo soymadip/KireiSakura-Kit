@@ -16,11 +16,11 @@ show_help() {
   echo -e "  ${GREEN}Usage:${NC}"
   echo -e "    kpm [command/flag] [input]\n"
   echo -e "  ${GREEN}Commands:${NC}"
+  echo -e "    ${LAVENDER}-s,  search${NC}     Search for a package in the registry"
   echo -e "    ${LAVENDER}-i,  install${NC}    Install a package"
   echo -e "    ${LAVENDER}-ui, uninstall${NC}  Uninstall a package"
   echo -e "    ${LAVENDER}-u,  update${NC}     Update packages"
   echo -e "    ${LAVENDER}-l,  list${NC}       List all installed packages"
-  # echo -e "    ${LAVENDER}search${NC}     Search for a plugin\n"
   echo -e "\n  ${GREEN}Options:${NC}"
   echo -e "    ${LAVENDER}-h, --help${NC}      Show this help message\n"
   exit 0
@@ -28,14 +28,21 @@ show_help() {
 
 
 
-install_plugin() {
+install_package() {
 
   echo -e "\n  ${YELLOW}Not yet implemented${NC}\n"
   exit 1
 }
 
 
-update_plugins() {
+update_packages() {
+  echo -e "\n  ${YELLOW}Not yet implemented${NC}\n"
+
+  exit 1
+}
+
+
+search_package() {
   echo -e "\n  ${YELLOW}Not yet implemented${NC}\n"
 
   exit 1
@@ -70,7 +77,7 @@ while [[ "$#" -gt 0 ]]; do
     ;;
   -i | install)
     if [ -n "$2" ]; then
-      install_plugin "$2"
+      install_package "$2"
       shift
     else
       echo -e "\n  ${RED}Error: Plugin name must be specified after '-i' or '--install'.${NC}\n"
@@ -79,7 +86,7 @@ while [[ "$#" -gt 0 ]]; do
     ;;
   -ui | uninstall)
     if [ -n "$2" ]; then
-      uninstall_plugin "$2"
+      uninstall_package "$2"
       shift
     else
       echo -e "\n  ${RED}Error: Plugin name must be specified after '-ui' or '--uninstall'.${NC}\n"
@@ -87,7 +94,16 @@ while [[ "$#" -gt 0 ]]; do
     fi
     ;;
   -u | update)
-    update_plugins
+    update_packages
+    ;;
+  -s | search)
+    if [ -n "$2" ]; then
+      search_package "$2"
+      shift
+    else
+      echo -e "\n  ${RED}Error: Plugin name must be specified after '-s' or '--search'.${NC}\n"
+      exit 1
+    fi
     ;;
   *)
     show_help "$1"
