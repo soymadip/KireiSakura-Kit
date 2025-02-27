@@ -1,0 +1,22 @@
+
+h2{
+  color:var(--md-accent-fg-color);
+}
+
+h3{
+  font-style: oblique;
+}
+
+.md-banner {
+  color: var(--md-accent-fg-color);
+}
+
+.md-banner__inner {
+  align-items: center;
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+
+.md-nav__title {
+  color: var(--md-primary-bg-color);
+}
