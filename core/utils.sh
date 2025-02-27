@@ -64,6 +64,8 @@ get-package-manager() {
       echo "dnf"
     elif check-dep -q zypper; then
       echo "zypper"
+    elif check-dep -q apk; then
+      echo "apk"
     else
       log.error "Unsupported Linux distribution."
       log.error "Use one (or derivatives) of below distros: "
@@ -112,6 +114,9 @@ install-package() {
       ;;
     zypper)
       sudo zypper install -y "$pkg" >/dev/null || return 1
+      ;;
+    apk)
+      sudo apk add "$pkg" >/dev/null || return 1
       ;;
     brew)
       brew install "$pkg" >/dev/null || return 1
