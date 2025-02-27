@@ -23,6 +23,8 @@ export TEMP_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/${KIT_NAME}"
 export KIT_REPO="soymadip/${KIT_NAME}"
 export KIT_URL="https://github.com/${KIT_REPO}"
 
+export YQ_BIN_URL="https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
+
 export KIT_LOGO="$(
   cat <<"EOF"
  _  ___          _ ____        _                          _  ___ _
@@ -313,7 +315,7 @@ check_dir() {
   fi
 }
 
-download_pkg() {
+download_kit() {
   local VERSION=${1:-latest}
   local DOWN_URL="${KIT_URL}/releases/latest/download/${KIT_NAME}.tar.gz"
 
@@ -405,7 +407,7 @@ add_in_path() {
   fi
 }
 
-install_pkg() {
+install_kit() {
 
   print_header
   warn "Checking installation directory...."
@@ -415,11 +417,11 @@ install_pkg() {
   sleep 1.5
 
   print_header
-  warn "Installing Package..."
-  info "Extracting package to proper directories...."
+  warn "Installing Kit..."
+  info "Extracting kit binary to proper directories...."
   sleep 0.3
   if ! tar -xzf "${TEMP_DIR}/${KIT_NAME}.tar.gz" -C "${KIT_DIR}"; then
-    error "Failed to extract package to $KIT_DIR"
+    error "Failed to extract kit binary to $KIT_DIR"
     exit 1
   else
     completed "Extracted Successfully."
@@ -430,6 +432,16 @@ install_pkg() {
   check_dir "$BIN_DIR"
   add_in_path "$BIN_DIR"
   completed "Local BIN dir check complete."
+  
+  info "Installing 'yq'..."
+  if ! curl -L $YQ_BIN_URL -o $BIN_DIR/yq; then
+    error "Failed to download 'yq'."
+    exit 1
+  fi
+  if ! chmod +x $BIN_DIR/yq; then
+    error "Failed to make 'yq' executable."
+    exit 1
+  fi
   echo "" && sleep 0.9
 
   completed "Installation complete."
@@ -501,8 +513,8 @@ main() {
   sleep 2
   check_deps tr curl grep figlet
   check_update
-  download_pkg latest
-  install_pkg
+  download_kit latest
+  install_kit
   sleep 2
   cleanup
   if [ "$direct_source" = true ]; then
