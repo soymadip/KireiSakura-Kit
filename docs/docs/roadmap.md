@@ -34,7 +34,7 @@ icon: material/clipboard-text-clock-outline
     
     - [ ] Add support for packages.
         - [x] Add `kmp` command for managing package.
-              - [ ] make package registry in separate branch.
+            - [ ] make package registry in separate branch.
         - [x] Packages will reside in /packages dir.
         - [x] move existing modules to `utils` package.
         - [ ] Update `kimport` for importing plugin modules:
@@ -48,8 +48,9 @@ icon: material/clipboard-text-clock-outline
         - [ ] Methods.
 
     - [ ] Make a clearer Design guide.
-          - The functons will print log with a tab at front.
-          - so users heading, then function's logs...
+        - methods form packages should name with packageName.methodName
+        - The functons will print log with a tab at front.
+        - so users heading, then function's logs...
 
 
 === "Later in Time"

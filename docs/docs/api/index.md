@@ -1,5 +1,6 @@
 ---
 # icon: material/puzzle
+title: API
 icon: material/api
 ---
 

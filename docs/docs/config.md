@@ -3,45 +3,60 @@ title: Configuration
 icon: fontawesome/solid/gear
 ---
 
-<h1 align="center"><b>Config file</b></h1>
+<h1 align="center"><b>Configuration File</b></h1>
 
-📌 **Location:** `<project_root>/config.sh`  
+The configuration file, `config.sh` allows users to customize default behaviour of the kit.
 
-The config file stores essential options, such as the project name and other settings used by KireiSakura-Kit.
+## **:simple-rocket: Quick Start**
+Create a file named `config` in `.config/KireiSakura-Kit` directory &  
+Add following content:
 
+```bash
+# Name of the project
+project_name="Your Project Name"
+```
 
+## :fontawesome-solid-location-crosshairs: **Location of config**
+- **Global:** `$XDG_CONFIG_HOME/kireiSakura-kit/config`
+- **Project Specific:** `<project_root>/config`
 
-Configuration is done by exporting variables.
+## **:material-arrow-up: Configuration Loading Process**
 
-```bash title="Example config.sh"
-# <project_root>/config.sh
+The priority in which the config files are read follows below:
 
-
-export PROJECT_NAME="Project Name" # Set Project name
-export CACHE_DIR="/path/to/cache/dir" # Set Cache dir location
-export LOG_FILE_NAME="log_file_name" # Set log file name
+```mermaid
+graph TD
+    B{{XDG_CONFIG_HOME set?}}
+    B -- Yes --> C[XDG_CONFIG_HOME/KireiSakura-Kit/config]
+    B -- No --> D[$HOME/.config/KireiSakura-Kit/config]
+    C --> E[Load global config values]
+    D --> E[Load global config values]
+    E --> F{{config file present in current project root?}}
+    F -- Yes --> G[<project_root>/config]
+    F -- No --> H[Use global config values]
+    G --> I[Load project-specific config values]
+    I --> J[Overwrite global config values]
+    H --> J[Use loaded config values]
 ```
 
 ---
 
-## **Available Config options**
+## :octicons-sliders-24: **Available Config Options**
 
-###
-
-### ==`PROJECT_NAME`==
+### ==`project_name`==
 
 - **Desc**: Specifies the name of your project.
 - **Type**: string
-- **Optional**: yes
+- **Optional**: No 
 - **Default**: `KireiSakura-Kit`
 
 
 ---
 
-### ==`CACHE_DIR`==
+### ==`cache_dir`==
 
 - **Desc**: Defines the directory path where KireiSakura-Kit will store temporary files.
-- **Type**: string
+- **Type**: string/path
 - **Optional**: yes
 - **Default**:
     - If `$XDG_CONFIG_HOME` is set: `$XDG_CONFIG_HOME/<project name>`  
@@ -49,24 +64,46 @@ export LOG_FILE_NAME="log_file_name" # Set log file name
 
 ---
 
-### ==`LOG_FILE_NAME`==  
+### ==`log_file_name`==  
 
 - **Desc**: Specifies the name of the log file.
 - **Type**: string
-- **Location**: CACHE_DIR/
+- **Location**: cache_dir/
 - **Optional**: yes
-- **Default**: `<PROJECT_NAME>.log`
+- **Default**: `<project_name>.log`
 
 ---
 
-### ==`DEBUG_MODE`==  
+### ==`debug_mode`==  
 
-- **Desc**: Enable Debug mode. In this mode, kit prints extra messages helpful for debugging.
+- **Desc**: Enable Debug mode. In this mode, extra messages are printed (helpful for debugging).
 - **Type**: bool
 - **Optional**: yes
 - **Default**: false
 
 ---
 
+### ==`installer_url`==  
+
+- **Desc**: Direct URL to the installer script. This is used for installing/updating kit.
+- **Type**: string/url
+- **Optional**: yes
+- **Default**: `https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh`
+
+---
+
+### ==`custom_kit_dir`==
+- **Desc**: Directory to use instead of default kit installation.
+- **Type**: string/path
+- **Optional**: Yes
+- **Default**:`$XDG_DATA_HOME/<project_name>`
+
+---
+
+### ==`local_modules_dir`==
+- **Desc**: Path of the directory that holds local modules, **relative to the project root.**
+- **Type**: string/path
+- **Optional**: Yes
+- **Default**: modules/
 
 

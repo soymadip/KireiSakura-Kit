@@ -89,7 +89,9 @@ get-package-manager() {
 # DESC: uses get-package-manager() to determine package manager.
 #       & installs the package using the package manager.
 # USAGE: install-package <package>
-# TODO: add support for group install
+# TODO: 
+#     - add support for group install
+#     - add support for uninstall package
 #------------------------------------------------------------------------------------
 install-package() {
   local pkg="$1"

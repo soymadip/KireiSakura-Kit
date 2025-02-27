@@ -24,7 +24,7 @@ echo -e "\n${LAVENDER}-------: SUPER VARIABLES :-------${NC}\n"
 
 echo -e " ${GREEN}Installation dir${NC}    (kirei_dir):    $kirei_dir"
 echo -e " ${GREEN}Core dir${NC}       (kirei_core_dir):    $kirei_core_dir"
-echo -e " ${GREEN}Core file${NC}          (kirei_core):    $kirei_core"
+echo -e " ${GREEN}Core file${NC}          (kirei_loader):    $kirei_loader"
 echo -e " ${GREEN}Package dir${NC} (kirei_package_dir):    $kirei_package_dir"
 echo -e " ${GREEN}Assets dir${NC}   (kirei_assets_dir):    $kirei_assets_dir"
 echo -e "\n"
@@ -86,7 +86,10 @@ log.warn "Log level: inform"
 
 echo -e "\n${LAVENDER}--------: IMPORTING ALL MODULES :--------${NC}\n"
 
-kimport utils.os utils.app-patches
+kimport utils.os utils.app-patches utils.font
+
+
+font.list
 
 
 echo -e "\n${LAVENDER}---------- REMOVING CACHE DIR ----------${NC}\n"

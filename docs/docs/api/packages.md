@@ -7,17 +7,14 @@ icon: octicons/package-16
 <h1 align="center"><b> Packages</b></h1>
 
 !!! warning "Be carefull"
-    <center><big>Packages are not yet fully implemented. They need some more work.</big></center>
-<br>
+    <center><big>Packages are not yet fully implemented. They need more work.</big></center>
 
-As discussed before, Packages are directories containing [plugin modules](./terminology.md#2-plugin-modules).
+Packages are directories containing [plugin modules](./methods-modules.md#__tabbed_1_2).
 
 
 Packages allow to group related plugin modules & enable easily sharing plugin modules as installable pack.
 
 ## **Structure of package**
-
-<big> Structure of a package looks like this: -</big>
 
 ```bash
 <PACKAGE_ROOT | PACKAGE_NAME>

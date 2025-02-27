@@ -12,7 +12,7 @@ icon: material/rocket-launch
     - **Except modules dir**, you are free to organize your project however you like.
 
 ```markdown
-Project-Root-Dir
+Project Root
 │
 ├── main.sh
 ├── src/
@@ -26,7 +26,7 @@ Project-Root-Dir
 
 - **Location:** Project Root
 - **Desc:**  
-    - This is entry point of the project.  
+    - This is *entry point* of the project.  
     - This file holds all steps. initializing kit, importing modules, using methods, is done in this method.
 
 ??? example "Example main.sh"
@@ -56,26 +56,35 @@ Project-Root-Dir
 ### **3. `src` dir**
 
 - **Location:** Project Root
-- **Desc:**  
-    - This directory is intended to hold source files and scripts that are part of your project.
-    - You can organize your source files in this directory as per your project requirements.
+- **Desc:** This directory is intended to hold resource files that are part of your project.
 
 ??? example "Example src/packages.sh"
 
-    ```bash
-    #!/bin/bash
+    === "packages.sh"
 
-    # Example function in packages.sh
-    install_package() {
-      local package_name="$1"
-      echo "Installing package: $package_name"
-      # Add package installation logic here
-    }
+        ```bash
+        cli_pacakges=(
+            "yazi"
+            "eza"
+            "htop"
+        )
 
-    # Call the function with a package name
-    install_package "example-package"
-    ```
+        gui_packages=(
+            "zen-browser"
+            "code-oss"
+            "mpv"
+            "redshift"
+        )
+        ```
 
+    === "main.sh"
+
+        ```bash
+        #!/bin/env bash
+        source src/packages.sh
+
+        install-package cli_packages gui_packages
+        ```
 ---
 
 ## **Install & source Kit**
@@ -84,10 +93,11 @@ Project-Root-Dir
     - Make sure you have `curl`, `grep`  installed.
     - Optionally `figlet` too for the header.
 
-#### There are two ways to Install & source the kit : -
+#### ℹ️ There are two ways to Install & source the kit : -
 
 === "Install & Source directly within script"
 
+    - This one is recommended.
     - Just execute your entry script, initialization will be done automatically.
     - Suitable for portable scripts. (ex. in a dotfiles install script)
 

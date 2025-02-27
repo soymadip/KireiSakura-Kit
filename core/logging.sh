@@ -15,6 +15,7 @@
 #       - Change log.info to something else.
 # TODO:
 #       - bold, italics and underline text.
+#       - add a new line after log.success.
 #--------------------------------------------------------------------------
 logger() {
     local log_level=$1
