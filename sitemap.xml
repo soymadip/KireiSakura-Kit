@@ -29,6 +29,10 @@
          <lastmod>2025-02-28</lastmod>
     </url>
     <url>
+         <loc>https://soymadip.github.io/KireiSakura-Kit/trash/</loc>
+         <lastmod>2025-02-28</lastmod>
+    </url>
+    <url>
          <loc>https://soymadip.github.io/KireiSakura-Kit/api/</loc>
          <lastmod>2025-02-28</lastmod>
     </url>
@@ -57,7 +61,11 @@
          <lastmod>2025-02-28</lastmod>
     </url>
     <url>
-         <loc>https://soymadip.github.io/KireiSakura-Kit/config/overrides/</loc>
+         <loc>https://soymadip.github.io/KireiSakura-Kit/config/example/</loc>
+         <lastmod>2025-02-28</lastmod>
+    </url>
+    <url>
+         <loc>https://soymadip.github.io/KireiSakura-Kit/config/reference/</loc>
          <lastmod>2025-02-28</lastmod>
     </url>
 </urlset>
