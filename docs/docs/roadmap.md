@@ -1,6 +1,6 @@
 ---
 title: RoadMap
-icon: material/clipboard-text-clock-outline
+icon: material/calendar-clock
 ---
 <h1 align="center"><b>RoadMap</b></h1>
 
@@ -24,7 +24,7 @@ icon: material/clipboard-text-clock-outline
     - [x] Revamp project.
         - [x] Better directory structure.
         - [x] Clearer naming conventions.
-        - [x] Make old Modules compatible.
+        - [ ] Make old Modules compatible.
     
     - [x] Implement Auto-Update.
 
@@ -36,7 +36,6 @@ icon: material/clipboard-text-clock-outline
     
     - [ ] Add support for packages.
         - [x] Add `kmp` command for managing package.
-            - [ ] make package registry in separate branch.
         - [x] Packages will reside in /packages dir.
         - [ ] Allow changing package dir.
         - [x] move existing modules to `utils` package.
@@ -67,4 +66,6 @@ icon: material/clipboard-text-clock-outline
         - Make script.
         - Source the file.
         - In install script: `printf "echo \"fpath+=(\"${kirei_dir}/completions\")\" >> \"${zsh_rc}\""`
-    - [ ] check for internet connection: `ping -c 2 soymadip.github.com &>/dev/null`
+    - [ ] Check for internet connection: `ping -c 2 soymadip.github.com &>/dev/null`
+    - [ ] Make Package registry in separate branch.
+      - [ ] kpm will by default search package form here.
