@@ -5,16 +5,17 @@ icon: material/rocket-launch
 <h1 align="center"><b>Initialization</b></h1>
 
 
-## **Directory Structure**
+## :material-file-tree: **Directory Structure**
 
 !!! info "About this.."
-    - The default structure is intended (& recomended) to provide a great starting point & is followed by documentation.  
-    - **Except modules dir**, you are free to organize your project however you like.
+    - The default structure is intended (& recomended) to provide a clean structure & followed by documentation.  
+    - **Except modules dir, config file**, you are free to organize your project however you like.
 
 ```markdown
 Project Root
 │
 ├── main.sh
+├── config.yml 
 ├── src/
 │   └── packages.sh
 └── modules/
@@ -47,13 +48,19 @@ Project Root
 
     ```
 
-### **2. `modules` dir**
+### **3. `config.yml` dir**
 
 - **Location:** Project Root
 - **Desc:**  This directory holds [local modules](./api/methods-modules.md#__tabbed_1_3). This directory is interpreted as `local` package within the kit.
 
 
-### **3. `src` dir**
+### **3. `modules` dir**
+
+- **Location:** Project Root
+- **Desc:**  This directory holds [local modules](./api/methods-modules.md#__tabbed_1_3). This directory is interpreted as `local` package within the kit.
+
+
+### **4. `src` dir**
 
 - **Location:** Project Root
 - **Desc:** This directory is intended to hold resource files that are part of your project.
@@ -87,13 +94,13 @@ Project Root
         ```
 ---
 
-## **Install & source Kit**
+## :material-import: **Install & source Kit**
 
 !!! abstract "Before everything"
     - Make sure you have `curl`, `grep`  installed.
     - Optionally `figlet` too for the header.
 
-#### ℹ️ There are two ways to Install & source the kit : -
+**ℹ️ There are two ways to Install & source the kit** : -
 
 === "Install & Source directly within script"
 
@@ -118,3 +125,18 @@ Project Root
     ```bash title="Run this in terminal"
     curl -L https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh | bash -s
     ```
+
+---
+
+## :fontawesome-solid-gear: **Create config file**
+
+Create a file called `config.yml` in your project root.
+
+Add below lines with proper values : -
+
+```yaml
+
+Project:
+    name: "Your project name"
+    owner: "your name"
+```

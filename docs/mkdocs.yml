@@ -9,14 +9,14 @@ nav:
   - index.md
   - init.md
   - Configuration:
-    - config/index.md
-    - config/overrides.md
+      - config/index.md
+      - config/reference.md
   - Using API:
-    - api/index.md
-    - api/super-vars.md
-    - api/methods-modules.md
-    - api/packages.md
-    - api/loading-modules.md
+      - api/index.md
+      - api/super-vars.md
+      - api/methods-modules.md
+      - api/packages.md
+      - api/loading-modules.md
   - api/reference.md
   - faq.md
   - roadmap.md

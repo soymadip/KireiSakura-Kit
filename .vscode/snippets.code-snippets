@@ -24,13 +24,25 @@
     "body": [
       "---",
       "",
-      "### ==`${1:CONFIG_VAR}`==",
+      "### :material-shield-key: **${1:name}**",
       "",
       "${2:Description of the option} ",
       "",
-      "- **Type**: ${3:Type}",
-      "- **Optional**: ${4:Yes or Not}",
-      "- **Default**:${5:Default Value}",
+      "- **Type:** ${3:Type}",
+      "- **Optional:** ${4:✅ or ❌}",
+      "- **Default:** ${5:Default Value}",
+    ]
+  },
+  "section" :{
+
+    "prefix": "section",
+    "scope": "markdown",
+    "body": [
+      "",
+      "!!! quote \"\"",
+      "",
+      "## ^^**${1:name}**^^ section",
+      "",
     ]
   }
 }

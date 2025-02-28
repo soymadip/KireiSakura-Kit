@@ -5,7 +5,12 @@ icon: material/pickaxe
 
 <h1 align="center"><b>Available Methods</b></h1>
 
-# INI Parser Design (Following `configparser` Standards)
+
+!!! failure "Sorry"
+    <center><big> Methods are not yet documented.</big></center>
+
+
+<!-- # INI Parser Design (Following `configparser` Standards)
 
 ## Core Functionalities
 
@@ -58,7 +63,7 @@ icon: material/pickaxe
 - Supports `key = value # comment`.
 
 ### Empty Sections  
-- Allowed but logs a warning.
+- Allowed but logs a warning. -->
 
 
 
