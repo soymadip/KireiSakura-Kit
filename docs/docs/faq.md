@@ -6,10 +6,12 @@ icon: material/progress-question
 <h1 align="center"> Frequently Asked Questions</h1>
 <br>
 
-## **1. Which shells are Supported?**
+## **1. Which distros are Supported?**
 
-- *Officially supported*:- `Bash` 
-- Other POSIX-compliant shells should work but are not officially tested.<br>However, any fixes will be accepted.
+- Primarily on Arch.
+- Other major ones:- Debian, Ubuntu, fedora, OpenSuse Tumbleweed, Alpine Linux.
+
+- Other distros should work but are not officially tested.<br>Any fixes will be accepted.
 
 ---
 ## **2. When will stable version be released?**
