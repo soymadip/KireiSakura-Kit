@@ -5,7 +5,7 @@ icon: material/puzzle
 
 <h1 align="center"><b>Methods & Modules</b></h1>
 
-## **1. Methods**
+## :material-pound-box-outline: **Methods**
 
 **Methods** are the functions exposed by [Modules.](#modules) 
 
@@ -13,41 +13,45 @@ They are the primary API for interacting with KireiSakura-Kit.
 
 ---
 
-## **2. Modules**
+## :material-puzzle: **Modules**
 
-**Modules** are shell scripts that store methods. Each module performs a specific task and can be sourced as needed.
+**Modules** are shell scripts that store methods.  
+Each module performs a specific task and can be sourced as needed.
 
-#### There are 3 types are modules : -
+**There are 3 types are modules : -**
 
-=== "Core Modules"
+=== ":simple-securityscorecard: Core Modules"
 
-    These are essential components of the KireiSakura-Kit providing the foundational functionality required for the framework to operate. 
+    These are essential components of KireiSakura-Kit, providing foundational functionality.
 
-    These are automatically loaded at start & listed in [loaded modules](./super-vars.md#3-runtime--logging).
+      - Automatically loaded at startup.
+      - Cannot be modified or removed.
+      - Listed in [loaded modules](#).
+
+=== ":material-power-plug-outline: Plugin Modules"
+
+    Extend the functionality of the framework.  
+
+    - These are optional & must be loaded manually.  
+    - Can be dependent on core modules.
+    - Contained in packages. See [packages](./packages.md).
 
 
-=== "Plugin Modules"
+=== ":material-folder-open: Local Modules"
 
-    Plugin modules are optional modules, used to extend the functionality of the framework.  
-    Plugin modules are usually contained in packages and are dependent on [core modules](#__tabbed_1_1).
+    Local modules allow users to write their own extensions within a project.  
 
-    !!! info
-        These are required to be [loaded](./loading-modules.md#import-plugin-modules) explicitly using [`kimport`](#).
+    - These work similarly to plugin modules but are project specific.
+    - Core & plugin modules can be used to make these.
+    - This makes main [entry script](../init.md#1-mainsh) clean, separating methods.
 
-
-=== "Local Modules"
-
-    These are similar to [plugin modules](#__tabbed_1_2) except these are designed & implemented by the user.
-    Local modules gives users to write their own modules by using core modules & plugin modules.
-
-    !!! info "**Create local modules** by making a directory called `modules` in the project root."
+    !!! info "**Create local modules** by making a sub directory called `modules` within project root."
 
         ```sh
         <PROJECT_ROOT>
-        |-main.sh
+        |
         |-modules/
             |
             |-module1.sh
             |-module2.sh
         ```
-

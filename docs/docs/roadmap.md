@@ -29,22 +29,26 @@ icon: material/clipboard-text-clock-outline
     - [x] Implement Auto-Update.
 
     - [x] Config file support.
-        - [ ] ~~toml as format? Use of [YQ](https://chatgpt.com/share/671ab466-aaf0-8001-ba21-ae748636e88b)?~~
-        - [x] Use `config.sh` & variables. 
+        - [ ] Use ~~`.sh`~~ Yaml as format. 
+        - [ ] Use YQ.
+        - [ ] Make config hiararchy.
+        - [ ] Allow customization, metadata input.
     
     - [ ] Add support for packages.
         - [x] Add `kmp` command for managing package.
             - [ ] make package registry in separate branch.
         - [x] Packages will reside in /packages dir.
+        - [ ] Allow changing package dir.
         - [x] move existing modules to `utils` package.
         - [ ] Update `kimport` for importing plugin modules:
-            - [x] For single plugin module:            `packageName.moduleName`
+            - [x] For single plugin module:     `packageName.moduleName`
+            - [ ] For all module in a package:  `packageName`
             - [x] For local module:              `.moduleName`
-            - [ ] For all module in a package:  `packageName.`
             - [ ] For all local module:          `.`
 
     - [ ] Write documentation [(help needed)](./contributing.md#how-to-help-writing-docs).
         - [x] Terms, Initialization, todo, faq.
+        - [ ] Config Options.
         - [ ] Methods.
 
     - [ ] Make a clearer Design guide.
