@@ -20,20 +20,20 @@ KireiSakura-Kit supports two levels of configuration : -
 === ":material-earth: **Global**"
 
     - **Applies to all projects**, overriding default settings.
-    - **Primary Location:** `$XDG_CONFIG_HOME/kireisakura-kit/config.toml`
-    - **Fallback Location:** `~/.config/kireisakura-kit/config.toml` _(used if `$XDG_CONFIG_HOME` is not set)_
+    - **Primary Location:** `$XDG_CONFIG_HOME/kireisakura-kit/config.yml`
+    - **Fallback Location:** `~/.config/kireisakura-kit/config.yml` _(used if `$XDG_CONFIG_HOME` is not set)_
 
 === ":material-folder: **Project Specific**"
 
     - **Applies only to the current project.**
     - **Has the highest priority**, overriding both default & global settings.
-    - **Location:** `<project_root>/config.toml`
+    - **Location:** `<project_root>/config.yml`
 
     ??? info "This config file's name can be changed!"
 
         **What if we want to change the project config file's name?**  
 
-        - You can set a custom name using the **global config option:** `project_config_name`.
+        - You can set a custom name using the **global config option:** `Project.config_file`.
 
 
 ---
@@ -47,8 +47,8 @@ KireiSakura-Kit supports two levels of configuration : -
 
 graph TD
     B{{Is XDG_CONFIG_HOME env variable set?}}
-    B -- Yes --> C[Use<br>XDG_CONFIG_HOME/KireiSakura-Kit/config.toml]
-    B -- No --> D[Use<br>$HOME/.config/KireiSakura-Kit/config.toml]
+    B -- Yes --> C[Use<br>XDG_CONFIG_HOME/KireiSakura-Kit/config.yml]
+    B -- No --> D[Use<br>$HOME/.config/KireiSakura-Kit/config.yml]
     C --> E[Load global config values.<br>Overwriting default values.]
     D --> E
     E --> F{{'config.toml' file present in current project root?}}
