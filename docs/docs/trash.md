@@ -121,3 +121,25 @@ ini.expand() {
 }
 
 ```
+
+
+```bash
+
+# Function to create aliases for all modules
+make-alias() {
+  local module_name=$1
+  local alias_name=$2
+
+  # Check if the module is loaded
+  if [[ " ${kirei_loaded_modules[@]} " =~ " ${module_name} " ]]; then
+    # Create the alias
+    alias "$alias_name"="$module_name"
+    # Disable the function name execute
+    unset -f "$module_name"
+    echo -e "\e[38;5;245m       -> Alias $alias_name created for $module_name.\e[0m"
+  else
+    echo -e "\e[38;5;196m       -> Module $module_name is not loaded.\e[0m"
+  fi
+}
+
+```

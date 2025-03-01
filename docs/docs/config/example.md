@@ -21,7 +21,7 @@ Custom:
 Kit:
   installer_url:
   docs_url:
-  latest_version_url: 
+  upstream_ver_url: 
 
 Options:
   auto_update:

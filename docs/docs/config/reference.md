@@ -158,6 +158,43 @@ Directory to use to hold installed packages.
 <br><!-- a glitch in mkdocs :) -->
 !!! quote "" 
 
+## :material-vector-intersection: ^^**Kit**^^
+
+
+---
+
+### :material-shield-key: **docs_url**
+
+Url of the Kit's documentation website. 
+
+- **Type:** string/url
+- **Optional:** ✅ 
+- **Default:** https://soymadip.github.io/KireiSakura-Kit
+
+---
+
+### :material-shield-key: **installer_url**
+
+Direct link to kit's installer script. 
+
+- **Type:** string/url
+- **Optional:** ✅
+- **Default:** `https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh`
+
+---
+
+### :material-shield-key: **upstream_ver_url**
+
+Direct download link of the file that holds the version number. 
+
+- **Type:** string/url
+- **Optional:** ✅
+- **Default:** `https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/main/.version`
+
+
+<br><!-- a glitch in mkdocs :) -->
+!!! quote "" 
+
 ## :material-vector-intersection: ^^**Options**^^
 
 
