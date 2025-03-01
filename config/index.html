@@ -659,21 +659,21 @@
 <div class="tabbed-block">
 <ul>
 <li><strong>Applies to all projects</strong>, overriding default settings.</li>
-<li><strong>Primary Location:</strong> <code>$XDG_CONFIG_HOME/kireisakura-kit/config.toml</code></li>
-<li><strong>Fallback Location:</strong> <code>~/.config/kireisakura-kit/config.toml</code> <em>(used if <code>$XDG_CONFIG_HOME</code> is not set)</em></li>
+<li><strong>Primary Location:</strong> <code>$XDG_CONFIG_HOME/kireisakura-kit/config.yml</code></li>
+<li><strong>Fallback Location:</strong> <code>~/.config/kireisakura-kit/config.yml</code> <em>(used if <code>$XDG_CONFIG_HOME</code> is not set)</em></li>
 </ul>
 </div>
 <div class="tabbed-block">
 <ul>
 <li><strong>Applies only to the current project.</strong></li>
 <li><strong>Has the highest priority</strong>, overriding both default &amp; global settings.</li>
-<li><strong>Location:</strong> <code>&lt;project_root&gt;/config.toml</code></li>
+<li><strong>Location:</strong> <code>&lt;project_root&gt;/config.yml</code></li>
 </ul>
 <details class="info">
 <summary>This config file's name can be changed!</summary>
 <p><strong>What if we want to change the project config file's name?</strong>  </p>
 <ul>
-<li>You can set a custom name using the <strong>global config option:</strong> <code>project_config_name</code>.</li>
+<li>You can set a custom name using the <strong>global config option:</strong> <code>Project.config_file</code>.</li>
 </ul>
 </details>
 </div>
@@ -688,8 +688,8 @@
 <pre class="mermaid"><code>
 graph TD
     B{{Is XDG_CONFIG_HOME env variable set?}}
-    B -- Yes --&gt; C[Use&lt;br&gt;XDG_CONFIG_HOME/KireiSakura-Kit/config.toml]
-    B -- No --&gt; D[Use&lt;br&gt;$HOME/.config/KireiSakura-Kit/config.toml]
+    B -- Yes --&gt; C[Use&lt;br&gt;XDG_CONFIG_HOME/KireiSakura-Kit/config.yml]
+    B -- No --&gt; D[Use&lt;br&gt;$HOME/.config/KireiSakura-Kit/config.yml]
     C --&gt; E[Load global config values.&lt;br&gt;Overwriting default values.]
     D --&gt; E
     E --&gt; F{{'config.toml' file present in current project root?}}
