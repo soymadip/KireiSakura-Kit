@@ -58,6 +58,9 @@ icon: material/calendar-clock
 
 === "Later in Time"
 
+    - [ ] Swith to [Docusaurus](https://docusaurus.io) for documentation
+        - mkdocs is excellent but is limited in some areas. 
+        - Docusaurus will be more flexibile.
     - [ ] Check if core functions & dependency functions are loaded and set that script load flag true using a variable.
     - [ ] Make use of log file in more functions (for more detailed logs).
     - [ ] Add more config options, make use of config file more.
