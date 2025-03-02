@@ -48,17 +48,21 @@ Project Root
 
     ```
 
+---
+
 ### **3. `config.yml` dir**
 
 - **Location:** Project Root
 - **Desc:**  This directory holds [local modules](./api/methods-modules.md#__tabbed_1_3). This directory is interpreted as `local` package within the kit.
 
+---
 
 ### **3. `modules` dir**
 
 - **Location:** Project Root
 - **Desc:**  This directory holds [local modules](./api/methods-modules.md#__tabbed_1_3). This directory is interpreted as `local` package within the kit.
 
+---
 
 ### **4. `src` dir**
 
@@ -92,7 +96,9 @@ Project Root
 
         install-package cli_packages gui_packages
         ```
----
+
+<br>
+!!! quote ""
 
 ## :material-import: **Install & source Kit**
 
@@ -126,7 +132,9 @@ Project Root
     curl -L https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh | bash -s
     ```
 
----
+<br>
+!!! quote ""
+
 
 ## :fontawesome-solid-gear: **Create config file**
 

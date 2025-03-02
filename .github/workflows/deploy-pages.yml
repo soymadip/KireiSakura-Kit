@@ -20,12 +20,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        
+      - name: Install dependencies
+        run: |
+          echo "Installing dependencies..."
+          
+          sudo apt install -y pngquant
+          pip install -r docs/requirements.txt
+
+          echo "Dependencies installed successfully."
 
       - name: Compile docs
         run: |
           echo "Compiling documentation..."
-          
-          pip install -r docs/requirements.txt
+
           python -m mkdocs build --config-file docs/mkdocs.yml --site-dir build
 
           echo "Documentation compiled successfully."
