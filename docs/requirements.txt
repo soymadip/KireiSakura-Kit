@@ -1,6 +1,0 @@
-mkdocs
-mkdocs-material
-pymdown-extensions
-mkdocs-glightbox
-mkdocs-obsidian-bridge
-mkdocs-material[imaging]
