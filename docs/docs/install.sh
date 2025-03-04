@@ -1,0 +1,1 @@
+../../core/_updater.sh

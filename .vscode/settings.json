@@ -12,5 +12,9 @@
         "tag:yaml.org,2002:python/name:material.extensions.emoji.twemoji",
         "tag:yaml.org,2002:python/name:pymdownx.superfences.fence_code_format"
     ],
-    "markdown.validate.enabled": true
+    "markdown.validate.enabled": true,
+
+    "code-runner.executorMap": {
+        "markdown": "cd $workspaceRoot/docs && $pythonPath -m pip install -r requirements.txt && $pythonPath -m mkdocs serve"
+    },
 }

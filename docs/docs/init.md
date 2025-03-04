@@ -120,7 +120,7 @@ Project Root
     else
       clear -x
       printf "\n> Downloading KireiSakura-Kit\n"
-      curl -sSL https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh | bash -s -ds
+      curl -sSL https://kireisakura.soymadip.me/install.sh | bash -s -ds
     fi
     ```
 === "Only install in System"
@@ -129,7 +129,7 @@ Project Root
     - Suitable if only needed to install.
 
     ```bash title="Run this in terminal"
-    curl -L https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh | bash -s
+    curl -L https://kireisakura.soymadip.me/install.sh | bash -s
     ```
 
 <br>
