@@ -11,28 +11,6 @@
 > "KireiSakura-Kit" is combination of 2 Japanese words, "Kirei" and "Sakura," along with the suffix "Kit".</br>
 > `Kirei(綺麗)` means "clean" & `Sakura(桜)` refers to cherry blossoms. Together, "KireiSakura-Kit" is interpreted as a framework that emphasizes a beautiful and clean design inspired by the elegance of cherry blossoms.
 
-## Features
+## Docusaurus Branch.
 
-- **Written purely in bash**, can be used in POSIX[*][sprtd_shl] shell script.
-- **Vast built-in methods**, no need to write from scratch.
-- **Mudular**, import only stuff you need.
-- **Packages**, extend functionality by installing from internet.
-- **Log support**, with various levels.
-- See [TODO][todo] for upcomming features.
-<!-- - Various **UI elements**. -->
-
-
-## Installation & setup
-
-> [!WARNING]
-> FREQUENT CHANGES ARE BEING MADE as this project is in beta, so be careful.<br>
-> Contribute if you find this useful and wanna make this more powerful.
-
-- Checkout [Dcoumentation](https://soymadip.github.io/KireiSakura-Kit) for installation & setup.
-
-
-
-
-<!---------------- links --------------->
-[sprtd_shl]: https://soymadip.github.io/KireiSakura-Kit/faq.html#1._Which_shells_are_Supported?_0
-[todo]:      https://soymadip.github.io/KireiSakura-Kit/todo.html
+This branch is made to shift to docusaurus slowly.
