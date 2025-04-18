@@ -5,7 +5,6 @@ icon: octicons/sliders-24
 
 <h1 align="center"><b>Configuration Options</b></h1>
 
-
 This page details all available **configuration options** for KireiSakura-Kit.  
 
 !!! info "Configuration follows YAML format."
@@ -25,7 +24,6 @@ This page details all available **configuration options** for KireiSakura-Kit.
 
 :fontawesome-solid-circle-info: **Below are options, grouped by section : -**
 
-
 ## :material-vector-intersection: ^^**Project**^^
 
 ### :material-shield-key: **name**
@@ -43,8 +41,8 @@ Specifies the name of your project.
 Name of the maintainer of current project.
 
 - **Type:** string
-- **Optional:** ❌ 
-- **Default:** Null 
+- **Optional:** ❌
+- **Default:** Null
 
 ---
 
@@ -100,9 +98,7 @@ Url of the current project's Repository/Website.
 <br><!-- a glitch in mkdocs :-) -->
 !!! quote ""
 
-
 ## :material-vector-intersection: ^^**Custom**^^
-
 
 ### :material-shield-key: **kit_dir**
 
@@ -121,8 +117,8 @@ Defines the directory path where temporary files will be stored.
 - **Type:** string/path
 - **Optional:** ✅
 - **Default:**  
-    - Primary: `$XDG_CONFIG_HOME/<project name>` (If `$XDG_CONFIG_HOME` is set)
-    - Fallback: `~/.config/<project name>`
+  - Primary: `$XDG_CONFIG_HOME/<project name>` (If `$XDG_CONFIG_HOME` is set)
+  - Fallback: `~/.config/<project name>`
 
 ---
 
@@ -154,28 +150,26 @@ Directory to use to hold installed packages.
 - **Optional:** ✅
 - **Default:** `$kirei_dir/packages`
 
-
 <br><!-- a glitch in mkdocs :) -->
-!!! quote "" 
+!!! quote ""
 
 ## :material-vector-intersection: ^^**Kit**^^
-
 
 ---
 
 ### :material-shield-key: **docs_url**
 
-Url of the Kit's documentation website. 
+Url of the Kit's documentation website.
 
 - **Type:** string/url
-- **Optional:** ✅ 
-- **Default:** https://soymadip.github.io/KireiSakura-Kit
+- **Optional:** ✅
+- **Default:** <https://soymadip.github.io/KireiSakura-Kit>
 
 ---
 
-### :material-shield-key: **installer_url**
+### :material-shield-key: **custom_repo**
 
-Direct link to kit's installer script. 
+Direct link to kit's installer script.
 
 - **Type:** string/url
 - **Optional:** ✅
@@ -185,18 +179,16 @@ Direct link to kit's installer script.
 
 ### :material-shield-key: **upstream_ver_url**
 
-Direct download link of the file that holds the version number. 
+Direct download link of the file that holds the version number.
 
 - **Type:** string/url
 - **Optional:** ✅
 - **Default:** `https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/main/.version`
 
-
 <br><!-- a glitch in mkdocs :) -->
-!!! quote "" 
+!!! quote ""
 
 ## :material-vector-intersection: ^^**Options**^^
-
 
 ### :material-shield-key: **auto_update**
 
@@ -210,7 +202,7 @@ Should the Kit update everytime it's run?
 
 ### :material-shield-key: **debug_mode**
 
-Enable Debug mode. 
+Enable Debug mode.
 
 :octicons-arrow-right-16: In this mode, extra messages are printed (helpful for debugging).  
 
@@ -222,7 +214,7 @@ Enable Debug mode.
 
 ### :material-shield-key: **quiet_mode**
 
-Enable quiet mode. 
+Enable quiet mode.
 
 :octicons-arrow-right-16: In this mode, most of the logs are supressed & delays are removed.  
 

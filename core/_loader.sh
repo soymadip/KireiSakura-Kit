@@ -10,7 +10,7 @@
 
 #
 #--------------------- Get Color Codes ------------------------
-eval "$(_kirei-colors)"
+eval "$("$(dirname "$0")/_colors.sh")"
 
 #
 #--------------------- Setup core modules ------------------------

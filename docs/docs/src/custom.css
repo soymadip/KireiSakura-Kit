@@ -1,14 +1,6 @@
 
-h2{
-  color:var(--md-accent-fg-color);
-}
-
-h3{
-  font-style: oblique;
-}
-
 .md-banner {
-  color: var(--md-accent-fg-color);
+  color: var(--md-primary-fg-color);
 }
 
 .md-banner__inner {
@@ -17,6 +9,50 @@ h3{
   margin-top: 4px;
 }
 
+.md-header {
+  background-color: var(--md-code-bg-color);
+}
+
+.md-header__title {
+  margin-left: 4px !important;
+  font-size: 1rem;
+}
+
 .md-nav__title {
   color: var(--md-primary-bg-color);
 }
+
+h2 {
+  color:var(--md-primary-fg-color);
+  font-weight: bold !important; 
+}
+
+h1 {
+  text-align: center;
+  font-weight: bold !important; 
+}
+
+h3 {
+  font-style: oblique;
+}
+
+.md-typeset .admonition-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.md-typeset .admonition-title::before {
+    position: static;
+    margin-right: 3px;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 1;
+}
+
+.md-footer-meta__inner {
+    display: none !important;
+}
+

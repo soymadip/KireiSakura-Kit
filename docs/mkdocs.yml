@@ -1,7 +1,7 @@
 site_name: KireiSakura Kit
 site_url: &SITE_URL https://soymadip.github.io/KireiSakura-Kit
 
-repo_url: &REPO_URL https://gitHub.com/soymadip/KireiSakura-Kit 
+repo_url: &REPO_URL https://gitHub.com/soymadip/KireiSakura-Kit
 repo_name: soymadip/KireiSakura-Kit
 edit_uri: edit/main/docs/docs
 
@@ -32,15 +32,15 @@ plugins:
   - social
   - search
   - tags
-  - obsidian-bridge
+  # - obsidian-bridge
 
 theme:
   name: material
   custom_dir: overrides
   palette:
     scheme: slate
-    primary: purple 
-    accent: deep orange
+    primary: purple
+    accent: deep purple
 
   icon:
     repo: fontawesome/brands/github
@@ -55,7 +55,7 @@ theme:
     - navigation.top
     - navigation.purne
     - navigation.indexes
-    - navigation.footer 
+    - navigation.footer
     - search.suggest
     - search.highlight
     - search.share
@@ -64,7 +64,7 @@ theme:
     # - announce.dismiss
     # - content.action.view
     # - content.action.edit
-  
+
   # extra:
   #   version:
   #     provider: mike
@@ -79,7 +79,7 @@ markdown_extensions:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
-      auto_title: false 
+      auto_title: false
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences:
@@ -89,7 +89,7 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.details
   - pymdownx.tabbed:
-      alternate_style: true 
+      alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.critic
@@ -100,8 +100,8 @@ markdown_extensions:
   - pymdownx.betterem
   - pymdownx.blocks.caption
   - pymdownx.details
-  - obsidian_callouts
-  - obsidian_media_mkdocs
+  # - obsidian_callouts
+  # - obsidian_media_mkdocs
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg

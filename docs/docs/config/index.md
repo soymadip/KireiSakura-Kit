@@ -5,13 +5,9 @@ icon: fontawesome/solid/gear
 
 <h1 align="center"><b>Configuration File</b></h1>
 
+!!! warning "Configuration system is not yet implemented"
+
 You can **customize** or **override** the default behavior of KireiSakura-Kit using configuration files.
-
-The configuration is done in YAML format.
-
-
-!!! warning 
-    Config System is not yet implemented.
 
 ## :fontawesome-solid-location-crosshairs: **Configuration Files**
 
@@ -34,7 +30,6 @@ KireiSakura-Kit supports two levels of configuration : -
         **What if we want to change the project config file's name?**  
 
         - You can set a custom name using the **global config option:** `Project.config_file`.
-
 
 ---
 

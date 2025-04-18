@@ -23,7 +23,7 @@ icon: material/variable
 
 ### 1. Project & Metadata
 - **`kirei_docs_url`**         → URL to the official documentation.  
-- **`kirei_project_name`**     → Name of the project.  
+- **`k_project_name`**     → Name of the project.  
 - **`kirei_kit_version`**      → Version of the currently installed kit.  
 
 ### 2. Core Directories

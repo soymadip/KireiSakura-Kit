@@ -5,13 +5,13 @@ icon: material/import
 
 <h1 align="center"><b>Loading Modules</b></h1>
 
-By default, KireiSakura Kit only imports [core modules](./terminology.md#1-core-modules).
+By default, KireiSakura Kit only imports [core modules](./methods-modules.md#__tabbed_1_1).
 
 Modules are imported using the `kimport` method.
 
 ## **Import Plugin Modules**
 
-To import [plugin modules](./terminology.md#2-plugin-modules):
+To import [plugin modules](./methods-modules.md#__tabbed_1_2):
 
 ```bash
 # import specific modules of a package.
@@ -25,12 +25,12 @@ kimport utils
 
 ## **Import Local Modules**
 
-To import [local modules](./terminology.md#3-local-modules) use the `-l` flag:
+To import [local modules](./loading-modules.md#__tabbed_1_3):
 
-```bash 
+```bash
 # import local modules
-kimport .ModuleName
-kimport .module1 .module2 .module3
+kimport ModuleName
+kimport module1 module2 module3
 
 # import all local modules
 kimport .

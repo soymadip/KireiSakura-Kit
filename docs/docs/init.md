@@ -4,12 +4,11 @@ icon: material/rocket-launch
 ---
 <h1 align="center"><b>Initialization</b></h1>
 
-
 ## :material-file-tree: **Directory Structure**
 
 !!! info "About this.."
     - The default structure is intended (& recomended) to provide a clean structure & followed by documentation.  
-    - **Except modules dir, config file**, you are free to organize your project however you like.
+    - **Except modules dir, config file**, you are free to organize your project however you like.[^*]
 
 ```markdown
 Project Root
@@ -27,8 +26,8 @@ Project Root
 
 - **Location:** Project Root
 - **Desc:**  
-    - This is *entry point* of the project.  
-    - This file holds all steps. initializing kit, importing modules, using methods, is done in this method.
+  - This is *entry point* of the project.  
+  - This file holds all steps. initializing kit, importing modules, using methods, is done in this method.
 
 ??? example "Example main.sh"
 
@@ -50,7 +49,7 @@ Project Root
 
 ---
 
-### **3. `config.yml` dir**
+### **3. `config.yml`**
 
 - **Location:** Project Root
 - **Desc:**  This directory holds [local modules](./api/methods-modules.md#__tabbed_1_3). This directory is interpreted as `local` package within the kit.
@@ -115,6 +114,8 @@ Project Root
     - Suitable for portable scripts. (ex. in a dotfiles install script)
 
     ```bash title="Add these lines at top of your script"
+    #!/bin/env bash
+
     if command -v kireisakura &> /dev/null; then
       eval "$(kireisakura --init)"
     else
@@ -135,7 +136,6 @@ Project Root
 <br>
 !!! quote ""
 
-
 ## :fontawesome-solid-gear: **Create config file**
 
 Create a file called `config.yml` in your project root.
@@ -148,3 +148,5 @@ Project:
     name: "Your project name"
     owner: "your name"
 ```
+
+[^*]: These can be customized too. See [reference](http://localhost:8000/KireiSakura-Kit/config/reference/).

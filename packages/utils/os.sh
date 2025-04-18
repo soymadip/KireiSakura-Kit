@@ -1,27 +1,4 @@
 
-#
-#
-#---------------------------------------------------------------------------------
-# NAME:  install-font
-# DESC:  Install fonts from font file/directory.
-# USAGE: install-font <flags> <arguments>
-# FLAGS:
-#      -d,--dir  install from directory.
-# FIXME: Update this function with latest changes.
-#---------------------------------------------------------------------------------
-install-font() {
-  local sys_font_dir="${1:-$HOME/.local/share/fonts}"
-  local install_form_dir=false
-  local font_dir font_file
-
-  log.warn "Installing custom Fonts......"
-  log.warn "copying fonts to ~/$sys_font_dir."
-  cp -r "$font_dir/$font_file"/* "$sys_font_dir"/
-  log.warn "Rebuilding font cache."
-  sudo fc-cache -f -v
-  log.success "Fonts are installed."
-
-}
 
 #
 #
@@ -126,3 +103,8 @@ install-additional-repo() {
   log.success "Chaotic AUR, ArcoLinux, and Garuda repos are successfully installed."
   return 0
 }
+
+
+
+#_____________________ Aliases _________________________
+alias os.install-additional-repo=install-additional-repo
