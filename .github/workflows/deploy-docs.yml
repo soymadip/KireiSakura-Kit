@@ -33,7 +33,7 @@ jobs:
       - name: Install Dependencies
         run: |
           echo "Installing dependencies..."
-          uv pip install -r docs/pyproject.toml
+          uv pip install -r docs/pyproject.toml --system
           echo "Dependencies installed successfully."
 
       - name: Compile docs
