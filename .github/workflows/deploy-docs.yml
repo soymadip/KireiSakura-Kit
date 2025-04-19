@@ -33,22 +33,20 @@ jobs:
       - name: Install Dependencies
         run: |
           echo "Installing dependencies..."
-          ( cd docs && uv sync )
+          uv pip install -r docs/pyproject.toml
           echo "Dependencies installed successfully."
 
       - name: Compile docs
         run: |
           echo "Compiling documentation..."
-          ls -a
-
-          uv tool run mkdocs build --config-file docs/mkdocs.yml --site-dir build
-
+          cd docs
+          uv run mkdocs build --site-dir ../build
           echo "Documentation compiled successfully."
 
       - name: Create .nojekyll & README file
         run: |
-          echo "" > docs/build/.nojekyll
-          echo '<h1 align="center">THIS BRANCH IS AUTO-GENERATED</h1>' > docs/build/README.md
+          touch build/.nojekyll
+          echo '<h1 align="center">THIS BRANCH IS AUTO-GENERATED</h1>' > build/README.md
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
