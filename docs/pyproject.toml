@@ -1,0 +1,12 @@
+[project]
+name = "docs"
+version = "1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "mkdocs>=1.6.1",
+    "mkdocs-glightbox>=0.4.0",
+    "mkdocs-material[imaging]>=9.6.12",
+    "pngquant>=3.0.3",
+    "pymdown-extensions>=10.14.3",
+    # "mkdocs-obsidian-bridge>=1.2.0",
+]

@@ -22,20 +22,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Install dependencies
+      - name: Install UV
+        uses: astral-sh/setup-uv@v5
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "docs/pyproject.toml"
+        
+      - name: Install Dependencies
         run: |
           echo "Installing dependencies..."
-          
-          sudo apt install -y pngquant
-          pip install -r docs/requirements.txt
-
+          uv sync
           echo "Dependencies installed successfully."
 
       - name: Compile docs
         run: |
           echo "Compiling documentation..."
 
-          python -m mkdocs build --config-file docs/mkdocs.yml --site-dir build
+          uv run mkdocs build --config-file docs/mkdocs.yml --site-dir build
 
           echo "Documentation compiled successfully."
 
