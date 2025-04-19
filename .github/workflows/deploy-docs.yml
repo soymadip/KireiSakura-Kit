@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "Compiling documentation..."
 
-          python -m mkdocs build --config-file docs/mkdocs.yml --site-dir build
+          uv tool run mkdocs build --config-file docs/mkdocs.yml --site-dir build
 
           echo "Documentation compiled successfully."
 
