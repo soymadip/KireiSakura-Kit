@@ -199,7 +199,7 @@ check_update() {
           warn "Reinstalling..."
           sleep 0.6
         else
-          completed "OK, See you again next time."
+          completed "\nOK, See you again next time."
           completed "Sayonara..."
           exit 0
         fi
@@ -401,7 +401,7 @@ install_kit() {
   check_dir "$BIN_DIR"
   add_in_path "$BIN_DIR"
   completed "Local BIN dir check complete."
-  
+
   info "Installing 'yq'..."
   if ! curl -L $YQ_BIN_URL -o $BIN_DIR/yq; then
     error "Failed to download 'yq'."
@@ -468,7 +468,6 @@ sayonada() {
   fi
 }
 
-
 #________________ Variables ________________
 
 export BOLD="$(tput bold 2>/dev/null || printf '')"
@@ -502,33 +501,36 @@ export KIT_LOGO="$(
 EOF
 )"
 
-
 #________________ Main Func ________________
 
 # TODO:
 #     - Close terminal if not directly sourcing
 #     - Make the script use KireiSakura-Kit itself.
-main() {
-  local direct_source=false
 
-  [[ "$1" == "-ds" ]] && direct_source=true
+direct_source=false
 
-  print_header
-  warn 'Welcome to KireiSakura-Kit installer.'
-  sleep 1
-  info 'KireiSakura-Kit will soon be installed in your system.'
-  sleep 2
-  check_deps tr curl grep figlet
-  check_update
-  download_kit latest
-  install_kit
-  sleep 2
-  cleanup
-  if [ "$direct_source" = true ]; then
-    sayonada -s
-  else
-    sayonada
-  fi
-}
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+  -ds | --direct-source)
+    direct_source=true
+    ;;
+  esac
+  shift
+done
 
-main "$@"
+print_header
+has kireisakura || { warn 'Welcome to KireiSakura-Kit installer.' &&  sleep 1; }
+sleep 0.3
+check_update
+sleep 1
+check_deps tr curl grep figlet
+download_kit latest
+install_kit
+sleep 1.2
+cleanup
+
+if [ "$direct_source" = true ]; then
+  sayonada -s
+else
+  sayonada
+fi
