@@ -33,7 +33,7 @@ jobs:
       - name: Install Dependencies
         run: |
           echo "Installing dependencies..."
-          uv sync
+          ( cd docs && uv sync )
           echo "Dependencies installed successfully."
 
       - name: Compile docs
