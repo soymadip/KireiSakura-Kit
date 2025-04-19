@@ -39,6 +39,7 @@ jobs:
       - name: Compile docs
         run: |
           echo "Compiling documentation..."
+          ls -a
 
           uv tool run mkdocs build --config-file docs/mkdocs.yml --site-dir build
 
