@@ -43,7 +43,7 @@ logger() {
   if starts-with "\n" "$log_message"; then
     log_message=$(strip "\n" "$log_message")
     echo ""
-    echo -e "[$(date '+%Y.%m.%d %H:%M:%S')] " >>"$kirei_log_file"
+    echo -e "[$(date '+%Y.%m.%d %H:%M:%S')] " >>"$k_log_file"
   fi
 
   if [ -n "$extra_info" ]; then
@@ -68,7 +68,7 @@ logger() {
 
   {
     echo -e "$formatted_message" &&
-      echo -e "[$(date +"%Y.%m.%d %H:%M:%S")] [$log_level] $log_message" >>"$kirei_log_file"
+      echo -e "[$(date +"%Y.%m.%d %H:%M:%S")] [$log_level] $log_message" >>"$k_log_file"
   } && return 0 || return 1
 }
 
@@ -77,4 +77,4 @@ alias log.info='logger info'
 alias log.error='logger error'
 alias log.warn='logger warn'
 alias log.success='logger success'
-alias log.error.nyi='logger error "NOT YET IMPLEMENTED!"'
+alias log.nyi='logger error "NOT YET IMPLEMENTED!"'

@@ -3,9 +3,7 @@
 #| |   / _ \| '__/ _ \ | |_ | | | | '_ \ / __| __| |/ _ \| '_ \/ __|
 #| |__| (_) | | |  __/ |  _|| |_| | | | | (__| |_| | (_) | | | \__ \
 # \____\___/|_|  \___| |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
-# 
-
-
+#
 
 #
 #
@@ -82,7 +80,6 @@ get-package-manager() {
     exit 1
   fi
 }
- 
 
 #
 #
@@ -91,7 +88,7 @@ get-package-manager() {
 # DESC: uses get-package-manager() to determine package manager.
 #       & installs the package using the package manager.
 # USAGE: install-package <package>
-# TODO: 
+# TODO:
 #     - add support for group install
 #     - add support for uninstall package
 #------------------------------------------------------------------------------------
@@ -102,32 +99,32 @@ install-package() {
   pkg_mngr="$(get-package-manager)"
 
   case $pkg_mngr in
-    pacman)
-      sudo pacman -S --noconfirm --needed "$pkg" >/dev/null || return 1
-      ;;
-    apt)
-      sudo apt update >/dev/null || return 1
-      sudo apt install -y "$pkg" >/dev/null || return 1
-      ;;
-    dnf)
-      sudo dnf install -y "$pkg" >/dev/null || return 1
-      ;;
-    zypper)
-      sudo zypper install -y "$pkg" >/dev/null || return 1
-      ;;
-    apk)
-      sudo apk add "$pkg" >/dev/null || return 1
-      ;;
-    brew)
-      brew install "$pkg" >/dev/null || return 1
-      ;;
-    *)
-      log.error "Unsupported Linux distribution."
-      log.error "No suppoeted package manager found."
-      log.warn "Use one (or derivatives) of below distros: "
-      log.warn "Debian, Ubuntu, Fedora, Arch, SUSE"
-      return 1
-      ;;
+  pacman)
+    sudo pacman -S --noconfirm --needed "$pkg" >/dev/null || return 1
+    ;;
+  apt)
+    sudo apt update >/dev/null || return 1
+    sudo apt install -y "$pkg" >/dev/null || return 1
+    ;;
+  dnf)
+    sudo dnf install -y "$pkg" >/dev/null || return 1
+    ;;
+  zypper)
+    sudo zypper install -y "$pkg" >/dev/null || return 1
+    ;;
+  apk)
+    sudo apk add "$pkg" >/dev/null || return 1
+    ;;
+  brew)
+    brew install "$pkg" >/dev/null || return 1
+    ;;
+  *)
+    log.error "Unsupported Linux distribution."
+    log.error "No suppoeted package manager found."
+    log.warn "Use one (or derivatives) of below distros: "
+    log.warn "Debian, Ubuntu, Fedora, Arch, SUSE"
+    return 1
+    ;;
   esac
   return 0
 }
@@ -145,13 +142,13 @@ install-package() {
 check-dep() {
   local dep=()
   local not_found=()
-  local be_quiet=false 
+  local be_quiet=false
 
   log.warn "Checking dependencies." check-dep
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
-    -q|--quiet)
+    -q | --quiet)
       be_quiet=true
       shift
       ;;
@@ -262,7 +259,6 @@ check-dir() {
   fi
 }
 
-
 #------------------------------------------------------------------------------
 # NAME: starts-with
 # DESC: Check if a string starts with a given prefix.
@@ -271,7 +267,8 @@ check-dir() {
 starts-with() {
   local str="$1"
   local prfx="$2"
-  [[ "${str#"$prfx"}" != "$str" ]] 
+
+  [[ "${str#"$prfx"}" != "$str" ]]
 }
 
 #
@@ -284,6 +281,7 @@ starts-with() {
 ends-with() {
   local str="$1"
   local suffix="$2"
+
   [[ "${str%"$suffix"}" != "$str" ]]
 }
 
@@ -295,7 +293,7 @@ ends-with() {
 # USAGE: len <string>
 #--------------------------------------------------------------------------
 len() {
-echo "${#1}"
+  echo "${#1}"
 }
 
 #
@@ -303,7 +301,7 @@ echo "${#1}"
 #-----------------------------------------------------------------------
 # NAME: strip
 # DESC: Trim a leading & trailing character from a string.
-# USAGE: strip <string from to remove> <character to strip> 
+# USAGE: strip <string from to remove> <character to strip>
 #        if no arg, strip whitespaces.
 # FLAGS:
 #   -s,--start  Strip only leading char.
@@ -315,22 +313,22 @@ strip() {
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
-      -s | --start)
-        strip_start=true
-        shift
-        ;;
-      -e | --end)
-        strip_end=true
-        shift
-        ;;
-      *)
-        if [[ -z "$string" ]]; then
-          string="$1"
-        elif [[ -z "$character" ]]; then
-          character="$1"
-        fi
-        shift
-        ;;
+    -s | --start)
+      strip_start=true
+      shift
+      ;;
+    -e | --end)
+      strip_end=true
+      shift
+      ;;
+    *)
+      if [[ -z "$string" ]]; then
+        string="$1"
+      elif [[ -z "$character" ]]; then
+        character="$1"
+      fi
+      shift
+      ;;
     esac
   done
 
@@ -341,7 +339,6 @@ strip() {
     strip_start=true
     strip_end=true
   fi
-
 
   # Strip leading occurrences of character
   if [[ "$strip_start" == true ]]; then
@@ -370,7 +367,7 @@ strip() {
 split() {
   local string="$1"
   local delimiter="$2"
-  mapfile -t split_result < <(awk -v d="$delimiter" '{ n = split($0, parts, d); for (i = 1; i <= n; i++) print parts[i] }' <<< "$string")
+  mapfile -t split_result < <(awk -v d="$delimiter" '{ n = split($0, parts, d); for (i = 1; i <= n; i++) print parts[i] }' <<<"$string")
 }
 
 #
@@ -381,7 +378,48 @@ split() {
 # USAGE: hyprlink <url> <text>
 #-------------------------------------------------------------------------
 hyperlink() {
-    local url="$1"
-    local text="${2:-$1}"
-    echo -e "\e]8;;${url}\e\\${text}\e]8;;\e\\"
+  local url="$1"
+  local text="${2:-$1}"
+  echo -e "\e]8;;${url}\e\\${text}\e]8;;\e\\"
+}
+
+
+#
+#
+#---------------------------------------------------------------------------------
+# NAME:  kit-version
+# DESC:  Get the version of the kit.
+# USAGE: kit-version <arguments>
+# FLAGS:
+#     -u, --upstream   get version of upstream
+#     -l, --local      get version of local installation
+#---------------------------------------------------------------------------------
+kit-version() {
+  local url
+  local version
+  local local=true
+
+  case "$1" in
+  -u | --upstream)
+    local=false
+    version=$(curl -s "$k_kit_upstream_ver_url" || echo "N/A")
+    ;;
+  -l | --local)
+    version=$(cat -s "$k_kit_ver_url" || echo "N/A")
+    ;;
+  *)
+    version=$(cat -s "$k_kit_ver_url" || echo "N/A")
+    ;;
+  esac
+
+  if [[ "$version" == "N/A" ]]; then
+    log.error "Couldn't resolve version. Please check your connection or the URL."
+    return 1
+  fi
+  
+  [[ "$local" == "true" ]] && k_kit_version="$version"
+  [[ "$local" == "false" ]] && k_kit_upstream_version="$version"
+
+  echo "$version"
+  return 0
 }

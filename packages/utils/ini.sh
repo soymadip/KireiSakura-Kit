@@ -1,5 +1,7 @@
+# EXPERIMENTAL UTIL.
+# Do NOT use in production.
 
-# NOT tested properly.
+
 read-ini() {
     local ini_file="$1"
     local section_key="$2"

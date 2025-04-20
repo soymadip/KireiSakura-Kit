@@ -16,7 +16,7 @@ fi
 
 
 #------------ Export arrays for module count -----------------------
-export kirei_loaded_modules=()
+export k_loaded_modules=()
 
 
 #

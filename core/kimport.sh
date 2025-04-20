@@ -44,14 +44,14 @@ kimport() {
 
   # modules: {"module": "package"}
   ## path: 
-  ##     - Plugin: $kirei_package_dir/package/module.sh
+  ##     - Plugin: $k_package_dir/package/module.sh
   ##     - Local: $pwd/modules/module.sh
   for module in "${!modules[@]}"; do
 
     if [[ "${modules["$module"]}" == "local" ]]; then
       module_path="$(pwd)/modules/$module.sh"
     else
-      module_path="$kirei_package_dir/${modules["$module"]}/$module.sh"
+      module_path="$k_package_dir/${modules["$module"]}/$module.sh"
     fi
 
     if source "$module_path" 2>/dev/null; then
@@ -70,7 +70,7 @@ kimport() {
     log.warn "Please check your imports." kimport
     exit 1
   else
-    log.success "\nImported all modules successfully." kimport
+    log.success "Imported all modules successfully." kimport
   fi
 
 }

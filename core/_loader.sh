@@ -26,9 +26,10 @@ core_modules=(
 
 echo -e "\e[38;5;245m     -> Loading core modules.\e[0m"
 
+# Use the core directory path from kireisakura script
 for core_module in "${core_modules[@]}"; do
-  if source "$kirei_core_dir/$core_module.sh"; then
-    kirei_loaded_modules+=("$core_module")
+  if source "$(dirname "$0")/$core_module.sh"; then
+    k_loaded_modules+=("$core_module")
   fi
   echo -e "\e[38;5;245m       -> Loaded $core_module.\e[0m"
 done

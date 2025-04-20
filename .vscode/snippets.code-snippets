@@ -44,5 +44,12 @@
       "## ^^**${1:name}**^^ section",
       "",
     ]
+  },
+  "print super var": {
+    "prefix": "printf",
+    "scope": "shellscript",
+    "body": [
+      "printf \"k_${1:core_dir}=\\\"%s\\\"\\n\" \"$${2}\""
+    ]
   }
 }
