@@ -1,50 +1,19 @@
 ---
-# icon: material/puzzle
 title: API
 icon: material/api
+description: "Know how to use kit's API"
 ---
 
 <h1 align="center"><b>Using API</b></h1>
 
 ## **Overview**
 
-KireiSakura-Kit provides a set of ways to interact with and leverage it's capabilities.
-This documentation will guide you through the available methods and their usage.
+KireiSakura-Kit provides a structured API to help you build powerful shell scripts. The API consists of several components/elements.
 
+## **Sections**
 
-## **Elements**
-
-- [Super Variables](./super-vars.md)
-- [Methods & Modules](./methods-modules.md)
-- [Packages](./packages.md)
-- [Loading Modules](./loading-modules.md)
-
-<!--
-
-## **Loading modules**
-
-By default KireiSakura Kit only imports [core modules](./terminology.md#1-core-modules).
-
-Modules are imported using `kimport` method.
-
-- To import [plugin modules](./terminology.md#2-plugin-modules):-
-```bash
-# import specific modules of a package.
-kimport packageName.ModuleName
-kimport utils.disk utils.shell
-
-# import all modules of a package
-kimport PackageName.
-kimport utils.
-```
-
-- To import [local modules](./terminology.md#3-local-modules) use `-l` flag:-
-```bash 
-# import local modules
-kimport .ModuleName
-kimport .module1 .module2 .module3
-
-# import all local modules
-kimport .
-```
--->
+- [Logging](./logging.md) - Equivalent to echo/printf but with more.
+- [Super Variables](./super-vars.md) - Access important paths and configuration values.
+- [Methods & Modules](./methods-modules.md) - Use predefined functions organized into modules.
+- [Packages](./packages.md) - Extend functionality with installable packages.
+- [Loading Modules](./loading-modules.md) - Learn how to import and use various modules.

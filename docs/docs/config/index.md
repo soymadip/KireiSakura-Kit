@@ -5,7 +5,7 @@ icon: fontawesome/solid/gear
 
 <h1 align="center"><b>Configuration File</b></h1>
 
-!!! warning "Configuration system is not yet implemented"
+!!! warning "Configuration system is not yet fully implemented"
 
 You can **customize** or **override** the default behavior of KireiSakura-Kit using configuration files.
 
@@ -46,7 +46,7 @@ graph TD
     B -- No --> D[Use<br>$HOME/.config/KireiSakura-Kit/config.yml]
     C --> E[Load global config values.<br>Overwriting default values.]
     D --> E
-    E --> F{{'config.toml' file present in current project root?}}
+    E --> F{{'config.yml' file present in current project root?}}
     F -- Yes --> G[Load project config values.<br>Overwrite global ones present in this.]
     F -- No --> H[Use global config values]
     G --> I[Use loaded config values]

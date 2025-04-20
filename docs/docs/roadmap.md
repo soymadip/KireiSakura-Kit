@@ -29,9 +29,9 @@ icon: material/calendar-clock
     - [x] Implement Auto-Update.
 
     - [x] Config file support.
-        - [ ] Use ~~`.sh`~~ Yaml as format. 
-        - [ ] Use YQ.
-        - [ ] Make config hiararchy.
+        - [x] Use ~~`.sh`~~ Yaml as format. 
+        - [x] Make config hiararchy.
+        - [ ] Implement, use YQ.
         - [ ] Allow customization, metadata input.
     
     - [ ] Add support for packages.
@@ -63,12 +63,13 @@ icon: material/calendar-clock
         - Docusaurus will be more flexibile.
     - [ ] Check if core functions & dependency functions are loaded and set that script load flag true using a variable.
     - [ ] Make use of log file in more functions (for more detailed logs).
+    - [ ] Allow adding custom log levels.
     - [ ] Add more config options, make use of config file more.
     - [ ] Add `-q` or `--quiet` flag to all possible functions.
     - [ ] Enable completions (still thinking if useful):
         - Make script.
         - Source the file.
-        - In install script: `printf "echo \"fpath+=(\"${kirei_dir}/completions\")\" >> \"${zsh_rc}\""`
+        - In install script: `printf "echo \"fpath+=(\"${k_dir}/completions\")\" >> \"${.zshrc}\""`
     - [ ] Check for internet connection: `ping -c 2 soymadip.github.com &>/dev/null`
     - [ ] Make Package registry in separate branch.
       - [ ] kpm will by default search package form here.

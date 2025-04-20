@@ -1,6 +1,7 @@
 ---
 title: Reference 
 icon: octicons/sliders-24
+description: "A detailed guide to all configuration options in KireiSakura-Kit."
 ---
 
 <h1 align="center"><b>Configuration Options</b></h1>
@@ -10,13 +11,13 @@ This page details all available **configuration options** for KireiSakura-Kit.
 !!! info "Configuration follows YAML format."
 
     ```yaml
-    # example config.toml
+    # example config.yml
 
     Project:
       name: "KireiSakura-Kit"
-      author: soymadip
+      owner: soymadip
 
-    Option:
+    Options:
         debug_mode: false
     ```
 
@@ -65,25 +66,25 @@ Name or path of the project config file.
 
 - **Type:** String or path
 - **Optional:** ✅
-- **Default:** config.toml
+- **Default:** config.yml
 
 ??? example "Example"
 
-    Let's suppese project name is `Dotfile Heaven`.
+    Let's suppose project name is `Dotfile Heaven`.
 
     1. Config file is in project root but only name is changed:-
 
         ```yaml
         Project:
             name: "Dotfile Heaven"
-            config_file: "kirei.roml"
+            config_file: "kirei.yml"
         ```
-    2. Config file is in `config` subdirectory & is named `kirei.toml`. so:-
+    2. Config file is in `config` subdirectory & is named `kirei.yml`. so:-
 
         ```yaml
         Project:
             name: "Dotfile Heaven"
-            config_file: "config/kirei.toml"
+            config_file: "config/kirei.yml"
         ```
 ---
 
@@ -148,7 +149,7 @@ Directory to use to hold installed packages.
 
 - **Type:** string/path
 - **Optional:** ✅
-- **Default:** `$kirei_dir/packages`
+- **Default:** `$k_kit_dir/packages`
 
 <br><!-- a glitch in mkdocs :) -->
 !!! quote ""
@@ -216,11 +217,11 @@ Enable Debug mode.
 
 Enable quiet mode.
 
-:octicons-arrow-right-16: In this mode, most of the logs are supressed & delays are removed.  
+:octicons-arrow-right-16: In this mode, most of the logs are suppressed & delays are removed.  
 
 - **Type:** bool
 - **Optional:** ✅
-- **Default:** flase
+- **Default:** false
 
 ---
 

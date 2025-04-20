@@ -131,7 +131,7 @@ make-alias() {
   local alias_name=$2
 
   # Check if the module is loaded
-  if [[ " ${kirei_loaded_modules[@]} " =~ " ${module_name} " ]]; then
+  if [[ " ${k_loaded_modules[@]} " =~ " ${module_name} " ]]; then
     # Create the alias
     alias "$alias_name"="$module_name"
     # Disable the function name execute

@@ -1,13 +1,22 @@
 ---
 title: Initialization
 icon: material/rocket-launch
+description: Set up a project, install KireiSakura-Kit, and create config file.
 ---
 <h1 align="center"><b>Initialization</b></h1>
+
+In this page, you'll learn,
+
+- Recommended Folder structure of a project.
+- How to install and source the Kit
+- Creating basic configuration file
+
 
 ## :material-file-tree: **Directory Structure**
 
 !!! info "About this.."
-    - The default structure is intended (& recomended) to provide a clean structure & followed by documentation.  
+    - The default structure is intended (& recommended) to provide a clean structure & follo
+    - wed by documentation.  
     - **Except modules dir, config file**, you are free to organize your project however you like.[^*]
 
 ```markdown
@@ -49,10 +58,13 @@ Project Root
 
 ---
 
-### **3. `config.yml`**
+### **2. `config.yml`**
 
 - **Location:** Project Root
-- **Desc:**  This directory holds [local modules](./api/methods-modules.md#__tabbed_1_3). This directory is interpreted as `local` package within the kit.
+- **Desc:**  
+  - This file holds configuration for your project.
+  - It allows you to customize the behavior of the Kit in your project.
+  - See [configuration reference](./config/reference.md) for details.
 
 ---
 
@@ -73,7 +85,7 @@ Project Root
     === "packages.sh"
 
         ```bash
-        cli_pacakges=(
+        cli_packages=(
             "yazi"
             "eza"
             "htop"
@@ -99,10 +111,10 @@ Project Root
 <br>
 !!! quote ""
 
-## :material-import: **Install & source Kit**
+## :material-import: **Installation & source Kit**
 
 !!! abstract "Before everything"
-    - Make sure you have `curl`, `grep`  installed.
+    - Make sure you have `curl`, `grep` installed.
     - Optionally `figlet` too for the header.
 
 **ℹ️ There are two ways to Install & source the kit** : -
@@ -149,4 +161,4 @@ Project:
     owner: "your name"
 ```
 
-[^*]: These can be customized too. See [reference](http://localhost:8000/KireiSakura-Kit/config/reference/).
+[^*]: These can be customized too. See [configuration reference](./config/reference.md).
