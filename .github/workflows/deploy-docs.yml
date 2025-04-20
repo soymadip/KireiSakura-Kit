@@ -3,9 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     paths:
-      - '.github/workflows/doploy-pages.yml'
+      - '.github/workflows/doploy-docs.yml'
       - 'core/_updater.sh'
       - 'docs/**'
+      - '.version'
     branches:
       - main
 
