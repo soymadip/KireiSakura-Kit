@@ -14,20 +14,22 @@ Packages are directories containing [plugin modules](./methods-modules.md#__tabb
 
 Packages allow to group related plugin modules & enable easily sharing plugin modules as installable pack.
 
-## **Structure of package**
+## :material-file-tree: **Structure of package**
 
-```bash
+```markdown
 <PACKAGE_ROOT | PACKAGE_NAME>
     |
-    |-module1.sh
-    |-module2.sh
-    |-mosule3.sh
+    |- __init__.sh
+    |- module1.sh
+    |- module2.sh
+    |- mosule3.sh
 ```
 
-- The package dir name should be of desired name for the package. 
-- Version detection & updating will be added later.
+1. The package dir name should be of desired name for the package. 
+2. `__init__.sh` is for initialization, this file will be automatically sourced on importing any module of the package.
 
 ---
+
 ## **Import package & modules**
 
 To use a package, import modules of that package, we need to use `kimport` function.
@@ -36,10 +38,10 @@ To use a package, import modules of that package, we need to use `kimport` funct
 
 ```bash
 kimport package1.module2   # import module2 from packge1
-kimport package1           # import all modules from packge1
+kimport package1.*         # import all modules from packge1
 
-kimport .module3           # import LOCAL module: module3 
-kimport .                  # import all local mosules.
+kimport module3            # import LOCAL module: module3 
+kimport *                  # import all local mosules.
 ```
 
 !!! info
@@ -47,6 +49,7 @@ kimport .                  # import all local mosules.
     - `.module_name` is actually interprited as `local.module_name`.
 
 ---
+
 ## **Install a package**
 
 To install a package, we use `kpm` or KireiSakura Package Manager.
@@ -67,6 +70,7 @@ kpm install <git_username>/<package_name>@gitlab.com
 ```
 
 --- 
+
 ## **List all packages**
 To list all installed packages, 
 
@@ -75,6 +79,7 @@ kpm list
 ```
 
 ---
+
 ## **Update packages**
 
 To update all packages use: -
@@ -84,6 +89,7 @@ kpm update
 ```
 
 ---
+
 ## **Uninstall package**
 
 To uninstall a package use: -

@@ -13,11 +13,11 @@
 #-----------------------------------------------------------
 # USAGE: kimport packageName.moduleName 
 #                 OR
-#        kimport packageName
+#        kimport packageName.*
 #                 OR
-#        kimport .moduleName
+#        kimport moduleName
 #                 OR
-#        kimport .
+#        kimport *
 # FIXME: 
 #      - If module name is same for 2 packages,
 #        it causes overwrite in packagename of module in modules dict.
@@ -27,7 +27,8 @@
 #-----------------------------------------------------------
 kimport() {
   local -A modules 
-  local failed=() module_path=""
+  local module_path="" package="" package_init=""
+  local failed=() imported_packages=()
 
   log.warn "Importing modules....\n" kimport
 
@@ -39,6 +40,26 @@ kimport() {
     else
       modules["${1#*.}"]="${1%%.*}"
       shift
+    fi
+  done
+
+  # First source all package __init__.sh
+  for module in "${!modules[@]}"; do
+    package="${modules["$module"]}"
+
+    # Skip local modules and already imported packages
+    if [[ "$package" != "local" && ! " ${imported_packages[*]} " =~ " $package " ]]; then
+      package_init="$k_package_dir/$package/__init__.sh"
+
+      if [[ -f "$package_init" ]]; then
+        if source "$package_init" 2>/dev/null; then
+          log.success "Sourced package init: '$package/__init__.sh'"
+          imported_packages+=("$package")
+        else
+          log.error "Failed to source package init: '$package/__init__.sh'"
+          failed+=("${GRAY}$package${NC}/__init__.sh")
+        fi
+      fi
     fi
   done
 

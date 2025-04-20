@@ -1,5 +1,5 @@
 ---
-title: Welcome
+title: Home 
 description: Bash framework to create Powerful shell scripts.  
 icon: octicons/home-16
 hide: footer
@@ -14,8 +14,6 @@ search:
 <p align="center">
     KireiSakura-Kit is a framework written in <a href="https://www.gnu.org/software/bash">Bash</a> for making powerful shell scripts.
 </p>
-<br>
-
 
 ## :material-lightning-bolt-outline: **Features**
 

@@ -18,10 +18,10 @@ eval "$(kireisakura -i)"
 echo -e "\n${LAVENDER}-------: VERSION CHECKS :-------${NC}\n"
 
 if [[ -n "$k_kit_version" && -n "$k_kit_upstream_version" ]]; then
-  echo -e "${GREEN}[✔]-> Local version: $k_kit_version${NC}"
-  echo -e "${GREEN}[✔]-> Upstream version: $k_kit_upstream_version${NC}"
+  echo -e "${GREEN}✔ Local version: $k_kit_version${NC}"
+  echo -e "${GREEN}✔ Upstream version: $k_kit_upstream_version${NC}"
 else
-  echo -e "${RED}[X]-> Version information not available${NC}"
+  echo -e "${RED}X Version information not available${NC}"
 fi
 
 echo -e "\n${LAVENDER}-------: SUPER VARIABLES :-------${NC}\n"
@@ -29,7 +29,7 @@ echo -e "\n${LAVENDER}-------: SUPER VARIABLES :-------${NC}\n"
 super_vars=(
   "k_kit_dir"
   "k_core_dir"
-  "k_loader"
+  "k_init_file"
   "k_package_dir"
   "k_assets_dir"
   "k_kit_name"
@@ -57,20 +57,20 @@ for var in "${super_vars[@]}"; do
 
   if [[ -z "${!var}" ]]; then
     missing_vars+=("$var")
-    echo -e "${RED}[X]-> $var: ${NC}"
+    echo -e "${RED}X${NC} ${BOLD_RED} $var: ${NC}"
   else
-    echo -e "${GREEN}[✔]-> $var${NC}: ${!var}"
+    echo -e "${GREEN}✔${NC} ${BOLD_GREEN}$var${NC}: ${!var}"
   fi
 done
 
 if [[ ${#missing_vars[@]} -gt 0 ]]; then
-  echo -e "\n${RED}[X]-> Missing Super Vars: ${NC}"
+  echo -e "\n${RED}X${NC} ${BOLD_RED} Missing Super Vars: ${NC}"
   for var in "${missing_vars[@]}"; do
     echo -e "      $var"
   done
   exit 1
 else
-  echo -e "\n${GREEN}[✔]-> All super variables are properly set.${NC}"
+  echo -e "\n${GREEN}✔${NC} ${BOLD_GREEN} All super variables are properly set.${NC}"
 fi
 
 #
@@ -78,16 +78,16 @@ fi
 echo -e "\n${LAVENDER}-------: CHECKING CACHE DIR :-------${NC}\n"
 
 if [[ -d "$k_cache_dir" ]]; then
-  echo -e "${GREEN}[✔]-> Cache dir exists${NC}"
+  echo -e "${GREEN}✔ Cache dir exists${NC}"
 else
-  echo -e "${RED}[X]-> Cache dir doesn't exist${NC}"
+  echo -e "${RED}X Cache dir doesn't exist${NC}"
   exit 1
 fi
 
 if [[ -f "$k_log_file" ]]; then
-  echo -e "${GREEN}[✔]-> log file exists${NC}"
+  echo -e "${GREEN}✔ log file exists${NC}"
 else
-  echo -e "${RED}[X]-> log file doesn't exist${NC}"
+  echo -e "${RED}X log file doesn't exist${NC}"
   exit 1
 fi
 
@@ -143,9 +143,9 @@ kimport utils.font utils.app-patches
 echo -e "\n${LAVENDER}---------- REMOVING CACHE DIR ----------${NC}\n"
 
 if rm -rf "$k_cache_dir"; then
-  echo -e "${GREEN}[✔]-> Cache dir removed.${NC}"
+  echo -e "${GREEN}✔ Cache dir removed.${NC}"
   exit 0
 else
-  echo -e "${RED}[X]-> Failed to remove Cache dir.${NC}"
+  echo -e "${RED}X Failed to remove Cache dir.${NC}"
   exit 1
 fi

@@ -40,7 +40,7 @@ icon: material/variable
 ### 3. Core Directories
 - **`k_kit_dir`**               → Root directory of KireiSakura-Kit.
 - **`k_core_dir`**              → Directory containing core scripts.
-- **`k_loader`**                → Path to the main entry script.
+- **`k_init_file`**             → Path to the main entry script.
 - **`k_package_dir`**           → Directory containing packages.
 - **`k_assets_dir`**            → Directory for assets like icons and themes.
 

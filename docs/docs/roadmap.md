@@ -58,6 +58,7 @@ icon: material/calendar-clock
 
 === "Later in Time"
 
+    - [ ] Make `kimport` adapt like python's import system. introduce namespacing.
     - [ ] Swith to [Docusaurus](https://docusaurus.io) for documentation
         - mkdocs is excellent but is limited in some areas. 
         - Docusaurus will be more flexibile.

@@ -221,9 +221,9 @@ init_kit() {
   fi
 
   # Check if core file exists
-  if [ ! -f "$loader_file" ]; then
-    logf "Error: Core file is missing in kit."
-    printf "echo -e '%s[X]-> Error: Core file is missing in Kit. Please check installation or re-install.%s\n'" "$RED" "$NC"
+  if [ ! -f "$init_file" ]; then
+    logf "Error: Init file is missing in kit."
+    printf "echo -e '%s[X]-> Error: Init file is missing in Kit. Please check installation or re-install.%s\n'" "$RED" "$NC"
     printf "echo -e 'Exiting.....' \n"
     exit 1
   fi
@@ -239,7 +239,7 @@ init_kit() {
 
   printf "k_kit_dir=\"%s\"\n"         "$kit_dir"
   printf "k_core_dir=\"%s\"\n"        "$core_dir"
-  printf "k_loader=\"%s\"\n"          "$loader_file"
+  printf "k_init_file=\"%s\"\n"       "$init_file"
   printf "k_package_dir=\"%s\"\n"     "$package_dir"
   printf "k_assets_dir=\"%s\"\n"      "$assets_dir"
 
@@ -259,11 +259,11 @@ init_kit() {
 
   # Print source and check_dir commands
   printf "\nsleep 1\n"
-  logf "Loading core....."
-  printf "echo -e \"%s[!]-> Loading core.%s\" \n" "$YELLOW" "$NC"
-  printf "source \"\$k_loader\" \n"
-  printf "log.success 'Loaded core.' \n"
-  logf "Loaded core."
+  logf "Loading init file....."
+  printf "echo -e \"%s[!]-> Loading init file.%s\" \n" "$YELLOW" "$NC"
+  printf "source \"\$k_init_file\" \n"
+  printf "log.success 'Loaded Init file.' \n"
+  logf "Loaded init file."
 
   printf "sleep 1\n"
   printf "log.warn \"Checking cache directory.....\"\n"
@@ -301,7 +301,7 @@ kit_repo_branch="main"                     # k_kit_branch
 
 kit_dir="$HOME/.local/share/${kit_name}"   # k_kit_dir
 core_dir="$kit_dir/core"                   # k_core_dir
-loader_file="$core_dir/_loader.sh"         # k_loader
+init_file="$core_dir/__init__.sh"          # k_init_file
 package_dir="$kit_dir/packages"            # k_package_dir
 assets_dir="$kit_dir/Assets"               # k_assets_dir
 
