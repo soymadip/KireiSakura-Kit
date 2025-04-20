@@ -424,6 +424,8 @@
       
         
       
+        
+      
     
     
     
@@ -464,6 +466,31 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/logging/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.727 6.727H14V0H4.91c-.905 0-1.637.732-1.637 1.636v20.728c0 .904.732 1.636 1.636 1.636h14.182c.904 0 1.636-.732 1.636-1.636V6.727zm-.545 10.455H7.09v-1.364h7.09v1.364zm2.727-3.273H7.091v-1.364h9.818zm0-3.273H7.091V9.273h9.818zM14.727 6h6l-6-6z"/></svg>
+  
+  <span class="md-ellipsis">
+    Logging
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -733,7 +760,7 @@
 <h1 align="center"><b>Configuration File</b></h1>
 
 <div class="admonition warning">
-<p class="admonition-title">Configuration system is not yet implemented</p>
+<p class="admonition-title">Configuration system is not yet fully implemented</p>
 </div>
 <p>You can <strong>customize</strong> or <strong>override</strong> the default behavior of KireiSakura-Kit using configuration files.</p>
 <h2 id="configuration-files"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M256 0c17.7 0 32 14.3 32 32v34.7c80.4 13.4 143.9 76.9 157.3 157.3H480c17.7 0 32 14.3 32 32s-14.3 32-32 32h-34.7c-13.4 80.4-76.9 143.9-157.3 157.3V480c0 17.7-14.3 32-32 32s-32-14.3-32-32v-34.7C143.6 431.9 80.1 368.4 66.7 288H32c-17.7 0-32-14.3-32-32s14.3-32 32-32h34.7C80.1 143.6 143.6 80.1 224 66.7V32c0-17.7 14.3-32 32-32M128 256a128 128 0 1 0 256 0 128 128 0 1 0-256 0m128-80a80 80 0 1 1 0 160 80 80 0 1 1 0-160"/></svg></span> <strong>Configuration Files</strong></h2>
@@ -776,7 +803,7 @@ graph TD
     B -- No --&gt; D[Use&lt;br&gt;$HOME/.config/KireiSakura-Kit/config.yml]
     C --&gt; E[Load global config values.&lt;br&gt;Overwriting default values.]
     D --&gt; E
-    E --&gt; F{{'config.toml' file present in current project root?}}
+    E --&gt; F{{'config.yml' file present in current project root?}}
     F -- Yes --&gt; G[Load project config values.&lt;br&gt;Overwrite global ones present in this.]
     F -- No --&gt; H[Use global config values]
     G --&gt; I[Use loaded config values]

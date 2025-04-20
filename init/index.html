@@ -6,6 +6,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Set up a project, install KireiSakura-Kit, and create config file.">
+      
       
       
         <link rel="canonical" href="https://soymadip.github.io/KireiSakura-Kit/init/">
@@ -61,7 +63,7 @@
       
         <meta  property="og:title"  content="Initialization - KireiSakura Kit" >
       
-        <meta  property="og:description"  content="None" >
+        <meta  property="og:description"  content="Set up a project, install KireiSakura-Kit, and create config file." >
       
         <meta  property="og:image"  content="https://soymadip.github.io/KireiSakura-Kit/assets/images/social/init.png" >
       
@@ -77,7 +79,7 @@
       
         <meta  name="twitter:title"  content="Initialization - KireiSakura Kit" >
       
-        <meta  name="twitter:description"  content="None" >
+        <meta  name="twitter:description"  content="Set up a project, install KireiSakura-Kit, and create config file." >
       
         <meta  name="twitter:image"  content="https://soymadip.github.io/KireiSakura-Kit/assets/images/social/init.png" >
       
@@ -364,9 +366,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-configyml" class="md-nav__link">
+  <a href="#2-configyml" class="md-nav__link">
     <span class="md-ellipsis">
-      3. config.yml
+      2. config.yml
     </span>
   </a>
   
@@ -396,9 +398,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-source-kit" class="md-nav__link">
+  <a href="#installation-source-kit" class="md-nav__link">
     <span class="md-ellipsis">
-      Install &amp; source Kit
+      Installation &amp; source Kit
     </span>
   </a>
   
@@ -531,6 +533,8 @@
       
         
       
+        
+      
     
     
     
@@ -571,6 +575,31 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/logging/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.727 6.727H14V0H4.91c-.905 0-1.637.732-1.637 1.636v20.728c0 .904.732 1.636 1.636 1.636h14.182c.904 0 1.636-.732 1.636-1.636V6.727zm-.545 10.455H7.09v-1.364h7.09v1.364zm2.727-3.273H7.091v-1.364h9.818zm0-3.273H7.091V9.273h9.818zM14.727 6h6l-6-6z"/></svg>
+  
+  <span class="md-ellipsis">
+    Logging
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -820,9 +849,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-configyml" class="md-nav__link">
+  <a href="#2-configyml" class="md-nav__link">
     <span class="md-ellipsis">
-      3. config.yml
+      2. config.yml
     </span>
   </a>
   
@@ -852,9 +881,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-source-kit" class="md-nav__link">
+  <a href="#installation-source-kit" class="md-nav__link">
     <span class="md-ellipsis">
-      Install &amp; source Kit
+      Installation &amp; source Kit
     </span>
   </a>
   
@@ -890,11 +919,18 @@
 
 <h1 align="center"><b>Initialization</b></h1>
 
+<p>In this page, you'll learn,</p>
+<ul>
+<li>Recommended Folder structure of a project.</li>
+<li>How to install and source the Kit</li>
+<li>Creating basic configuration file</li>
+</ul>
 <h2 id="directory-structure"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3zm12 7h6v4h-6zm0 7h6v4h-6zm-2-4H7v5h6v2H5V9h2v2h6z"/></svg></span> <strong>Directory Structure</strong></h2>
 <div class="admonition info">
 <p class="admonition-title">About this..</p>
 <ul>
-<li>The default structure is intended (&amp; recomended) to provide a clean structure &amp; followed by documentation.  </li>
+<li>The default structure is intended (&amp; recommended) to provide a clean structure &amp; follo</li>
+<li>wed by documentation.  </li>
 <li><strong>Except modules dir, config file</strong>, you are free to organize your project however you like.<sup id="fnref:*"><a class="footnote-ref" href="#fn:*">1</a></sup></li>
 </ul>
 </div>
@@ -932,10 +968,13 @@
 </span></code></pre></div>
 </details>
 <hr />
-<h3 id="3-configyml"><strong>3. <code>config.yml</code></strong></h3>
+<h3 id="2-configyml"><strong>2. <code>config.yml</code></strong></h3>
 <ul>
 <li><strong>Location:</strong> Project Root</li>
-<li><strong>Desc:</strong>  This directory holds <a href="../api/methods-modules/#__tabbed_1_3">local modules</a>. This directory is interpreted as <code>local</code> package within the kit.</li>
+<li><strong>Desc:</strong>  </li>
+<li>This file holds configuration for your project.</li>
+<li>It allows you to customize the behavior of the Kit in your project.</li>
+<li>See <a href="../config/reference/">configuration reference</a> for details.</li>
 </ul>
 <hr />
 <h3 id="3-modules-dir"><strong>3. <code>modules</code> dir</strong></h3>
@@ -954,7 +993,7 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">packages.sh</label><label for="__tabbed_1_2">main.sh</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">cli_pacakges</span><span class="o">=(</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">cli_packages</span><span class="o">=(</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="s2">&quot;yazi&quot;</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="s2">&quot;eza&quot;</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="s2">&quot;htop&quot;</span>
@@ -980,11 +1019,11 @@
 </details>
 <p><br></p>
 <div class="admonition quote"></div>
-<h2 id="install-source-kit"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14 12-4-4v3H2v2h8v3m10 2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3h2V6h12v12H6v-3H4v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2"/></svg></span> <strong>Install &amp; source Kit</strong></h2>
+<h2 id="installation-source-kit"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14 12-4-4v3H2v2h8v3m10 2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3h2V6h12v12H6v-3H4v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2"/></svg></span> <strong>Installation &amp; source Kit</strong></h2>
 <div class="admonition abstract">
 <p class="admonition-title">Before everything</p>
 <ul>
-<li>Make sure you have <code>curl</code>, <code>grep</code>  installed.</li>
+<li>Make sure you have <code>curl</code>, <code>grep</code> installed.</li>
 <li>Optionally <code>figlet</code> too for the header.</li>
 </ul>
 </div>
@@ -1031,7 +1070,7 @@
 <hr />
 <ol>
 <li id="fn:*">
-<p>These can be customized too. See <a href="http://localhost:8000/KireiSakura-Kit/config/reference/">reference</a>.&#160;<a class="footnote-backref" href="#fnref:*" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>These can be customized too. See <a href="../config/reference/">configuration reference</a>.&#160;<a class="footnote-backref" href="#fnref:*" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>

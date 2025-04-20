@@ -6,6 +6,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="A detailed guide to all configuration options in KireiSakura-Kit.">
+      
       
       
         <link rel="canonical" href="https://soymadip.github.io/KireiSakura-Kit/config/reference/">
@@ -61,7 +63,7 @@
       
         <meta  property="og:title"  content="Reference - KireiSakura Kit" >
       
-        <meta  property="og:description"  content="None" >
+        <meta  property="og:description"  content="A detailed guide to all configuration options in KireiSakura-Kit." >
       
         <meta  property="og:image"  content="https://soymadip.github.io/KireiSakura-Kit/assets/images/social/config/reference.png" >
       
@@ -77,7 +79,7 @@
       
         <meta  name="twitter:title"  content="Reference - KireiSakura Kit" >
       
-        <meta  name="twitter:description"  content="None" >
+        <meta  name="twitter:description"  content="A detailed guide to all configuration options in KireiSakura-Kit." >
       
         <meta  name="twitter:image"  content="https://soymadip.github.io/KireiSakura-Kit/assets/images/social/config/reference.png" >
       
@@ -677,6 +679,8 @@
       
         
       
+        
+      
     
     
     
@@ -717,6 +721,31 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/logging/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.727 6.727H14V0H4.91c-.905 0-1.637.732-1.637 1.636v20.728c0 .904.732 1.636 1.636 1.636h14.182c.904 0 1.636-.732 1.636-1.636V6.727zm-.545 10.455H7.09v-1.364h7.09v1.364zm2.727-3.273H7.091v-1.364h9.818zm0-3.273H7.091V9.273h9.818zM14.727 6h6l-6-6z"/></svg>
+  
+  <span class="md-ellipsis">
+    Logging
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -1183,13 +1212,13 @@
 <p>This page details all available <strong>configuration options</strong> for KireiSakura-Kit.  </p>
 <div class="admonition info">
 <p class="admonition-title">Configuration follows YAML format.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># example config.toml</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># example config.yml</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nt">Project</span><span class="p">:</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;KireiSakura-Kit&quot;</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soymadip</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">soymadip</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">Option</span><span class="p">:</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">Options</span><span class="p">:</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="nt">debug_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </span></code></pre></div>
 </div>
@@ -1227,24 +1256,24 @@
 <ul>
 <li><strong>Type:</strong> String or path</li>
 <li><strong>Optional:</strong> ✅</li>
-<li><strong>Default:</strong> config.toml</li>
+<li><strong>Default:</strong> config.yml</li>
 </ul>
 <details class="example">
 <summary>Example</summary>
-<p>Let's suppese project name is <code>Dotfile Heaven</code>.</p>
+<p>Let's suppose project name is <code>Dotfile Heaven</code>.</p>
 <ol>
 <li>
 <p>Config file is in project root but only name is changed:-</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">Project</span><span class="p">:</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Dotfile</span><span class="nv"> </span><span class="s">Heaven&quot;</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">config_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kirei.roml&quot;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">config_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kirei.yml&quot;</span>
 </span></code></pre></div>
 </li>
 <li>
-<p>Config file is in <code>config</code> subdirectory &amp; is named <code>kirei.toml</code>. so:-</p>
+<p>Config file is in <code>config</code> subdirectory &amp; is named <code>kirei.yml</code>. so:-</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">Project</span><span class="p">:</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Dotfile</span><span class="nv"> </span><span class="s">Heaven&quot;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">config_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;config/kirei.toml&quot;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">config_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;config/kirei.yml&quot;</span>
 </span></code></pre></div>
 </li>
 </ol>
@@ -1299,7 +1328,7 @@
 <ul>
 <li><strong>Type:</strong> string/path</li>
 <li><strong>Optional:</strong> ✅</li>
-<li><strong>Default:</strong> <code>$kirei_dir/packages</code></li>
+<li><strong>Default:</strong> <code>$k_kit_dir/packages</code></li>
 </ul>
 <p><br><!-- a glitch in mkdocs :) --></p>
 <div class="admonition quote"></div>
@@ -1350,11 +1379,11 @@
 <hr />
 <h3 id="quiet_mode"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m9 3c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9-5a3 3 0 0 0-3 3c0 1.31.83 2.42 2 2.83V18h2v-2h2v-2h-2v-2.17c1.17-.41 2-1.52 2-2.83a3 3 0 0 0-3-3"/></svg></span> <strong>quiet_mode</strong></h3>
 <p>Enable quiet mode.</p>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l2.97-2.97H3.75a.75.75 0 0 1 0-1.5h7.44L8.22 4.03a.75.75 0 0 1 0-1.06"/></svg></span> In this mode, most of the logs are supressed &amp; delays are removed.  </p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l2.97-2.97H3.75a.75.75 0 0 1 0-1.5h7.44L8.22 4.03a.75.75 0 0 1 0-1.06"/></svg></span> In this mode, most of the logs are suppressed &amp; delays are removed.  </p>
 <ul>
 <li><strong>Type:</strong> bool</li>
 <li><strong>Optional:</strong> ✅</li>
-<li><strong>Default:</strong> flase</li>
+<li><strong>Default:</strong> false</li>
 </ul>
 <hr />
 <h3 id="failsafe_mode"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m9 3c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9-5a3 3 0 0 0-3 3c0 1.31.83 2.42 2 2.83V18h2v-2h2v-2h-2v-2.17c1.17-.41 2-1.52 2-2.83a3 3 0 0 0-3-3"/></svg></span> <strong>failsafe_mode</strong></h3>

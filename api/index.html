@@ -6,6 +6,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Know how to use kit's API">
+      
       
       
         <link rel="canonical" href="https://soymadip.github.io/KireiSakura-Kit/api/">
@@ -14,7 +16,7 @@
         <link rel="prev" href="../config/reference/">
       
       
-        <link rel="next" href="super-vars/">
+        <link rel="next" href="logging/">
       
       
       <link rel="icon" href="../src/icon.png">
@@ -61,7 +63,7 @@
       
         <meta  property="og:title"  content="API - KireiSakura Kit" >
       
-        <meta  property="og:description"  content="None" >
+        <meta  property="og:description"  content="Know how to use kit's API" >
       
         <meta  property="og:image"  content="https://soymadip.github.io/KireiSakura-Kit/assets/images/social/api/index.png" >
       
@@ -77,7 +79,7 @@
       
         <meta  name="twitter:title"  content="API - KireiSakura Kit" >
       
-        <meta  name="twitter:description"  content="None" >
+        <meta  name="twitter:description"  content="Know how to use kit's API" >
       
         <meta  name="twitter:image"  content="https://soymadip.github.io/KireiSakura-Kit/assets/images/social/api/index.png" >
       
@@ -424,6 +426,8 @@
       
         
       
+        
+      
     
     
     
@@ -464,6 +468,31 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="logging/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.727 6.727H14V0H4.91c-.905 0-1.637.732-1.637 1.636v20.728c0 .904.732 1.636 1.636 1.636h14.182c.904 0 1.636-.732 1.636-1.636V6.727zm-.545 10.455H7.09v-1.364h7.09v1.364zm2.727-3.273H7.091v-1.364h9.818zm0-3.273H7.091V9.273h9.818zM14.727 6h6l-6-6z"/></svg>
+  
+  <span class="md-ellipsis">
+    Logging
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -703,9 +732,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#elements" class="md-nav__link">
+  <a href="#sections" class="md-nav__link">
     <span class="md-ellipsis">
-      Elements
+      Sections
     </span>
   </a>
   
@@ -733,42 +762,15 @@
 <h1 align="center"><b>Using API</b></h1>
 
 <h2 id="overview"><strong>Overview</strong></h2>
-<p>KireiSakura-Kit provides a set of ways to interact with and leverage it's capabilities.
-This documentation will guide you through the available methods and their usage.</p>
-<h2 id="elements"><strong>Elements</strong></h2>
+<p>KireiSakura-Kit provides a structured API to help you build powerful shell scripts. The API consists of several components/elements.</p>
+<h2 id="sections"><strong>Sections</strong></h2>
 <ul>
-<li><a href="super-vars/">Super Variables</a></li>
-<li><a href="methods-modules/">Methods &amp; Modules</a></li>
-<li><a href="packages/">Packages</a></li>
-<li><a href="loading-modules/">Loading Modules</a></li>
+<li><a href="logging/">Logging</a> - Equivalent to echo/printf but with more.</li>
+<li><a href="super-vars/">Super Variables</a> - Access important paths and configuration values.</li>
+<li><a href="methods-modules/">Methods &amp; Modules</a> - Use predefined functions organized into modules.</li>
+<li><a href="packages/">Packages</a> - Extend functionality with installable packages.</li>
+<li><a href="loading-modules/">Loading Modules</a> - Learn how to import and use various modules.</li>
 </ul>
-<!--
-
-## **Loading modules**
-
-By default KireiSakura Kit only imports [core modules](./terminology.md#1-core-modules).
-
-Modules are imported using `kimport` method.
-
-- To import [plugin modules](./terminology.md#2-plugin-modules):-
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># import specific modules of a package.</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>kimport<span class="w"> </span>packageName.ModuleName
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>kimport<span class="w"> </span>utils.disk<span class="w"> </span>utils.shell
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># import all modules of a package</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>kimport<span class="w"> </span>PackageName.
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>kimport<span class="w"> </span>utils.
-</span></code></pre></div>
-
-- To import [local modules](./terminology.md#3-local-modules) use `-l` flag:-
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># import local modules</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>kimport<span class="w"> </span>.ModuleName
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>kimport<span class="w"> </span>.module1<span class="w"> </span>.module2<span class="w"> </span>.module3
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># import all local modules</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>kimport<span class="w"> </span>.
-</span></code></pre></div>
--->
 
 
 
@@ -824,13 +826,13 @@ Modules are imported using `kimport` method.
         
         
           
-          <a href="super-vars/" class="md-footer__link md-footer__link--next" aria-label="Next: Super Variables">
+          <a href="logging/" class="md-footer__link md-footer__link--next" aria-label="Next: Logging">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Super Variables
+                Logging
               </div>
             </div>
             <div class="md-footer__button md-icon">

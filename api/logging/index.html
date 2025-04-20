@@ -6,15 +6,17 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Overview of KireiSakura-Kit's logging functionality, example usage.">
       
       
-        <link rel="canonical" href="https://soymadip.github.io/KireiSakura-Kit/api/reference/">
+      
+        <link rel="canonical" href="https://soymadip.github.io/KireiSakura-Kit/api/logging/">
       
       
-        <link rel="prev" href="../loading-modules/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../../faq/">
+        <link rel="next" href="../super-vars/">
       
       
       <link rel="icon" href="../../src/icon.png">
@@ -22,7 +24,7 @@
     
     
       
-        <title>Methods Reference - KireiSakura Kit</title>
+        <title>Logging - KireiSakura Kit</title>
       
     
     
@@ -59,11 +61,11 @@
       
         <meta  property="og:type"  content="website" >
       
-        <meta  property="og:title"  content="Methods Reference - KireiSakura Kit" >
+        <meta  property="og:title"  content="Logging - KireiSakura Kit" >
       
-        <meta  property="og:description"  content="None" >
+        <meta  property="og:description"  content="Overview of KireiSakura-Kit's logging functionality, example usage." >
       
-        <meta  property="og:image"  content="https://soymadip.github.io/KireiSakura-Kit/assets/images/social/api/reference.png" >
+        <meta  property="og:image"  content="https://soymadip.github.io/KireiSakura-Kit/assets/images/social/api/logging.png" >
       
         <meta  property="og:image:type"  content="image/png" >
       
@@ -71,15 +73,15 @@
       
         <meta  property="og:image:height"  content="630" >
       
-        <meta  property="og:url"  content="https://soymadip.github.io/KireiSakura-Kit/api/reference/" >
+        <meta  property="og:url"  content="https://soymadip.github.io/KireiSakura-Kit/api/logging/" >
       
         <meta  name="twitter:card"  content="summary_large_image" >
       
-        <meta  name="twitter:title"  content="Methods Reference - KireiSakura Kit" >
+        <meta  name="twitter:title"  content="Logging - KireiSakura Kit" >
       
-        <meta  name="twitter:description"  content="None" >
+        <meta  name="twitter:description"  content="Overview of KireiSakura-Kit's logging functionality, example usage." >
       
-        <meta  name="twitter:image"  content="https://soymadip.github.io/KireiSakura-Kit/assets/images/social/api/reference.png" >
+        <meta  name="twitter:image"  content="https://soymadip.github.io/KireiSakura-Kit/assets/images/social/api/logging.png" >
       
     
     
@@ -140,7 +142,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Methods Reference
+              Logging
             
           </span>
         </div>
@@ -400,6 +402,8 @@
       
   
   
+    
+  
   
   
     
@@ -423,11 +427,11 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -452,7 +456,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Using API
@@ -465,10 +469,17 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../logging/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -481,6 +492,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -597,17 +609,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../reference/" class="md-nav__link">
         
   
   
@@ -620,7 +625,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -732,66 +736,9 @@
   
 
 
-<h1 align="center"><b>Available Methods</b></h1>
+  <h1>Logging</h1>
 
-<div class="admonition failure">
-<p class="admonition-title">Sorry</p>
-<p><center><big> Methods are not yet documented.</big></center></p>
-</div>
-<!-- # INI Parser Design (Following `configparser` Standards)
-
-## Core Functionalities
-
-### 1. Read INI Files
-- **Command:** `ini.read <file>`
-- Reads and parses an INI file into memory.
-- Stores data in an associative array (`INI_DATA`) if called form another ini method. else store in a associative array as same name as the filename without the .ini extension.
-- Parses `[parser]` section for flags (e.g., `raw_mode = true`).
-
-### 2. Retrieve Values
-- **Command:** `ini.get <file> <section.key> [--raw]`
-- Supports:
-  - **Variable expansion:** Expands `${key}` (same section) and `${section.key}` (cross-section).
-  - **Recursive expansion:** Expands up to 5 levels deep. can be adjusted using `[parser] expansion_limit=N` option.
-  - **Raw mode:**
-    - `--raw` flag for per-query raw output.
-    - `[parser] raw_mode = true` to set global raw mode.
-
-### 3. Set Values
-- **Command:** `ini.set <file> <section.key> <value>`
-- Overwrites existing values.
-- Creates a new key if not found.
-
----
-
-## Additional Features
-
-### Handling Environment Variables  
-- No automatic expansion.
-- Expansion can be enabled using `--env` or `[parser] expand_env = true`.
-
-### Case Sensitivity  
-- Default: **Case-insensitive** (like `configparser`).
-- Configurable via `[parser] case_sensitive = true`.
-
-### Defaults Section  
-- `[DEFAULT]` values act as fallback for missing keys.
-
-### Strict Key-Value Rules  
-- By default, **keys without values** throw an error.
-- `[parser] allow_empty_keys = true` allows empty values.
-
-### Multi-line Support  
-- Indented lines are treated as continuations.
-
-### Duplicate Keys  
-- Logs a warning but overwrites previous values.
-
-### Inline Comments  
-- Supports `key = value # comment`.
-
-### Empty Sections  
-- Allowed but logs a warning. -->
+<p>This section displays overview of logging functionality</p>
 
 
 
@@ -830,7 +777,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../loading-modules/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Loading Modules">
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: API">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -840,20 +787,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Loading Modules
+                API
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../faq/" class="md-footer__link md-footer__link--next" aria-label="Next: FAQ">
+          <a href="../super-vars/" class="md-footer__link md-footer__link--next" aria-label="Next: Super Variables">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                FAQ
+                Super Variables
               </div>
             </div>
             <div class="md-footer__button md-icon">

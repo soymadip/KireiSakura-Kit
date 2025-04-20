@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://soymadip.github.io/KireiSakura-Kit/api/super-vars/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../logging/">
       
       
         <link rel="next" href="../methods-modules/">
@@ -424,6 +424,8 @@
       
         
       
+        
+      
     
     
     
@@ -464,6 +466,31 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.727 6.727H14V0H4.91c-.905 0-1.637.732-1.637 1.636v20.728c0 .904.732 1.636 1.636 1.636h14.182c.904 0 1.636-.732 1.636-1.636V6.727zm-.545 10.455H7.09v-1.364h7.09v1.364zm2.727-3.273H7.091v-1.364h9.818zm0-3.273H7.091V9.273h9.818zM14.727 6h6l-6-6z"/></svg>
+  
+  <span class="md-ellipsis">
+    Logging
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -533,27 +560,36 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-project-metadata" class="md-nav__link">
+  <a href="#1-project-information" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Project &amp; Metadata
+      1. Project Information
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-core-directories" class="md-nav__link">
+  <a href="#2-kit-metadata" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Core Directories
+      2. Kit &amp; Metadata
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-runtime-logging" class="md-nav__link">
+  <a href="#3-core-directories" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Runtime &amp; Logging
+      3. Core Directories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-runtime-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Runtime &amp; Logging
     </span>
   </a>
   
@@ -786,27 +822,36 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-project-metadata" class="md-nav__link">
+  <a href="#1-project-information" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Project &amp; Metadata
+      1. Project Information
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-core-directories" class="md-nav__link">
+  <a href="#2-kit-metadata" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Core Directories
+      2. Kit &amp; Metadata
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-runtime-logging" class="md-nav__link">
+  <a href="#3-core-directories" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Runtime &amp; Logging
+      3. Core Directories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-runtime-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Runtime &amp; Logging
     </span>
   </a>
   
@@ -839,38 +884,50 @@
 <h1 align="center"><b>Super Variables</b></h1>
 
 <ul>
-<li>KireiSakura-Kit defines several key environment variables, known as <strong>Super Variables</strong>, which store important paths and project-related information.  </li>
-<li>These variables can be used like other variables to get many useful values.</li>
+<li>KireiSakura-Kit defines several environment variables, known as <strong>Super Variables</strong>, which store important kit &amp; project related information.  </li>
+<li>These variables can be accessed like other variables to get many useful values.</li>
 </ul>
 <div class="admonition example">
-<p class="admonition-title">Here is an example of getting values of Super Variables</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Print a value of a Super Variable (here, Documentation site url)</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>log.info<span class="w"> </span><span class="nv">$Kirei_docs_url</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># make a temporary directory in cache dir</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>mkdir<span class="w"> </span><span class="nv">$kirei_cache_dir</span>/temparary_dir
+<p class="admonition-title">Example</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Print value of Kit&#39;s official site url</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>log.info<span class="w"> </span><span class="nv">$k_kit_site</span>
 </span></code></pre></div>
 </div>
 <h2 id="list-of-super-variables"><strong>List of Super variables</strong></h2>
-<h3 id="1-project-metadata">1. Project &amp; Metadata</h3>
+<h3 id="1-project-information">1. Project Information</h3>
 <ul>
-<li><strong><code>kirei_docs_url</code></strong>         → URL to the official documentation.  </li>
-<li><strong><code>k_project_name</code></strong>     → Name of the project.  </li>
-<li><strong><code>kirei_kit_version</code></strong>      → Version of the currently installed kit.  </li>
+<li><strong><code>k_prj_name</code></strong>              → Name of the current project.</li>
+<li><strong><code>k_prj_owner</code></strong>             → Owner/maintainer of the current project.</li>
+<li><strong><code>k_prj_url</code></strong>               → URL to the project's website.</li>
+<li><strong><code>k_prj_repo</code></strong>              → Project's repository (format: username/repo).</li>
+<li><strong><code>k_prj_config</code></strong>            → Path to the project's configuration file.</li>
 </ul>
-<h3 id="2-core-directories">2. Core Directories</h3>
+<h3 id="2-kit-metadata">2. Kit &amp; Metadata</h3>
 <ul>
-<li><strong><code>kirei_dir</code></strong>              → Root directory of KireiSakura-Kit.  </li>
-<li><strong><code>kirei_core_dir</code></strong>         → Directory containing core scripts.  </li>
-<li><strong><code>kirei_loader</code></strong>           → Path to the main entry script.  </li>
-<li><strong><code>kirei_module_dir</code></strong>       → Directory containing additional modules.  </li>
-<li><strong><code>kirei_assets_dir</code></strong>       → Directory for assets like icons and themes.  </li>
+<li><strong><code>k_kit_name</code></strong>              → Name of the kit.</li>
+<li><strong><code>k_kit_owner</code></strong>             → Owner/maintainer of the kit.</li>
+<li><strong><code>k_kit_site</code></strong>              → URL to the kit's website.</li>
+<li><strong><code>k_kit_repo</code></strong>              → GitHub repository of the kit (format: username/repo).</li>
+<li><strong><code>k_kit_branch</code></strong>            → Production branch of the kit repository.</li>
+<li><strong><code>k_kit_installer_url</code></strong>     → URL to the installer script.</li>
+<li><strong><code>k_kit_version</code></strong>           → Version of the currently installed kit.</li>
+<li><strong><code>k_kit_upstream_version</code></strong>  → Latest available version from upstream.</li>
+<li><strong><code>k_kit_ver_url</code></strong>           → Path to the local version file.</li>
+<li><strong><code>k_kit_upstream_ver_url</code></strong>  → URL to check for upstream version.</li>
 </ul>
-<h3 id="3-runtime-logging">3. Runtime &amp; Logging</h3>
+<h3 id="3-core-directories">3. Core Directories</h3>
 <ul>
-<li><strong><code>kirei_cache_dir</code></strong>        → Directory for caching temporary files.  </li>
-<li><strong><code>kirei_log_file</code></strong>         → Path to the log file for debugging and tracking.  </li>
-<li><strong><code>kirei_loaded_modules</code></strong>   → <em>Array</em> containing list of loaded modules.  </li>
+<li><strong><code>k_kit_dir</code></strong>               → Root directory of KireiSakura-Kit.</li>
+<li><strong><code>k_core_dir</code></strong>              → Directory containing core scripts.</li>
+<li><strong><code>k_loader</code></strong>                → Path to the main entry script.</li>
+<li><strong><code>k_package_dir</code></strong>           → Directory containing packages.</li>
+<li><strong><code>k_assets_dir</code></strong>            → Directory for assets like icons and themes.</li>
+</ul>
+<h3 id="4-runtime-logging">4. Runtime &amp; Logging</h3>
+<ul>
+<li><strong><code>k_cache_dir</code></strong>             → Directory for caching temporary files.</li>
+<li><strong><code>k_log_file</code></strong>              → Path to the log file for debugging and tracking.</li>
+<li><strong><code>k_loaded_modules</code></strong>        → <em>Array</em> containing list of loaded modules.</li>
 </ul>
 <hr />
 
@@ -911,7 +968,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: API">
+          <a href="../logging/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Logging">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -921,7 +978,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                API
+                Logging
               </div>
             </div>
           </a>
