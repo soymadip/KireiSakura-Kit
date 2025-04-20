@@ -22,7 +22,7 @@
 #      - If module name is same for 2 packages,
 #        it causes overwrite in packagename of module in modules dict.
 # TODO:
-#      - Add . or packageName. to import all local/plugin modules.
+#      - IMPLEMENT new import patterns 
 #      - adapt to dependency related todos.
 #-----------------------------------------------------------
 kimport() {
