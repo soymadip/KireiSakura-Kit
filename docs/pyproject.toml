@@ -1,6 +1,6 @@
 [project]
 name = "KireiSakura-Docs"
-version = "1.0"
+version = "1.1"
 requires-python = "==3.12.*"
 dependencies = [
     "mkdocs>=1.6.1",
