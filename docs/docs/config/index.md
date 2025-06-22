@@ -33,22 +33,25 @@ KireiSakura-Kit supports two levels of configuration : -
 
 ---
 
-## :material-sort-numeric-ascending: **Loading Process**
+## :material-sitemap: **Config Loading Process**
 
 - The options set in config file overwrites their default values set by the Kit.  
 - Options in Project config file overwrite global & default values.
 
 ```mermaid
-
 graph TD
-    B{{Is XDG_CONFIG_HOME env variable set?}}
-    B -- Yes --> C[Use<br>XDG_CONFIG_HOME/KireiSakura-Kit/config.yml]
-    B -- No --> D[Use<br>$HOME/.config/KireiSakura-Kit/config.yml]
-    C --> E[Load global config values.<br>Overwriting default values.]
-    D --> E
-    E --> F{{'config.yml' file present in current project root?}}
-    F -- Yes --> G[Load project config values.<br>Overwrite global ones present in this.]
-    F -- No --> H[Use global config values]
-    G --> I[Use loaded config values]
-    H --> I
+    A[Look for default values]
+    A --> B[Check for **/etc/KireiSakura-Kit/config.yml**]
+    B -- Found --> C[Load default config values.]
+    B -- Not found --> D{{Is XDG_CONFIG_HOME env variable set?}}
+    C --> D
+    D -- Yes --> E[Use<br>XDG_CONFIG_HOME/KireiSakura-Kit/config.yml]
+    D -- No --> F[Use<br>$HOME/.config/KireiSakura-Kit/config.yml]
+    E --> G[Load global config values.<br>Overwrite previous values.]
+    F --> G
+    G --> H{{'config.yml' file present in **current project root**?}}
+    H -- Yes --> I[Load project config values.<br>Overwrite previous values.]
+    H -- No --> J[Use global config values]
+    I --> K[Use final config values]
+    J --> K
 ```
