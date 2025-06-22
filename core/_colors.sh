@@ -8,7 +8,15 @@
 #
 # Detect terminal color support and define color codes
 
-detect-ansi-support() {
+#
+#
+#==---------------------------------------------------------------------------------
+# NAME:   __detect_ansi_support
+# ALIAS:  detect-ansi-support
+# DESC:   Detects the terminal's color support level.
+# USAGE:  detect-ansi-support
+#==---------------------------------------------------------------------------------
+__detect_ansi_support() {
     local colors=$(tput colors 2>/dev/null)
 
     case "$colors" in
@@ -26,8 +34,19 @@ detect-ansi-support() {
             ;;
     esac
 }
+#==---------------------------------------------------------------------------------
 
-generate-colors() {
+alias detect-ansi-support=__detect_ansi_support
+
+#
+#
+#==---------------------------------------------------------------------------------
+# NAME:   __generate_colors
+# ALIAS:  generate-colors
+# DESC:   Generates terminal color codes based on terminal support.
+# USAGE:  generate-colors
+#==---------------------------------------------------------------------------------
+__generate_colors() {
     local COLOR_MODE=$(detect-ansi-support)
 
     # Define colors
@@ -109,6 +128,9 @@ generate-colors() {
     # Reset color
     echo 'export NC="\e[0m"'
 }
+#==---------------------------------------------------------------------------------
+
+alias generate-colors=__generate_colors
 
 # Export color codes
-generate-colors
+__generate_colors

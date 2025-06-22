@@ -1,21 +1,24 @@
 {
-  "Function Template ": {
-    "prefix": "function",
+  "Method Template ": {
+    "prefix": "method",
     "scope": "shellscript",
     "body": [
       "",
       "#",
       "#",
-      "#---------------------------------------------------------------------------------",
-      "# NAME:  ${1:Function-Name}",
-      "# DESC:  ${2:Function-Description.}",
-      "# USAGE: ${1:Function-Name} ${3:<arguments>}",
-      "# ${4:FLAGS:}",
-      "#${5:      -1st,--full1st  flag desc}.",
-      "#---------------------------------------------------------------------------------",
-      "${1:Function-Name}() {",
+      "#==---------------------------------------------------------------------------------",
+      "# NAME:   __${1:Method-Name}",
+      "# ALIAS:  ${2:Alias of Method}",
+      "# DESC:   ${3:Method-Description.}",
+      "# USAGE:  ${2:Alias of Method} [${4:<arguments>}]",
+      "# ${5:FLAGS:}",
+      "#         ${6:-1st,--full_1st}    ${7:flag Description}.",
+      "#==---------------------------------------------------------------------------------",
+      "__${1:Method-Name}() {",
       "  $0",
       "}",
+      "#==---------------------------------------------------------------------------------",
+      "",
     ]
   },
   "Config Option":{

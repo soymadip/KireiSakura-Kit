@@ -5,18 +5,17 @@
 # \____\___/|_|  \___| |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
 #
 
+
 #
 #
-#-----------------------------------------------------------------------
-# NAME:  compare-num
-# DESC:  Compare 2 numbers. also works for version numbers.
-# USAGE: compare-num <number1> <number2>
-# Return values:
-#    0 :- $1 is equal to $2
-#    1 :- $1 is greater than $2
-#    2 :- $1 is less than $2
-#----------------------------------------------------------------------
-compare-num() {
+#==---------------------------------------------------------------------------------
+# NAME:   __compare_num
+# ALIAS:  compare-num
+# DESC:   Compare 2 numbers. also works for version numbers.
+# USAGE:  compare-num <number1> <number2>
+# FLAGS:
+#==---------------------------------------------------------------------------------
+__compare_num() {
   local ver1 ver2
 
   if [[ $BASH_VERSION ]]; then
@@ -43,15 +42,18 @@ compare-num() {
   echo 0
   return 0
 }
+#==---------------------------------------------------------------------------------
+
 
 #
 #
-#-----------------------------------------------------------------------------------
-# NAME: get-package-manager
-# DESC: Determine the package manager based on the OS.
-# USAGE: get-package-manager
-#-----------------------------------------------------------------------------------
-get-package-manager() {
+#==---------------------------------------------------------------------------------
+# NAME:   __get_package_manager
+# ALIAS:  get-package-manager
+# DESC:   Determine the package manager based on the OS.
+# USAGE:  get-package-manager
+#==---------------------------------------------------------------------------------
+__get_package_manager() {
 
   if [[ "$(uname)" == "Linux" ]]; then
     if check-dep -q pacman; then
@@ -80,19 +82,18 @@ get-package-manager() {
     exit 1
   fi
 }
+#==---------------------------------------------------------------------------------
+
 
 #
 #
-#------------------------------------------------------------------------------------
-# NAME: install-package
-# DESC: uses get-package-manager() to determine package manager.
-#       & installs the package using the package manager.
-# USAGE: install-package <package>
-# TODO:
-#     - add support for group install
-#     - add support for uninstall package
-#------------------------------------------------------------------------------------
-install-package() {
+#==---------------------------------------------------------------------------------
+# NAME:   __install_package
+# ALIAS:  install-package
+# DESC:   Uses get-package-manager() to determine package manager and installs the package.
+# USAGE:  install-package <package>
+#==---------------------------------------------------------------------------------
+__install_package() {
   local pkg="$1"
   local pkg_mngr
 
@@ -128,18 +129,20 @@ install-package() {
   esac
   return 0
 }
+#==---------------------------------------------------------------------------------
+
 
 #
 #
-#---------------------------------------------------------------------------------
-# NAME:  check-dep
-# DESC:  Check if a dependency is installed.
-# USAGE: check_dir <directory> <flags>
+#==---------------------------------------------------------------------------------
+# NAME:   __check_dep
+# ALIAS:  check-dep
+# DESC:   Check if a dependency is installed.
+# USAGE:  check-dep [<flags>] <dependency1> [<dependency2> ...]
 # FLAGS:
-#     -q, --quiet    Suppress output
-# TODO: reimplement -n/--needed
-#---------------------------------------------------------------------------------
-check-dep() {
+#         -q,--quiet    Suppress output.
+#==---------------------------------------------------------------------------------
+__check_dep() {
   local dep=()
   local not_found=()
   local be_quiet=false
@@ -183,19 +186,22 @@ check-dep() {
     fi
   fi
 }
+#==---------------------------------------------------------------------------------
+
 
 #
 #
-#-------------------------------------------------------------------------------
-# FUNC:  check_dir
-# DESC:  Check if a directory exists and optionally create it.
-# USAGE: check_dir <directory> <flags>
+#==---------------------------------------------------------------------------------
+# NAME:   __check_dir
+# ALIAS:  check-dir
+# DESC:   Check if a directory exists and optionally create it.
+# USAGE:  check-dir <directory> [<flags>]
 # FLAGS:
-#     -n, --needed   Create the directory if it doesn't exist
-#     -e, --el_exit  Exit if the directory doesn't exist
-#     -q, --quiet    Suppress output
-#-------------------------------------------------------------------------------
-check-dir() {
+#         -n,--needed   Create the directory if it doesn't exist.
+#         -e,--el_exit  Exit if the directory doesn't exist.
+#         -q,--quiet    Suppress output.
+#==---------------------------------------------------------------------------------
+__check_dir() {
   local dir=$1
   local is_needed=0
   local el_exit=0
@@ -258,56 +264,69 @@ check-dir() {
     fi
   fi
 }
+#==---------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------
-# NAME: starts-with
-# DESC: Check if a string starts with a given prefix.
-# USAGE: starts-with <string> <prefix>
-#------------------------------------------------------------------------------
-starts-with() {
+
+#
+#
+#==---------------------------------------------------------------------------------
+# NAME:   __starts_with
+# ALIAS:  starts-with
+# DESC:   Check if a string starts with a given prefix.
+# USAGE:  starts-with <string> <prefix>
+#==---------------------------------------------------------------------------------
+__starts_with() {
   local str="$1"
   local prfx="$2"
 
   [[ "${str#"$prfx"}" != "$str" ]]
 }
+#==---------------------------------------------------------------------------------
+
 
 #
 #
-#------------------------------------------------------------------------------
-# NAME: ends-with
-# DESC: Check if a string ends with a given suffix.
-# USAGE: ends-with <string> <suffix>
-#------------------------------------------------------------------------------
-ends-with() {
+#==---------------------------------------------------------------------------------
+# NAME:   __ends_with
+# ALIAS:  ends-with
+# DESC:   Check if a string ends with a given suffix.
+# USAGE:  ends-with <string> <suffix>
+#==---------------------------------------------------------------------------------
+__ends_with() {
   local str="$1"
   local suffix="$2"
 
   [[ "${str%"$suffix"}" != "$str" ]]
 }
+#==---------------------------------------------------------------------------------
+
 
 #
 #
-#--------------------------------------------------------------------------
-# NAME: len
-# DESC: gets the length of a string.
-# USAGE: len <string>
-#--------------------------------------------------------------------------
-len() {
+#==---------------------------------------------------------------------------------
+# NAME:   __len
+# ALIAS:  len
+# DESC:   Gets the length of a string.
+# USAGE:  len <string>
+#==---------------------------------------------------------------------------------
+__len() {
   echo "${#1}"
 }
+#==---------------------------------------------------------------------------------
+
 
 #
 #
-#-----------------------------------------------------------------------
-# NAME: strip
-# DESC: Trim a leading & trailing character from a string.
-# USAGE: strip <string from to remove> <character to strip>
-#        if no arg, strip whitespaces.
+#==---------------------------------------------------------------------------------
+# NAME:   __strip
+# ALIAS:  strip
+# DESC:   Trim a leading & trailing character from a string.
+# USAGE:  strip [<flags>] <string> [<character>]
 # FLAGS:
-#   -s,--start  Strip only leading char.
-#   -e,--end    Strip only trailing char.
-#-------------------------------------------------------------------------
-strip() {
+#         -s,--start    Strip only leading char.
+#         -e,--end      Strip only trailing char.
+#==---------------------------------------------------------------------------------
+__strip() {
   local string character
   local strip_start=false strip_end=false
 
@@ -356,45 +375,52 @@ strip() {
 
   echo "$string"
 }
+#==---------------------------------------------------------------------------------
+
 
 #
 #
-#---------------------------------------------------------------------------------
-# NAME:  split (This one is AI generated, so no credit for me :D)
-# DESC:  Split a string by a delimiter & store the result in an array.
-# USAGE: split <string> <delimiter>
-#---------------------------------------------------------------------------------
-split() {
+#==---------------------------------------------------------------------------------
+# NAME:   __split
+# ALIAS:  split
+# DESC:   Split a string by a delimiter & store the result in an array.
+# USAGE:  split <string> <delimiter>
+#==---------------------------------------------------------------------------------
+__split() {
   local string="$1"
   local delimiter="$2"
   mapfile -t split_result < <(awk -v d="$delimiter" '{ n = split($0, parts, d); for (i = 1; i <= n; i++) print parts[i] }' <<<"$string")
 }
+#==---------------------------------------------------------------------------------
+
 
 #
 #
-#--------------------------------------------------------------------------
-# NAME:  hyprlink
-# DESC:  Print hyprlink in terminal.
-# USAGE: hyprlink <url> <text>
-#-------------------------------------------------------------------------
-hyperlink() {
+#==---------------------------------------------------------------------------------
+# NAME:   __hyperlink
+# ALIAS:  hyperlink
+# DESC:   Print hyperlink in terminal.
+# USAGE:  hyperlink <url> <text>
+#==---------------------------------------------------------------------------------
+__hyperlink() {
   local url="$1"
   local text="${2:-$1}"
   echo -e "\e]8;;${url}\e\\${text}\e]8;;\e\\"
 }
+#==---------------------------------------------------------------------------------
 
 
 #
 #
-#---------------------------------------------------------------------------------
-# NAME:  kit-version
-# DESC:  Get the version of the kit.
-# USAGE: kit-version <arguments>
+#==---------------------------------------------------------------------------------
+# NAME:   __kit_version
+# DESC:   Get the version of the kit.
+# USAGE:  kit-version [<flags>]
 # FLAGS:
-#     -u, --upstream   get version of upstream
-#     -l, --local      get version of local installation
-#---------------------------------------------------------------------------------
-kit-version() {
+#         -u,--upstream   Get version of upstream.
+#         -l,--local      Get version of local installation.
+#==---------------------------------------------------------------------------------
+__kit_version() {
   local url
   local version
   local local=true
@@ -423,3 +449,4 @@ kit-version() {
   echo "$version"
   return 0
 }
+#==---------------------------------------------------------------------------------

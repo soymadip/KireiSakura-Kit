@@ -10,22 +10,13 @@
 
 #
 #
-#-----------------------------------------------------------
-# USAGE: kimport packageName.moduleName 
-#                 OR
-#        kimport packageName.*
-#                 OR
-#        kimport moduleName
-#                 OR
-#        kimport *
-# FIXME: 
-#      - If module name is same for 2 packages,
-#        it causes overwrite in packagename of module in modules dict.
-# TODO:
-#      - IMPLEMENT new import patterns 
-#      - adapt to dependency related todos.
-#-----------------------------------------------------------
-kimport() {
+#==---------------------------------------------------------------------------------
+# NAME:   __kimport
+# ALIAS:  kimport
+# DESC:   Import package/local modules.
+# USAGE:  kimport [<packageName>.<moduleName>|<packageName>.*|<moduleName>|*]
+#==---------------------------------------------------------------------------------
+__kimport() {
   local -A modules 
   local module_path="" package="" package_init=""
   local failed=() imported_packages=()
@@ -93,5 +84,7 @@ kimport() {
   else
     log.success "Imported all modules successfully." kimport
   fi
-
 }
+#==---------------------------------------------------------------------------------
+
+alias kimport=__kimport

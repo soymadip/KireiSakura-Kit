@@ -21,12 +21,13 @@ export k_loaded_modules=()
 
 #
 #
-#---------------------------------------------------------------------------------
-# NAME:  remove-command
-# DESC:  Remove command conflicts between functions and aliases.
-# USAGE: remove-command <command>
-#---------------------------------------------------------------------------------
-remove-command() {
+#==---------------------------------------------------------------------------------
+# NAME:   __remove_command
+# ALIAS:  remove-command
+# DESC:   Remove command conflicts between functions and aliases.
+# USAGE:  remove-command <command>
+#==---------------------------------------------------------------------------------
+__remove_command() {
     local command="$1"
 
     if type "$command" &>/dev/null; then
@@ -39,3 +40,6 @@ remove-command() {
         fi
     fi
 }
+#==---------------------------------------------------------------------------------
+
+alias remove-command=__remove_command

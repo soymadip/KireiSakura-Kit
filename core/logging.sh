@@ -1,23 +1,13 @@
 #
 #
-#--------------------------------------------------------------------------
-# Name: logger
-# Desc: Logs the message to the console and log file.
-# USAGE: logger <arguments>
-# ARGS:
-#       - log_level: The log level of the message. (error, warn, success, info)
-#       - log_message: The message to log.
-#       - extra_info: Extra information to log.
-# FIXME:
-#       - \t is putting space after log symbol.
-#       - \n is printing the symbol then message in new line with empty symbol.
-#       - hyprlink is putting color code when using.
-#       - Change log.info to something else.
-# TODO:
-#       - bold, italics and underline text.
-#       - add a new line after log.success.
-#--------------------------------------------------------------------------
-logger() {
+#==---------------------------------------------------------------------------------
+# NAME:   __logger
+# ALIAS:  logger
+# DESC:   Logs the message to the console and log file.
+# USAGE:  logger [<log_level>] [<log_message>] [<extra_info>]
+# FLAGS:
+#==---------------------------------------------------------------------------------
+__logger() {
   local log_level=$1
   local log_message=$2
   local extra_info=$3
@@ -71,10 +61,12 @@ logger() {
       echo -e "[$(date +"%Y.%m.%d %H:%M:%S")] [$log_level] $log_message" >>"$k_log_file"
   } && return 0 || return 1
 }
+#==---------------------------------------------------------------------------------
 
-alias log='logger info'
-alias log.info='logger info'
-alias log.error='logger error'
-alias log.warn='logger warn'
-alias log.success='logger success'
-alias log.nyi='logger error "NOT YET IMPLEMENTED!"'
+alias logger=__logger
+alias log='__logger info'
+alias log.info='__logger info'
+alias log.error='__logger error'
+alias log.warn='__logger warn'
+alias log.success='__logger success'
+alias log.nyi='__logger error "NOT YET IMPLEMENTED!"'
