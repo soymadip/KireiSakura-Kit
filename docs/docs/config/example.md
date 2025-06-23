@@ -45,7 +45,7 @@ installer_url="${configs[installer_url]}"
 docs_url="${configs[docs_url]}"
 
 kit_dir="${configs[kit_dir]}"
-core_dir="${configs[core_dir]}"
+lib_dir="${configs[lib_dir]}"
 loader_path="${configs[loader_path]}"
 package_dir="${configs[package_dir]}"
 assets_dir="${configs[assets_dir]}"

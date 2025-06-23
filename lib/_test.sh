@@ -27,28 +27,28 @@ fi
 echo -e "\n${LAVENDER}-------: SUPER VARIABLES :-------${NC}\n"
 
 super_vars=(
-  "k_kit_dir"
-  "k_core_dir"
-  "k_init_file"
-  "k_package_dir"
-  "k_assets_dir"
-  "k_kit_name"
-  "k_kit_owner"
-  "k_kit_site"
-  "k_kit_repo"
-  "k_kit_branch"
-  "k_kit_installer_url"
-  "k_kit_ver_url"
-  "k_kit_upstream_ver_url"
-  "k_kit_version"
-  "k_kit_upstream_version"
-  "k_prj_name"
-  "k_prj_owner"
-  "k_prj_url"
-  "k_prj_repo"
-  "k_prj_config"
-  "k_cache_dir"
-  "k_log_file"
+  "K_KIT_DIR"
+  "K_LIB_DIR"
+  "K_INIT_FILE"
+  "K_PACKAGE_DIR"
+  "K_ASSETS_DIR"
+  "K_KIT_NAME"
+  "K_KIT_OWNER"
+  "K_KIT_SITE"
+  "K_KIT_REPO"
+  "K_KIT_BRANCH"
+  "K_KIT_INSTALLER_URL"
+  "K_KIT_VER_URL"
+  "K_KIT_UPSTREAM_VER_URL"
+  "K_KIT_VERSION"
+  "K_KIT_UPSTREAM_VERSION"
+  "K_PRJ_NAME"
+  "K_PRJ_OWNER"
+  "K_PRJ_URL"
+  "K_PRJ_REPO"
+  "K_PRJ_CONFIG"
+  "K_CACHE_DIR"
+  "K_LOG_FILE"
 )
 
 missing_vars=()
@@ -77,14 +77,14 @@ fi
 
 echo -e "\n${LAVENDER}-------: CHECKING CACHE DIR :-------${NC}\n"
 
-if [[ -d "$k_cache_dir" ]]; then
+if [[ -d "$K_CACHE_DIR" ]]; then
   echo -e "${GREEN}✔ Cache dir exists${NC}"
 else
   echo -e "${RED}X Cache dir doesn't exist${NC}"
   exit 1
 fi
 
-if [[ -f "$k_log_file" ]]; then
+if [[ -f "$K_LOG_FILE" ]]; then
   echo -e "${GREEN}✔ log file exists${NC}"
 else
   echo -e "${RED}X log file doesn't exist${NC}"

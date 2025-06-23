@@ -52,7 +52,7 @@
     "prefix": "printf",
     "scope": "shellscript",
     "body": [
-      "printf \"k_${1:core_dir}=\\\"%s\\\"\\n\" \"$${2}\""
+      "printf \"K_${1:LIB_DIR}=\\\"%s\\\"\\n\" \"$${2}\""
     ]
   }
 }

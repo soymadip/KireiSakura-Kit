@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/doploy-docs.yml'
-      - 'core/_updater.sh'
+      - 'lib/_updater.sh'
       - 'docs/**'
       - '.version'
     branches:

@@ -10,10 +10,9 @@
 #
 #==---------------------------------------------------------------------------------
 # NAME:   __compare_num
-# ALIAS:  compare-num
+# ALIAS:  util.compare-num
 # DESC:   Compare 2 numbers. also works for version numbers.
-# USAGE:  compare-num <number1> <number2>
-# FLAGS:
+# USAGE:  util.compare-num <number1> <number2>
 #==---------------------------------------------------------------------------------
 __compare_num() {
   local ver1 ver2
@@ -48,230 +47,8 @@ __compare_num() {
 #
 #
 #==---------------------------------------------------------------------------------
-# NAME:   __get_package_manager
-# ALIAS:  get-package-manager
-# DESC:   Determine the package manager based on the OS.
-# USAGE:  get-package-manager
-#==---------------------------------------------------------------------------------
-__get_package_manager() {
-
-  if [[ "$(uname)" == "Linux" ]]; then
-    if check-dep -q pacman; then
-      echo "pacman"
-    elif check-dep -q apt; then
-      echo "apt"
-    elif check-dep -q dnf; then
-      echo "dnf"
-    elif check-dep -q zypper; then
-      echo "zypper"
-    elif check-dep -q apk; then
-      echo "apk"
-    else
-      log.error "Unsupported Linux distribution."
-      log.error "Use one (or derivatives) of below distros: "
-      log.error "Debian, Ubuntu, Fedora, Arch, SUSE"
-      exit 1
-    fi
-    return 0
-  elif [[ "$(uname)" == "Darwin" ]]; then
-    echo "brew"
-    return 0
-  else
-    log.error "Unsupported OS."
-    log.error "Only Linux and macOS are supported."
-    exit 1
-  fi
-}
-#==---------------------------------------------------------------------------------
-
-
-#
-#
-#==---------------------------------------------------------------------------------
-# NAME:   __install_package
-# ALIAS:  install-package
-# DESC:   Uses get-package-manager() to determine package manager and installs the package.
-# USAGE:  install-package <package>
-#==---------------------------------------------------------------------------------
-__install_package() {
-  local pkg="$1"
-  local pkg_mngr
-
-  pkg_mngr="$(get-package-manager)"
-
-  case $pkg_mngr in
-  pacman)
-    sudo pacman -S --noconfirm --needed "$pkg" >/dev/null || return 1
-    ;;
-  apt)
-    sudo apt update >/dev/null || return 1
-    sudo apt install -y "$pkg" >/dev/null || return 1
-    ;;
-  dnf)
-    sudo dnf install -y "$pkg" >/dev/null || return 1
-    ;;
-  zypper)
-    sudo zypper install -y "$pkg" >/dev/null || return 1
-    ;;
-  apk)
-    sudo apk add "$pkg" >/dev/null || return 1
-    ;;
-  brew)
-    brew install "$pkg" >/dev/null || return 1
-    ;;
-  *)
-    log.error "Unsupported Linux distribution."
-    log.error "No suppoeted package manager found."
-    log.warn "Use one (or derivatives) of below distros: "
-    log.warn "Debian, Ubuntu, Fedora, Arch, SUSE"
-    return 1
-    ;;
-  esac
-  return 0
-}
-#==---------------------------------------------------------------------------------
-
-
-#
-#
-#==---------------------------------------------------------------------------------
-# NAME:   __check_dep
-# ALIAS:  check-dep
-# DESC:   Check if a dependency is installed.
-# USAGE:  check-dep [<flags>] <dependency1> [<dependency2> ...]
-# FLAGS:
-#         -q,--quiet    Suppress output.
-#==---------------------------------------------------------------------------------
-__check_dep() {
-  local dep=()
-  local not_found=()
-  local be_quiet=false
-
-  log.warn "Checking dependencies." check-dep
-
-  while [[ $# -gt 0 ]]; do
-    case "$1" in
-    -q | --quiet)
-      be_quiet=true
-      shift
-      ;;
-    *)
-      dep+=("$1")
-      shift
-      ;;
-    esac
-  done
-
-  if [[ "${#dep[@]}" -eq 0 ]]; then
-    log.error "No dependencies provided." check-dep
-    return 1
-  else
-    for pkg in "${dep[@]}"; do
-      if command -v "$pkg" &>/dev/null; then
-        [[ "$be_quiet" = false ]] && log.success "$pkg is installed."
-      else
-        [[ "$be_quiet" = false ]] && log.warn "$pkg is not installed."
-        not_found+=("$pkg")
-      fi
-    done
-
-    if [[ "${#not_found[@]}" -gt 0 ]]; then
-      log.error "Not installed dependency(s):" check-dep
-      for ndep in "${not_found[@]}"; do
-        echo -e "\t\t${LAVENDER}$ndep ${NC}"
-      done
-      return 1
-    else
-      return 0
-    fi
-  fi
-}
-#==---------------------------------------------------------------------------------
-
-
-#
-#
-#==---------------------------------------------------------------------------------
-# NAME:   __check_dir
-# ALIAS:  check-dir
-# DESC:   Check if a directory exists and optionally create it.
-# USAGE:  check-dir <directory> [<flags>]
-# FLAGS:
-#         -n,--needed   Create the directory if it doesn't exist.
-#         -e,--el_exit  Exit if the directory doesn't exist.
-#         -q,--quiet    Suppress output.
-#==---------------------------------------------------------------------------------
-__check_dir() {
-  local dir=$1
-  local is_needed=0
-  local el_exit=0
-  local is_quiet=0
-
-  if [[ -z "$dir" ]]; then
-    echo "Error: Directory parameter is required."
-    return 1
-  fi
-
-  shift
-  while [[ $# -gt 0 ]]; do
-    case "$1" in
-    -n | --needed)
-      is_needed=1
-      ;;
-    -e | --el_exit)
-      el_exit=1
-      ;;
-    -q | --quiet)
-      is_quiet=1
-      ;;
-    *)
-      echo "Invalid option: $1"
-      return 1
-      ;;
-    esac
-    shift
-  done
-
-  if [[ "$is_needed" -eq 1 && "$el_exit" -eq 1 ]]; then
-    log.error "Invalid flags given: --needed and --el_exit cannot be used together."
-    return 1
-  fi
-
-  if [[ -d "$dir" ]]; then
-    [[ "$is_quiet" -ne 1 ]] && log.warn "Directory '$dir' already exists."
-  else
-    [[ "$is_quiet" -ne 1 ]] && log.warn "Directory '$dir' does not exist."
-
-    if [[ "$is_needed" -eq 1 ]]; then
-      [[ "$is_quiet" -ne 1 ]] && log.warn "Creating directory '$dir'..."
-
-      if mkdir -p "$dir" 2>/dev/null; then
-        [[ "$is_quiet" -ne 1 ]] && log.success "Directory '$dir' created successfully."
-      else
-        log.warn "Failed to create directory '$dir'. Attempting with sudo..."
-        if sudo mkdir -p "$dir"; then
-          [[ "$is_quiet" -ne 1 ]] && log.success "Directory '$dir' created successfully with sudo."
-        else
-          log.error "Failed to create directory '$dir' with sudo."
-          return 1
-        fi
-      fi
-    fi
-
-    if [[ "$el_exit" -eq 1 ]]; then
-      log.error "Exiting as requested by --el_exit flag."
-      exit 1
-    fi
-  fi
-}
-#==---------------------------------------------------------------------------------
-
-
-#
-#
-#==---------------------------------------------------------------------------------
 # NAME:   __starts_with
-# ALIAS:  starts-with
+# ALIAS:  lib.starts_with
 # DESC:   Check if a string starts with a given prefix.
 # USAGE:  starts-with <string> <prefix>
 #==---------------------------------------------------------------------------------
@@ -450,3 +227,12 @@ __kit_version() {
   return 0
 }
 #==---------------------------------------------------------------------------------
+
+
+
+
+
+
+#_____________________ Aliases ________________________
+
+alias util.compare-num='__compare_num'

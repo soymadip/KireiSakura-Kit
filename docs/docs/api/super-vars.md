@@ -12,42 +12,48 @@ icon: material/variable
     
     ```bash
     # Print value of Kit's official site url
-    log.info $k_kit_site
+
+    log.info $K_KIT_SITE
 
     ```
 
 ## **List of Super variables**
 
 ### 1. Project Information
-- **`k_prj_name`**              → Name of the current project.
-- **`k_prj_owner`**             → Owner/maintainer of the current project.
-- **`k_prj_url`**               → URL to the project's website.
-- **`k_prj_repo`**              → Project's repository (format: username/repo).
-- **`k_prj_config`**            → Path to the project's configuration file.
+
+- **`K_PRJ_NAME`**              → Name of the current project.
+- **`K_PRJ_OWNER`**             → Owner/maintainer of the current project.
+- **`K_PRJ_URL`**               → URL to the project's website.
+- **`K_PRJ_REPO`**              → Project's repository (format: username/repo).
+- **`K_PRJ_CONFIG`**            → Path to the project's configuration file.
+
 
 ### 2. Kit & Metadata
-- **`k_kit_name`**              → Name of the kit.
-- **`k_kit_owner`**             → Owner/maintainer of the kit.
-- **`k_kit_site`**              → URL to the kit's website.
-- **`k_kit_repo`**              → GitHub repository of the kit (format: username/repo).
-- **`k_kit_branch`**            → Production branch of the kit repository.
-- **`k_kit_installer_url`**     → URL to the installer script.
-- **`k_kit_version`**           → Version of the currently installed kit.
-- **`k_kit_upstream_version`**  → Latest available version from upstream.
-- **`k_kit_ver_url`**           → Path to the local version file.
-- **`k_kit_upstream_ver_url`**  → URL to check for upstream version.
 
-### 3. Core Directories
-- **`k_kit_dir`**               → Root directory of KireiSakura-Kit.
-- **`k_core_dir`**              → Directory containing core scripts.
-- **`k_init_file`**             → Path to the main entry script.
-- **`k_package_dir`**           → Directory containing packages.
-- **`k_assets_dir`**            → Directory for assets like icons and themes.
+- **`K_KIT_NAME`**              → Name of the kit.
+- **`K_KIT_OWNER`**             → Owner/maintainer of the kit.
+- **`K_KIT_SITE`**              → URL to the kit's website.
+- **`K_KIT_REPO`**              → GitHub repository of the kit (format: username/repo).
+- **`K_KIT_BRANCH`**            → Production branch of the kit repository.
+- **`K_KIT_INSTALLER_URL`**     → URL to the installer script.
+- **`K_KIT_VERSION`**           → Version of the currently installed kit.
+- **`K_KIT_UPSTREAM_VERSION`**  → Latest available version from upstream.
+- **`K_KIT_VER_URL`**           → Path to the local version file.
+- **`K_KIT_UPSTREAM_VER_URL`**  → URL to check for upstream version.
+
+
+### 3. Library Directories
+
+- **`K_KIT_DIR`**               → Root directory of KireiSakura-Kit.
+- **`K_LIB_DIR`**               → Directory of KireiSakura-Kit core library.
+- **`K_INIT_FILE`**             → Path to the main entry script.
+- **`K_PACKAGE_DIR`**           → Directory containing packages.
+- **`K_ASSETS_DIR`**            → Directory for assets like icons and themes.
+
 
 ### 4. Runtime & Logging
-- **`k_cache_dir`**             → Directory for caching temporary files.
-- **`k_log_file`**              → Path to the log file for debugging and tracking.
-- **`k_loaded_modules`**        → _Array_ containing list of loaded modules.
 
----
-
+- **`K_DEBUG_MODE`**            → Runtime flag for enabling verbose debug output.
+- **`K_CACHE_DIR`**             → Directory for caching temporary files.
+- **`K_LOG_FILE`**              → Path to the log file for debugging and tracking.
+- **`K_LOADED_MODULES`**        → _Array_ containing list of loaded modules.

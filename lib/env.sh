@@ -16,7 +16,7 @@ fi
 
 
 #------------ Export arrays for module count -----------------------
-export k_loaded_modules=()
+export K_LOADED_MODULES=()
 
 
 #

@@ -180,42 +180,42 @@ init_kit() {
   logf "Initialization started."
 
   printf "clear\n"
-  printf "command -v figlet >/dev/null 2>&1 && figlet \"%s\" || cat \"\$k_assets_dir/header.txt\"\n" "$project_name"
-  printf "echo -e '\\\n\\\n%s[ INIT ]-> Starting Initialization..%s\\\n\\\n'\n" "$YELLOW" "$NC"
+  printf "command -v figlet >/dev/null 2>&1 && figlet \"%s\" || cat \"\$K_ASSETS_DIR/header.txt\"\n" "$project_name"
+  printf "echo -e '\\\n\\\n%s${BOLD_YELLOW}➤${NC}%s INIT: Starting Initialization...%s\\\n\\\n'\n" "$YELLOW" "$YELLOW" "$NC"
 
-  [[ "$config_file" == "NULL" ]] || printf "echo -e '%s[✔]-> Loaded Config file..%s'\n" "$GREEN" "$NC"
+  [[ "$config_file" == "NULL" ]] || printf "echo -e '%s${BOLD_GREEN}✓${NC}%s Loaded Config file.%s'\n" "$GREEN" "$GREEN" "$NC"
   printf "sleep 1\n"
 
   # Check if kit exists
   if [ "$is_cstm_kit_dir" = true ]; then
 
     logf "Custom Kit directory given."
-    printf "echo -e '%s[!]-> Custom Kit directory given.%s\n'" "$YELLOW" "$NC"
-    printf "echo -e '%s[!]-> Checking it....%s\n'" "$YELLOW" "$NC"
+    printf "echo -e '%s${BOLD_YELLOW}⚠${NC}%s Custom Kit directory given.%s\n'" "$YELLOW" "$YELLOW" "$NC"
+    printf "echo -e '%s${BOLD_YELLOW}⚠${NC}%s Checking it...%s\n'" "$YELLOW" "$YELLOW" "$NC"
   else
     logf "Using default Kit installation."
-    printf "echo -e \"%s[!]-> Using default Kit installation.%s\"\n" "$YELLOW" "$NC"
-    printf "echo -e '%s[!]-> Validating....%s'\n" "$YELLOW" "$NC"
+    printf "echo -e \"%s${BOLD_YELLOW}⚠${NC}%s Using default Kit installation.%s\"\n" "$YELLOW" "$YELLOW" "$NC"
+    printf "echo -e '%s${BOLD_YELLOW}⚠${NC}%s Validating...%s'\n" "$YELLOW" "$YELLOW" "$NC"
   fi
 
   if [ ! -d "$kit_dir" ]; then
     if [ "$is_cstm_kit_dir" = true ]; then
       logf "Error: given custom kit dir is not valid."
-      printf "echo -e '%s[X]-> Error: Custom Kit directory does not exist. Please check given directory path.%s\n'" "$RED" "$NC"
-      printf "echo -e '%s[X]-> Exiting.....%s\n'" "$RED" "$NC"
+      printf "echo -e '%s${BOLD_RED}✗${NC}%s Error: Custom Kit directory does not exist. Please check given directory path.%s\n'" "$RED" "$RED" "$NC"
+      printf "echo -e '%s${BOLD_RED}✗${NC}%s Exiting...%s\n'" "$RED" "$RED" "$NC"
       exit 1
     else
       logf "Error: Default installation is missing"
-      printf "echo -e '%s[X]-> Error: Default installation is missing. Please re-install the kit.%s\n'" "$RED" "$NC"
-      printf "echo -e '%s[X]-> Exiting.....%s\n'" "$RED" "$NC"
+      printf "echo -e '%s${BOLD_RED}✗${NC}%s Error: Default installation is missing. Please re-install the kit.%s\n'" "$RED" "$RED" "$NC"
+      printf "echo -e '%s${BOLD_RED}✗${NC}%s Exiting...%s\n'" "$RED" "$RED" "$NC"
       exit 1
     fi
   else
     if [ "$is_cstm_kit_dir" = true ]; then
       logf "Custom kit dir exists."
-      printf "echo -e '%s[✔]-> Custom Kit directory exists.%s'\n" "$GREEN" "$NC"
+      printf "echo -e '%s${BOLD_GREEN}✓${NC}%s Custom Kit directory exists.%s'\n" "$GREEN" "$GREEN" "$NC"
     else
-      echo -e "echo -e \"\${GREEN}[✔]-> Validated default installation.${NC}\""
+      printf "echo -e '%s${BOLD_GREEN}✓${NC}%s Validated default installation.%s'\n" "$GREEN" "$GREEN" "$NC"
       echo
     fi
   fi
@@ -223,57 +223,58 @@ init_kit() {
   # Check if core file exists
   if [ ! -f "$init_file" ]; then
     logf "Error: Init file is missing in kit."
-    printf "echo -e '%s[X]-> Error: Init file is missing in Kit. Please check installation or re-install.%s\n'" "$RED" "$NC"
+    printf "echo -e '%s${BOLD_RED}✗${NC}%s Error: Init file is missing in Kit. Please check installation or re-install.%s\n'" "$RED" "$RED" "$NC"
     printf "echo -e 'Exiting.....' \n"
     exit 1
   fi
 
 
-  # Output SUPER variables
-  printf "k_kit_name=\"%s\"\n"           "$kit_name"
-  printf "k_kit_owner=\"%s\"\n"          "$kit_owner"
-  printf "k_kit_site=\"%s\"\n"           "$kit_site"
-  printf "k_kit_repo=\"%s\"\n"           "$kit_repo"
-  printf "k_kit_branch=\"%s\"\n"         "$kit_repo_branch"
-  printf "k_kit_installer_url=\"%s\"\n"  "$kit_installer_url"
+  # Output SUPER variables (constants)
+  printf "K_KIT_NAME=\"%s\"\n"           "$kit_name"
+  printf "K_KIT_OWNER=\"%s\"\n"          "$kit_owner"
+  printf "K_KIT_SITE=\"%s\"\n"           "$kit_site"
+  printf "K_KIT_REPO=\"%s\"\n"           "$kit_repo"
+  printf "K_KIT_BRANCH=\"%s\"\n"         "$kit_repo_branch"
+  printf "K_KIT_INSTALLER_URL=\"%s\"\n"  "$kit_installer_url"
 
-  printf "k_kit_dir=\"%s\"\n"         "$kit_dir"
-  printf "k_core_dir=\"%s\"\n"        "$core_dir"
-  printf "k_init_file=\"%s\"\n"       "$init_file"
-  printf "k_package_dir=\"%s\"\n"     "$package_dir"
-  printf "k_assets_dir=\"%s\"\n"      "$assets_dir"
+  printf "K_KIT_DIR=\"%s\"\n"         "$kit_dir"
+  printf "K_LIB_DIR=\"%s\"\n"         "$lib_dir"
+  printf "K_INIT_FILE=\"%s\"\n"       "$init_file"
+  printf "K_PACKAGE_DIR=\"%s\"\n"     "$package_dir"
+  printf "K_ASSETS_DIR=\"%s\"\n"      "$assets_dir"
 
-  printf "k_prj_name=\"%s\"\n"        "$project_name"
-  printf "k_prj_owner=\"%s\"\n"       "$project_owner"
-  printf "k_prj_url=\"%s\"\n"         "$project_url"
-  printf "k_prj_repo=\"%s\"\n"        "$project_repo"
-  printf "k_prj_config=\"%s\"\n"      "$project_config_file"
+  printf "K_PRJ_NAME=\"%s\"\n"        "$project_name"
+  printf "K_PRJ_OWNER=\"%s\"\n"       "$project_owner"
+  printf "K_PRJ_URL=\"%s\"\n"         "$project_url"
+  printf "K_PRJ_REPO=\"%s\"\n"        "$project_repo"
+  printf "K_PRJ_CONFIG=\"%s\"\n"      "$project_config_file"
 
-  printf "k_cache_dir=\"%s\"\n"       "$cache_dir"
-  printf "k_log_file=\"%s\"\n"        "$log_file"
+  printf "K_CACHE_DIR=\"%s\"\n"       "$cache_dir"
+  printf "K_LOG_FILE=\"%s\"\n"        "$log_file"
 
-  printf "k_kit_ver_url=\"%s\"\n"            "$kit_ver_url"
-  printf "k_kit_upstream_ver_url=\"%s\"\n"   "$upstream_ver_url"
-  printf "k_kit_version=\"%s\"\n"            "$(get_version)"
-  printf "k_kit_upstream_version=\"%s\"\n"   "$(get_version -u)"
+  printf "K_KIT_VER_URL=\"%s\"\n"            "$kit_ver_url"
+  printf "K_KIT_UPSTREAM_VER_URL=\"%s\"\n"   "$upstream_ver_url"
+  printf "K_KIT_VERSION=\"%s\"\n"            "$(get_version)"
+  printf "K_KIT_UPSTREAM_VERSION=\"%s\"\n"   "$(get_version -u)"
+  printf "K_DEBUG_MODE=%s\n"                 "$debug_mode"
 
   # Print source and check_dir commands
   printf "\nsleep 1\n"
   logf "Loading init file....."
-  printf "echo -e \"%s[!]-> Loading init file.%s\" \n" "$YELLOW" "$NC"
-  printf "source \"\$k_init_file\" \n"
-  printf "log.success 'Loaded Init file.' \n"
+  printf "echo -e \"%s${BOLD_YELLOW}⚠${NC}%s Loading init file...%s\" \n" "$YELLOW" "$YELLOW" "$NC"
+  printf "source \"\$K_INIT_FILE\" \n"
+  printf "log.success 'Init file loaded successfully.' \n"
   logf "Loaded init file."
 
   printf "sleep 1\n"
-  printf "log.warn \"Checking cache directory.....\"\n"
-  printf "check-dir \"\${k_cache_dir}\" --needed\n"
-  printf "log.success \"Cache directory exists.\"\n"
+  printf "log.warn \"Checking cache directory...\"\n"
+  printf "check-dir \"\${K_CACHE_DIR}\" --needed\n"
+  printf "log.success \"Cache directory verified.\"\n"
   printf "echo \n"
   printf "log \"KireiSakura-Kit v%s\"  \n" "$(get_version)"
   printf "sleep 1\n"
   printf "echo \" \\n \" \n"
-  printf "log.success \"Initialization complete.\" INIT\n"
+  printf "log.success \"Initialization completed successfully.\" INIT\n"
   logf "Initialization complete."
   exit 0
 }
@@ -281,7 +282,7 @@ init_kit() {
 run_tester() {
   echo -e "\n${LAVENDER}================= KireiSakura Kit Test Utility ==================${NC}\n"
 
-  if bash "$core_dir/_test.sh"; then
+  if bash "$lib_dir/_test.sh"; then
     echo -e "\n\n${GREEN}================ TEST SUCCESSFULLY COMPLETED ==================${NC}\n"
     exit 0
   else
@@ -293,36 +294,37 @@ run_tester() {
 #_________________________________ Default Configuration Values __________________________________________
 
 # Super variables
-kit_name="KireiSakura-Kit"                 # k_kit_name
-kit_owner="soymadip"                       # k_kit_owner
-kit_site="https://kireisakura.soymadip.me" # k_kit_site
-kit_repo="${kit_owner}/${kit_name}"        # k_kit_repo
-kit_repo_branch="main"                     # k_kit_branch
+kit_name="KireiSakura-Kit"                 # K_KIT_NAME
+kit_owner="soymadip"                       # K_KIT_OWNER
+kit_site="https://kireisakura.soymadip.me" # K_KIT_SITE
+kit_repo="${kit_owner}/${kit_name}"        # K_KIT_REPO
+kit_repo_branch="main"                     # K_KIT_BRANCH
 
-kit_dir="$HOME/.local/share/${kit_name}"   # k_kit_dir
-core_dir="$kit_dir/core"                   # k_core_dir
-init_file="$core_dir/__init__.sh"          # k_init_file
-package_dir="$kit_dir/packages"            # k_package_dir
-assets_dir="$kit_dir/Assets"               # k_assets_dir
+kit_dir="$HOME/.local/share/${kit_name}"   # K_KIT_DIR
+lib_dir="$kit_dir/lib"                     # K_LIB_DIR
+init_file="$lib_dir/__init__.sh"           # K_INIT_FILE
+package_dir="$kit_dir/packages"            # K_PACKAGE_DIR
+assets_dir="$kit_dir/Assets"               # K_ASSETS_DIR
 
-kit_ver_url="$kit_dir/.version"           # k_kit_ver_url
-kit_installer_url="${kit_site}/install"   # k_kit_installer_url
-upstream_ver_url="$kit_site/version"      # k_kit_upstream_ver_url
+kit_ver_url="$kit_dir/.version"            # K_KIT_VER_URL
+kit_installer_url="${kit_site}/install"    # K_KIT_INSTALLER_URL
+upstream_ver_url="$kit_site/version"       # K_KIT_UPSTREAM_VER_URL
 
-project_name="$kit_name"            # k_prj_name
-project_owner="$kit_owner"          # k_prj_owner
-project_url="$kit_site"             # k_prj_url
-project_repo="$kit_repo"            # k_prj_repo
-project_config_file="config.yml"    # k_prj_config
+project_name="$kit_name"            # K_PRJ_NAME
+project_owner="$kit_owner"          # K_PRJ_OWNER
+project_url="$kit_site"             # K_PRJ_URL
+project_repo="$kit_repo"            # K_PRJ_REPO
+project_config_file="config.yml"    # K_PRJ_CONFIG
 
-cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/${project_name}" # k_cache_dir
-log_file="${cache_dir}/${project_name}.log"                 # k_log_file
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/${project_name}" # K_CACHE_DIR
+log_file="${cache_dir}/${project_name}.log"                 # K_LOG_FILE
 
+debug_mode=false                    # K_DEBUG_MODE
 
 # ____________________________________ Main _________________________________________________
 
 # source colors
-eval "$("$(dirname "$0")/../core/_colors.sh")"
+eval "$("$(dirname "$0")/../lib/_colors.sh")"
 
 # Parse option
 while [[ "$#" -ge 0 ]]; do

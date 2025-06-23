@@ -17,7 +17,6 @@ nav:
       - api/super-vars.md
       - api/methods-modules.md
       - api/packages.md
-      - api/loading-modules.md
   - api/reference.md
   - faq.md
   - roadmap.md
