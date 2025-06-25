@@ -25,9 +25,9 @@
 ## Installation & setup
 
 > [!WARNING]
+> - KIT MAY BE BROKEN as it's going thorough massive design changes.  
+> - Contribute if you find this useful and wanna make this more powerful.  
 <!-- > FREQUENT CHANGES ARE BEING MADE as this project is in beta, so be careful.<br> -->
-> KIT MAY BE BROKEN as it's going thorough massive design changes.
-> Contribute if you find this useful and wanna make this more powerful.
 
 - Checkout [Dcoumentation](https://soymadip.github.io/KireiSakura-Kit) for installation & setup.
 
