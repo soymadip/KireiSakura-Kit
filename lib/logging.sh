@@ -1,4 +1,3 @@
-
 #==---------------------------------------------------------------------------------
 # NAME:   __logger
 # ALIAS:  log.*
@@ -10,8 +9,31 @@
 #       - Add support for \n escape sequence.
 #==---------------------------------------------------------------------------------
 __logger() {
-  local log_level=$1
-  local log_message=$2
+  local log_level="info"
+  local log_file="$K_LOG_FILE"
+  local log_message=""
+  
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -l|--log-level)
+        log_level="$2"
+        shift 2
+        ;;
+      -f|--log-file)
+        log_file="$2"
+        shift 2
+        ;;
+      -* | --*)
+        echo "Usage: log.<log_level> [<log_message>]"
+        echo "Available log levels: error, warn, success, info, debug"
+        return 1
+        ;;
+      *)
+        log_message="$1"
+        shift 1
+        ;;
+    esac
+  done
 
   case "$log_level" in
   "error")
@@ -41,26 +63,28 @@ __logger() {
     ;;
   esac
 
-  if __starts_with "\n" "$log_message"; then
-    log_message=$(strip "\n" "$log_message")
+  if [[ "$log_message" == "\n"* ]]; then
+    log_message="${log_message#\\n}"
     echo ""
-    echo -e "[$(date '+%Y.%m.%d %H:%M:%S')] " >>"$K_LOG_FILE"
+    echo -e "[$(date '+%Y.%m.%d %H:%M:%S')] " >>"$log_file"
   fi
 
   # Format the message with bold colored prefix
-  formatted_message="${bold_color}${prefix}${NC}${color} ${log_message}${NC}"
+  formatted_message=" ${bold_color}${prefix}${NC}${color} ${log_message}${NC}"
 
-  {
-    echo -e "$formatted_message" &&
-      echo -e "[$(date +"%Y.%m.%d %H:%M:%S")] [$log_level] $log_message" >>"$K_LOG_FILE"
-  } && return 0 || return 1
+  # Log to file
+  echo -e "[$(date +"%Y.%m.%d %H:%M:%S")] [$log_level] $log_message" >>"$log_file"
+  
+  # Return the formatted message for display
+  echo -e "$formatted_message"
+
+  return 0
 }
 #==---------------------------------------------------------------------------------
 
-alias logger=__logger
-alias log='__logger info'
-alias log.info='__logger info'
-alias log.error='__logger error'
-alias log.warn='__logger warn'
-alias log.success='__logger success'
-alias log.nyi='__logger error "NOT YET IMPLEMENTED!"'
+alias log='__logger -l info'
+alias log.info='__logger -l info'
+alias log.error='__logger -l error'
+alias log.warn='__logger -l warn'
+alias log.success='__logger -l success'
+alias log.nyi='__logger -l error "NOT YET IMPLEMENTED!"'
