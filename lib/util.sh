@@ -191,8 +191,11 @@ __hyperlink() {
 #
 #==---------------------------------------------------------------------------------
 # NAME:   __kit_version
+# ALIAS:
+#         - kit.version           Get local kit version.
+#         - kit.upstream.version  Get upstream kit version.
 # DESC:   Get the version of the kit.
-# USAGE:  kit-version [<flags>]
+# USAGE:  kit.version || kit.upstream.version
 # FLAGS:
 #         -u,--upstream   Get version of upstream.
 #         -l,--local      Get version of local installation.
@@ -205,13 +208,20 @@ __kit_version() {
   case "$1" in
   -u | --upstream)
     local=false
-    version=$(curl -s "$k_kit_upstream_ver_url" || echo "N/A")
+    version=$(curl -s "$K_KIT_UPSTREAM_VER_URL" || echo "N/A")
     ;;
   -l | --local)
-    version=$(cat -s "$k_kit_ver_url" || echo "N/A")
+    version=$(cat -s "$K_KIT_VER_URL" || echo "N/A")
+    ;;
+  -* | --*)
+    echo "Usage: kit.version"
+    echo "Flags:"
+    echo "  -u, --upstream   Get version of upstream."
+    echo "  -l, --local      Get version of local installation."
+    return 1
     ;;
   *)
-    version=$(cat -s "$k_kit_ver_url" || echo "N/A")
+    version=$(cat -s "$K_KIT_VER_URL" || echo "N/A")
     ;;
   esac
 
@@ -220,8 +230,7 @@ __kit_version() {
     return 1
   fi
   
-  [[ "$local" == "true" ]] && k_kit_version="$version"
-  [[ "$local" == "false" ]] && k_kit_upstream_version="$version"
+  $local && K_KIT_VERSION="$version" || K_KIT_UPSTREAM_VERSION="$version"
 
   echo "$version"
   return 0
@@ -236,3 +245,5 @@ __kit_version() {
 #_____________________ Aliases ________________________
 
 alias util.compare-num='__compare_num'
+alias kit.version='__kit_version -l'
+alias kit.upstream.version='__kit_version -u'

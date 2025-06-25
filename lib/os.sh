@@ -12,20 +12,20 @@
 #==---------------------------------------------------------------------------------
 __reboot() {
     local skip_prompt=false
-
+    
     while [[ $# -gt 0 ]]; do
         case "$1" in
             -y|--yes)
                 skip_prompt=true
                 shift
-                ;;
+            ;;
             *)
                 log.error "Invalid option: $1"
                 return 1
-                ;;
+            ;;
         esac
     done
-
+    
     if [[ "$skip_prompt" = true ]] || prompt "Reboot is recommended, Do you wanna Reboot?"; then
         log.warn "rebooting..."
         sleep 2
@@ -48,20 +48,20 @@ __reboot() {
 #==---------------------------------------------------------------------------------
 __shut_down() {
     local skip_prompt=false
-
+    
     while [[ $# -gt 0 ]]; do
         case "$1" in
             -y|--yes)
                 skip_prompt=true
                 shift
-                ;;
+            ;;
             *)
                 log.error "Invalid option: $1"
                 return 1
-                ;;
+            ;;
         esac
     done
-
+    
     if [[ "$skip_prompt" = true ]] || prompt "Shut down is recommended, Do you wanna Shut down?"; then
         log.warn "shutting down..."
         sleep 2
@@ -84,20 +84,20 @@ __shut_down() {
 #==---------------------------------------------------------------------------------
 __sleep_system() {
     local skip_prompt=false
-
+    
     while [[ $# -gt 0 ]]; do
         case "$1" in
             -y|--yes)
                 skip_prompt=true
                 shift
-                ;;
+            ;;
             *)
                 log.error "Invalid option: $1"
                 return 1
-                ;;
+            ;;
         esac
     done
-
+    
     if [[ "$skip_prompt" = true ]] || prompt "Putting system to Sleep is recommended, Please confirm"; then
         log.warn "putting system to sleep..."
         sleep 2
@@ -115,18 +115,19 @@ __sleep_system() {
 #
 #
 #==---------------------------------------------------------------------------------
-# NAME:   __is_insatalled
-# ALIAS:  os.package.is.installed
+# NAME:   __is_installed
+# ALIAS:  os.package.installed
 # DESC:   Check if a package is installed.
-# USAGE:  os.package.is.installed [<flags>] <package>
+# USAGE:  os.package.installed [<flags>] <package>
 # RETURN: 0 if installed, 1 if not installed.
 # FLAGS:
 #         -q,--quiet    Suppress output.
 #==---------------------------------------------------------------------------------
-__is_insatalled() {
+__is_installed() {
     local pkg
     local be_quiet=false
-
+    local debug_mode=${K_DEBUG_MODE:-false}
+    
     while [[ $# -gt 0 ]]; do
         case "$1" in
             -q | --quiet)
@@ -139,17 +140,17 @@ __is_insatalled() {
             ;;
         esac
     done
-
+    
     if [[ -z "$pkg" ]]; then
         log.error "No package provided."
         return 1
     fi
-
+    
     if command -v "$pkg" &>/dev/null; then
-        [[ "$be_quiet" = false ]] && log.success "$pkg is installed."
+        $debug_mode && log.success "$pkg is installed."
         return 0
     else
-        [[ "$be_quiet" = false ]] && log.warn "$pkg is not installed."
+        $debug_mode && log.warn "$pkg is not installed."
         return 1
     fi
 }
@@ -165,17 +166,17 @@ __is_insatalled() {
 # USAGE:  os.get.package.manager
 #==---------------------------------------------------------------------------------
 __get_package_manager() {
-
+    
     if [[ "$(uname)" == "Linux" ]]; then
-        if __is_insatalled -q pacman; then
+        if __is_installed -q pacman; then
             echo "pacman"
-        elif __is_insatalled -q apt; then
+            elif __is_installed -q apt; then
             echo "apt"
-        elif __is_insatalled -q dnf; then
+            elif __is_installed -q dnf; then
             echo "dnf"
-        elif __is_insatalled -q zypper; then
+            elif __is_installed -q zypper; then
             echo "zypper"
-        elif __is_insatalled -q apk; then
+            elif __is_installed -q apk; then
             echo "apk"
         else
             log.error "Unsupported Linux distribution."
@@ -184,7 +185,7 @@ __get_package_manager() {
             return 1
         fi
         return 0
-    elif [[ "$(uname)" == "Darwin" ]]; then
+        elif [[ "$(uname)" == "Darwin" ]]; then
         echo "brew"
         return 0
     else
@@ -207,9 +208,9 @@ __get_package_manager() {
 __install_package() {
     local pkg="$1"
     local pkg_mngr
-
+    
     pkg_mngr="$(__get_package_manager)"
-
+    
     case $pkg_mngr in
         pacman)
             sudo pacman -S --noconfirm --needed "$pkg" >/dev/null || return 1
@@ -243,84 +244,233 @@ __install_package() {
 #==---------------------------------------------------------------------------------
 
 
-
 #
 #
 #==---------------------------------------------------------------------------------
-# NAME:   __check_dir
-# ALIAS:  check-dir
-# DESC:   Check if a directory exists and optionally create it.
-# USAGE:  check-dir <directory> [<flags>]
+# NAME:   __is_dir_exists
+# ALIAS:  os.dir.exists
+# DESC:   Check if a directory exists.
+# RETURN: 0 if exists, 1 if not exists.
+# USAGE:  os.dir.exists [<flags>] <directory>
 # FLAGS:
-#         -n,--needed   Create the directory if it doesn't exist.
-#         -e,--el_exit  Exit if the directory doesn't exist.
-#         -q,--quiet    Suppress output.
+#         -ee, --el_exit   Exit on error.
+#         -n, --needed     Create dir if not exists.
+#         -q, --quiet      Suppress output.
 #==---------------------------------------------------------------------------------
-__check_dir() {
-    local dir=$1
-    local is_needed=0
-    local el_exit=0
-    local is_quiet=0
+__is_dir_exists() {
+    local dir
+    local el_exit=false is_quiet=false needed=false
+    local debug_mode=${K_DEBUG_MODE:-false}
     
-    if [[ -z "$dir" ]]; then
-        echo "Error: Directory parameter is required."
-        return 1
-    fi
+    [[ $# -eq 0 ]] && {
+        log.error "No directory provided.";
+        log.warn "Usage: os.dir.exists [<flags>] <directory>";
+        return 1;
+    }
     
-    shift
     while [[ $# -gt 0 ]]; do
         case "$1" in
-            -n | --needed)
-                is_needed=1
+            -q|--quiet)
+                is_quiet=true
             ;;
-            -e | --el_exit)
-                el_exit=1
+            -ee|--el_exit)
+                el_exit=true
             ;;
-            -q | --quiet)
-                is_quiet=1
+            -n|--needed)
+                needed=true
+            ;;
+            -*|--*)
+                log.error "Invalid option: $1"
+                log.warn "Usage: os.dir.exists [<flags>] <directory>"
+                return 1
             ;;
             *)
-                echo "Invalid option: $1"
-                return 1
+                dir="$1"
             ;;
         esac
         shift
     done
     
-    if [[ "$is_needed" -eq 1 && "$el_exit" -eq 1 ]]; then
-        log.error "Invalid flags given: --needed and --el_exit cannot be used together."
+    $needed && $el_exit && {
+        log.error "Can't use both '-n' and '-ee' flags together."
+        log.warn "Usage: os.dir.exists [<flags>] <directory>"
+        return 1
+    }
+    
+    if [[ -z "$dir" ]]; then
+        log.error "No directory provided."
+        log.warn "Usage: os.dir.exists [<flags>] <directory>"
         return 1
     fi
     
     if [[ -d "$dir" ]]; then
-        [[ "$is_quiet" -ne 1 ]] && log.warn "Directory '$dir' already exists."
+        $debug_mode && log.warn "Directory '$dir' exists."
+        return 0
     else
-        [[ "$is_quiet" -ne 1 ]] && log.warn "Directory '$dir' does not exist."
+        $debug_mode && log.warn "Directory '$dir' does not exist."
         
-        if [[ "$is_needed" -eq 1 ]]; then
-            [[ "$is_quiet" -ne 1 ]] && log.warn "Creating directory '$dir'..."
-            
-            if mkdir -p "$dir" 2>/dev/null; then
-                [[ "$is_quiet" -ne 1 ]] && log.success "Directory '$dir' created successfully."
-            else
-                log.warn "Failed to create directory '$dir'. Attempting with sudo..."
-                if sudo mkdir -p "$dir"; then
-                    [[ "$is_quiet" -ne 1 ]] && log.success "Directory '$dir' created successfully with sudo."
-                else
-                    log.error "Failed to create directory '$dir' with sudo."
-                    return 1
-                fi
-            fi
-        fi
-
-        if [[ "$el_exit" -eq 1 ]]; then
-            log.error "Exiting as requested by --el_exit flag."
-            exit 1
+        if $needed; then
+            __create_dir "$dir" || {
+                log.error "Failed to create directory '$dir'."
+                $el_exit && exit 1 || return 1
+            }
+            return 0
+        else
+            $el_exit && exit 1 || return 1
         fi
     fi
 }
 #==---------------------------------------------------------------------------------
 
+
+#
+#
+#==---------------------------------------------------------------------------------
+# NAME:   __create_dir
+# ALIAS:  os.dir.create
+# DESC:   Create a directory, Also parent dirs.
+# USAGE:  os.dir.create [<flags>] <directory>
+# FLAGS:
+#        -q  --quiet    suppress output
+#        -ee --el_exit  exit on error
+# TODO: Add debug mode
+#==---------------------------------------------------------------------------------
+__create_dir() {
+    local dir="$1"
+    local el_exit=false is_quiet=false mk_command
+    local debug_mode=${K_DEBUG_MODE:-false}
+    
+    [[ $# -eq 0 ]] && {
+        log.error "No directory provided.";
+        log.warn "Usage: os.dir.create [<flags>] <directory>";
+        return 1;
+    }
+    
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -ee|--el_exit)
+                el_exit=true
+            ;;
+            -q|--quiet)
+                is_quiet=true
+            ;;
+            -*|--*)
+                log.error "Invalid option: $1"
+                log.warn "Usage: os.dir.create [<flags>] <directory>"
+                return 1
+            ;;
+            *)
+                dir="$1"
+            ;;
+        esac
+        shift
+    done
+    
+    
+    if [[ -d "$dir" ]]; then
+        ! $is_quiet && log.warn "Directory '$dir' already exists."
+        return 0
+    else
+        $debug_mode && log.warn "Directory '$dir' does not exist."
+        
+        ! $is_quiet && log.warn "Creating directory '$dir'..."
+        
+        mk_command=$( $debug_mode && echo "mkdir -p \"$dir\"" || echo "mkdir -p \"$dir\" 2>/dev/null" )
+        
+        if eval "$mk_command"; then
+            ! $is_quiet && \
+                log.success "Directory '$dir' created successfully."
+        else
+            log.warn "Failed to create directory '$dir'.\nAttempting with sudo..."
+            
+            if sudo mkdir -p "$dir"; then
+                ! $is_quiet && \
+                    log.success "Directory '$dir' created successfully."
+            else
+                log.error "Failed to create directory '$dir' with sudo."
+                
+                $el_exit && exit 1 || return 1
+            fi
+        fi
+    fi
+}
+#==---------------------------------------------------------------------------------
+
+
+#
+#
+#==---------------------------------------------------------------------------------
+# NAME:   __remove_dir
+# ALIAS:  os.dir.remove
+# DESC:   Remove a directory(& it's contents)
+# USAGE:  os.dir.remove
+# FLAGS:
+#         -q, --quiet    Suppress output.
+#==---------------------------------------------------------------------------------
+__remove_dir() {
+    local dir is_quiet=false
+    local debug_mode=${K_DEBUG_MODE:-false}
+    
+    [[ $# -eq 0 ]] && {
+        log.error "No directory provided.";
+        log.warn "Usage: os.dir.remove [<flags>] <directory>";
+        return 1;
+    }
+    
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -q|--quiet)
+                is_quiet=true
+            ;;
+            -*|--*)
+                log.error "Invalid option: $1"
+                log.warn "Usage: os.dir.remove [<flags>] <directory>"
+                return 1
+            ;;
+            *)
+                dir="$1"
+            ;;
+        esac
+        shift
+    done
+    
+    if [[ -d "$dir" ]]; then
+        if rm -rf "$dir"; then
+            ! $is_quiet && log.success "Directory '$dir' removed successfully."
+            return 0
+        else
+            ! $is_quiet && log.error "Failed to remove directory '$dir'."
+            return 1
+        fi
+    else
+        ! $is_quiet && log.error "Directory '$dir' does not exist."
+        return 1
+    fi
+}
+#==---------------------------------------------------------------------------------
+
+
+#
+#
+#==---------------------------------------------------------------------------------
+# NAME:   __list_dirs
+# ALIAS:  os.list.dirs
+# DESC:   List all directories in given dir path.
+# USAGE:  os.list.dirs <directory>
+#==---------------------------------------------------------------------------------
+__list_dirs() {
+    local dir="$1"
+    
+    [[ ! -d "$dir" ]] && {
+        log.error "Not a directory: '$dir'"
+        return 1
+    }
+    
+    for sub_dir in "$dir"/*/; do
+        [[ -d "$sub_dir" ]] && basename "$sub_dir"
+    done
+}
+#==---------------------------------------------------------------------------------
 
 
 
@@ -335,12 +485,18 @@ alias os.sleep='__sleep_system'
 
 # Package Management
 alias os.get.package.manager='__get_package_manager'
-alias os.package.is.installed='__is_insatalled'
+alias os.package.installed='__is_installed'
 alias os.package.install='__install_package'
 # alias os.package.remove='__remove_package'
 # alias os.package.reinstall='__reinstall_package'
 # alias os.package.update='__update_package'
 # alias os.package.update.all='__update_package -a'
+
+# Directory Management
+alias os.dir.exists='__is_dir_exists'
+alias os.dir.create='__create_dir'
+alias os.dir.remove='__remove_dir'
+alias os.list.dirs='__list_dirs'
 
 
 # alias os.get.swap.path='__get_swap_path'

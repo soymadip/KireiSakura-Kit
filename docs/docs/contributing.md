@@ -25,3 +25,8 @@ icon: material/hand-heart
 - Snake case should be used.
 - All methods should have alias in pattern: `module_name.method-name`.
 - Aliases should use `-` instead of Snake Case's `_`
+
+### 2. Logging conventions
+
+- The `__is_*` methods should not have any log output except for debug mode.  
+  They should only return 0 or 1 by default
