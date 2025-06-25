@@ -306,20 +306,21 @@ init_file="$lib_dir/__init__.sh"           # K_INIT_FILE
 package_dir="$kit_dir/packages"            # K_PACKAGE_DIR
 assets_dir="$kit_dir/Assets"               # K_ASSETS_DIR
 
-kit_ver_url="$kit_dir/.version"            # K_KIT_VER_URL
 kit_installer_url="${kit_site}/install"    # K_KIT_INSTALLER_URL
+kit_ver_url="$kit_dir/.version"            # K_KIT_VER_URL
 upstream_ver_url="$kit_site/version"       # K_KIT_UPSTREAM_VER_URL
 
-project_name="$kit_name"            # K_PRJ_NAME
-project_owner="$kit_owner"          # K_PRJ_OWNER
-project_url="$kit_site"             # K_PRJ_URL
-project_repo="$kit_repo"            # K_PRJ_REPO
-project_config_file="config.yml"    # K_PRJ_CONFIG
+project_name="$kit_name"                   # K_PRJ_NAME
+project_owner="$kit_owner"                 # K_PRJ_OWNER
+project_url="$kit_site"                    # K_PRJ_URL
+project_repo="$kit_repo"                   # K_PRJ_REPO
+project_config_file="config.yml"           # K_PRJ_CONFIG
+
+debug_mode=false                           # K_DEBUG_MODE
 
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/${project_name}" # K_CACHE_DIR
 log_file="${cache_dir}/${project_name}.log"                 # K_LOG_FILE
 
-debug_mode=false                    # K_DEBUG_MODE
 
 # ____________________________________ Main _________________________________________________
 

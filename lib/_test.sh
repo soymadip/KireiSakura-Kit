@@ -17,9 +17,9 @@ eval "$(kireisakura -i)"
 
 echo -e "\n${LAVENDER}-------: VERSION CHECKS :-------${NC}\n"
 
-if [[ -n "$k_kit_version" && -n "$k_kit_upstream_version" ]]; then
-  echo -e "${GREEN}✔ Local version: $k_kit_version${NC}"
-  echo -e "${GREEN}✔ Upstream version: $k_kit_upstream_version${NC}"
+if [[ -n "$K_KIT_VERSION" && -n "$K_KIT_UPSTREAM_VERSION" ]]; then
+  echo -e "${GREEN}✔ Local version: $K_KIT_VERSION${NC}"
+  echo -e "${GREEN}✔ Upstream version: $K_KIT_UPSTREAM_VERSION${NC}"UPSTREAM_VERSION${NC}"
 else
   echo -e "${RED}X Version information not available${NC}"
 fi
@@ -142,7 +142,7 @@ kimport utils.font utils.app-patches
 
 echo -e "\n${LAVENDER}---------- REMOVING CACHE DIR ----------${NC}\n"
 
-if rm -rf "$k_cache_dir"; then
+if rm -rf "$K_CACHE_DIR"; then
   echo -e "${GREEN}✔ Cache dir removed.${NC}"
   exit 0
 else

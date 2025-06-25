@@ -149,7 +149,7 @@ Directory to use to hold installed packages.
 
 - **Type:** string/path
 - **Optional:** ✅
-- **Default:** `$k_kit_dir/packages`
+- **Default:** `$K_KIT_DIR/packages`
 
 <br><!-- a glitch in mkdocs :) -->
 !!! quote ""
