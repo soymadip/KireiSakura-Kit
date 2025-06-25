@@ -25,7 +25,8 @@
 ## Installation & setup
 
 > [!WARNING]
-> FREQUENT CHANGES ARE BEING MADE as this project is in beta, so be careful.<br>
+<!-- > FREQUENT CHANGES ARE BEING MADE as this project is in beta, so be careful.<br> -->
+> KIT MAY BE BROKEN as it's going thorough massive design changes.
 > Contribute if you find this useful and wanna make this more powerful.
 
 - Checkout [Dcoumentation](https://soymadip.github.io/KireiSakura-Kit) for installation & setup.
@@ -34,5 +35,5 @@
 
 
 <!---------------- links --------------->
-[sprtd_shl]: https://soymadip.github.io/KireiSakura-Kit/faq.html#1._Which_shells_are_Supported?_0
-[todo]:      https://soymadip.github.io/KireiSakura-Kit/todo.html
+[sprtd_shl]: https://soymadip.github.io/KireiSakura-Kit/faq#which-distros-shells-are-supported
+[todo]:      https://soymadip.github.io/KireiSakura-Kit/roadmap
