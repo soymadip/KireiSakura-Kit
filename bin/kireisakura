@@ -145,25 +145,44 @@ compare_num() {
 update_kit() {
   local result
   local upstream_version
+  local local_version
+  
+  # Get local version
+  local_version="$(get_version || echo "N/A")"
+  
+  # Get upstream version with -u flag
+  upstream_version="$(get_version -u || echo "N/A")"
 
-  upstream_version="$(get_version || echo 0)"
+  if [[ "$upstream_version" == "N/A" ]]; then
+    echo -e " ${RED}Couldn't resolve upstream version. Please check your connection or the URL.${NC}"
+    return 1
+  fi
+  
+  if [[ "$local_version" == "N/A" ]]; then
+    echo -e " ${RED}Couldn't resolve local version. Please check your installation.${NC}"
+    return 1
+  fi
 
-  [[ "$upstream_version" == "0" ]] && echo -e " ${RED}Couldn't resolve upstream version. Please check your connection or the URL.${NC}" || k_upstream_ver="$upstream_version"
-
-  result=$(compare_num "$kit_ver" "$upstream_version")
+  # Compare versions
+  result=$(compare_num "$local_version" "$upstream_version")
 
   if [ "$result" -eq 2 ]; then
-    echo -e "\n  ${YELLOW}New update available:${NC} ${LAVENDER}v${verison} -> v${k_upstream_ver} ${NC}"
+    echo -e "\n  ${YELLOW}New update available:${NC} ${LAVENDER}v${local_version} -> v${upstream_version} ${NC}"
     echo -e " ${YELLOW}Updating....${NC}"
-    curl -L "$kit_installer_url" | bash -s
+
+    curl -L "$kit_installer_url" | bash -s || {
+      echo -e " ${RED}Update failed. Please try again manually.${NC}"
+      return 1
+    }
 
   elif [[ $result -eq 0 ]]; then
     echo -e "\n  ${GREEN}No new update available.${NC}"
-    echo -e "  KireiSakura-Kit ${LAVENDER}v${verison}${NC}"
+    echo -e "  KireiSakura-Kit ${LAVENDER}v${local_version}${NC}"
 
   else
-    echo -e "\n KireiSakura-Kit ${LAVENDER}v${verison}${NC}"
-    echo -e " Local version is greater than Official release?"
+    echo -e "! Local version is greater than Official release?"
+    echo -e "    Local:    ${LAVENDER}v${local_version}${NC}"
+    echo -e "    Upstream: ${LAVENDER}v${upstream_version}${NC}"
     echo -e " Are you a dev?"
     echo -e " If not, please reinstall."
   fi
