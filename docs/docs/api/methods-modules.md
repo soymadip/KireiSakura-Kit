@@ -45,20 +45,20 @@ Each module performs a specific task and can be sourced as needed.
 
     ```bash
     # Import specific modules
-    pkg.import packageName.moduleName
-    pkg.import utils.disk utils.shell
+    mod.import packageName.moduleName
+    mod.import utils.disk utils.shell
 
     # Import all modules in a package
-    pkg.import packageName.*
-    pkg.import utils.*
+    mod.import packageName.*
+    mod.import utils.*
 
     # Import from subpackages
-    pkg.import packageName.subPackage.moduleName
-    pkg.import utils.network.wifi
+    mod.import packageName.subPackage.moduleName
+    mod.import utils.network.wifi
 
     # Import all modules from a subpackage
-    pkg.import packageName.subPackage.*
-    pkg.import utils.network.*
+    mod.import packageName.subPackage.*
+    mod.import utils.network.*
     ```
 
     **Import Behavior:**
@@ -98,15 +98,15 @@ Each module performs a specific task and can be sourced as needed.
     **How to Import:**
     ```bash
     # Import specific local modules
-    pkg.import .moduleName
-    pkg.import .module1 .module2 .module3
+    mod.import .moduleName
+    mod.import .module1 .module2 .module3
     
     # Import modules from subdirectories
-    pkg.import .subdir.moduleName
-    pkg.import .utils.network .utils.system
+    mod.import .subdir.moduleName
+    mod.import .utils.network .utils.system
     
     # Import all local modules at once (including subdirectories)
-    pkg.import .*
+    mod.import .*
     ```
 
 !!! quote ""
@@ -117,20 +117,20 @@ Each module performs a specific task and can be sourced as needed.
 
 - **Group related imports** by package:
   ```bash
-  pkg.import utils.disk utils.shell utils.archive
+  mod.import utils.disk utils.shell utils.archive
   ```
 
 - **Use wildcards** for complete packages:
   ```bash
-  pkg.import utils.*
+  mod.import utils.*
   ```
 
 - **Organize complex projects** with subdirectories:
   ```bash
-  pkg.import .ui.dialog .ui.form
+  mod.import .ui.dialog .ui.form
   ```
 
 - For **small scripts**, import only what you need:
   ```bash
-  pkg.import utils.disk
+  mod.import utils.disk
   ```

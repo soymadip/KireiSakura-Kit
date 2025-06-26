@@ -19,7 +19,7 @@ echo -e "\n${LAVENDER}-------: VERSION CHECKS :-------${NC}\n"
 
 if [[ -n "$K_KIT_VERSION" && -n "$K_KIT_UPSTREAM_VERSION" ]]; then
   echo -e "${GREEN}✔ Local version: $K_KIT_VERSION${NC}"
-  echo -e "${GREEN}✔ Upstream version: $K_KIT_UPSTREAM_VERSION${NC}"UPSTREAM_VERSION${NC}"
+  echo -e "${GREEN}✔ Upstream version: $K_KIT_UPSTREAM_VERSION${NC}"
 else
   echo -e "${RED}X Version information not available${NC}"
 fi
@@ -137,8 +137,8 @@ log.warn "Log level: warn"
 
 echo -e "\n${LAVENDER}--------: IMPORTING ALL MODULES :--------${NC}\n"
 
-kimport utils.font utils.app-patches
-
+# Import modules
+mod.import utils.font utils.os
 
 echo -e "\n${LAVENDER}---------- REMOVING CACHE DIR ----------${NC}\n"
 

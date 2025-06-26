@@ -8,9 +8,14 @@
 #
 # Main executable script for KireiSakura-Kit
 
+
+
+
 #_____________________________________FUNCTIONS_____________________________________________
 
 # set -x
+
+[[ $- != *i* ]] && shopt -s expand_aliases
 
 # Log function
 logf() {
@@ -28,17 +33,63 @@ logf() {
   done <<<"$formatted_message"
 }
 
-#
+output() {
+  local log_level="$1"
+  local log_message="$2"
+  local prsd_message=""
+  local logger_loaded=false
+  local formatted_message=""
 
-clearx() {
-  if [[ "$(uname)" == "Darwin" ]]; then
-    clear
+  # Only try to load the logger module once
+  if [[ "$logger_loaded" == "false" ]]; then
+    if source "$lib_dir/logging.sh" && type __logger &>/dev/null; then
+      logger_loaded=true
+      logf "Logger module loaded successfully."
+    else
+      logger_loaded=failed
+    fi
+  fi
+
+  if [[ "$logger_loaded" == "true" ]]; then
+
+    formatted_message="$(__logger -l "$log_level" -f "$log_file" "$log_message")"
+
+    printf 'echo -e "%s"\n' "$formatted_message"
   else
-    clear -x
+
+    if [[ "$logger_loaded" == "failed" ]]; then
+      echo -e "${RED}Errors: Failed to load logger module.${NC}" >&2
+      logger_loaded=error_shown
+    fi
+  
+    case "$log_level" in
+      success) symbol="✓"; color="$GREEN"; bold_color="$BOLD_GREEN" ;;
+      warn)    symbol="⚠"; color="$YELLOW"; bold_color="$BOLD_YELLOW" ;;
+      error)   symbol="✗"; color="$RED"; bold_color="$BOLD_RED" ;;
+      info)    symbol="ℹ"; color="$YELLOW"; bold_color="$BOLD_YELLOW" ;;
+      *)       symbol="➤"; color="$NC"; bold_color="$BOLD_NC" ;;
+    esac
+
+    formatted_message="${bold_color}${symbol}${NC}${color} ${log_message}${NC}"
+    
+    printf 'echo -e "%s"\n' "$formatted_message"
+    
+    logf "[$log_level] $log_message"
   fi
 }
 
-#
+alias output.info='output info'
+alias output.error='output error'
+alias output.warn='output warn'
+alias output.success='output success'
+alias output.nyi='output error "NOT YET IMPLEMENTED!"'
+
+clearx() {
+	cat <<-'CLEARX'
+	echo -e "\n\n\n\n\n"
+	printf '\n%.0s' $(seq 1 "$(tput lines)"); tput cup 0 0
+	CLEARX
+}
 
 # For no arguments
 show_man() {
@@ -73,33 +124,43 @@ show_help() {
   exit 0
 }
 
-# version
 get_version() {
-  local url
-  local version
+  local url version prg="curl"
 
   case "$1" in
-  -u | --upstream)
-    version=$(curl -s "$upstream_ver_url" || echo "N/A")
-    ;;
-  -l | --local)
-    version=$(cat "$kit_ver_url" || echo "N/A")
-    ;;
-  *)
-    version=$(cat "$kit_ver_url" || echo "N/A")
-    ;;
+    -u | --upstream)
+      version="$(curl -s --connect-timeout 3 "$upstream_ver_url" || echo "N/A" )"
+      ;;
+    -l | --local)
+      version="$(cat "$kit_ver_url" || echo "N/A")"
+      ;;
+    -* | --*)
+      echo "Usage: get_version [-u|--upstream] [-l|--local]"
+      return 1
+      ;;
+    *)
+      version="$(cat "$kit_ver_url" || echo "N/A")"
+      ;;
   esac
 
-  if [[ "$version" == "N/A" ]]; then
-    return 1
-  fi
-
   echo "$version"
-  return 0 
+
+  if [[ -z "$version" || "$version" == "N/A" ]]; then
+    return 1
+  else
+    return 0
+  fi
 }
 
 show_version() {
-  local version="$(get_version || echo "N/A")"
+  local upstream=false
+  local version
+  
+  if [[ "$1" == "-u" || "$1" == "--upstream-version" ]]; then
+    version="$(get_version -u)"
+  else
+    version="$(get_version)"
+  fi
 
   if [[ "$version" == "N/A" ]]; then
     echo -e "  ${RED}Error: Unable to retrieve version.${NC}\n"
@@ -203,114 +264,128 @@ run_tester() {
 # Setup process
 # TODO: make the header logo middle of the screen
 init_kit() {
-  local kit_version
   
-  printf "\n\n" >>"$log_file"
+  logf "\n\n" >>"$log_file"
   logf "====================== NEW SESSION =======================\n"
   logf "Started in: $(pwd)/"
   logf "Initialization started."
 
-  printf "clear\n"
-  printf "command -v figlet >/dev/null 2>&1 && figlet \"%s\" || cat \"\$K_ASSETS_DIR/header.txt\"\n" "$project_name"
-  printf "echo -e '\\\n\\\n%s${BOLD_YELLOW}➤${NC}%s INIT: Starting Initialization...%s\\\n\\\n'\n" "$YELLOW" "$YELLOW" "$NC"
+  # 1st heading
+  clearx
+  cat <<-INIT_HEADER
+	command -v figlet >/dev/null 2>&1 && figlet "$project_name" || cat "\$K_ASSETS_DIR/header.txt"
+	INIT_HEADER
 
-  [[ "$config_file" == "NULL" ]] || printf "echo -e '%s${BOLD_GREEN}✓${NC}%s Loaded Config file.%s'\n" "$GREEN" "$GREEN" "$NC"
-  printf "sleep 1\n"
+  output.warn "INIT: Starting initialization process...\\\n\\\n"
 
-  # Check if kit exists
+  # Config file status
+  [[ "$config_file" == "NULL" ]] ||  output.success "Loaded Config file."
+  sleep 1
+
+  # Check kit directory
   if [ "$is_cstm_kit_dir" = true ]; then
-
-    logf "Custom Kit directory given."
-    printf "echo -e '%s${BOLD_YELLOW}⚠${NC}%s Custom Kit directory given.%s\n'" "$YELLOW" "$YELLOW" "$NC"
-    printf "echo -e '%s${BOLD_YELLOW}⚠${NC}%s Checking it...%s\n'" "$YELLOW" "$YELLOW" "$NC"
-  else
-    logf "Using default Kit installation."
-    printf "echo -e \"%s${BOLD_YELLOW}⚠${NC}%s Using default Kit installation.%s\"\n" "$YELLOW" "$YELLOW" "$NC"
-    printf "echo -e '%s${BOLD_YELLOW}⚠${NC}%s Validating...%s'\n" "$YELLOW" "$YELLOW" "$NC"
-  fi
-
-  if [ ! -d "$kit_dir" ]; then
-    if [ "$is_cstm_kit_dir" = true ]; then
-      logf "Error: given custom kit dir is not valid."
-      printf "echo -e '%s${BOLD_RED}✗${NC}%s Error: Custom Kit directory does not exist. Please check given directory path.%s\n'" "$RED" "$RED" "$NC"
-      printf "echo -e '%s${BOLD_RED}✗${NC}%s Exiting...%s\n'" "$RED" "$RED" "$NC"
+    output.info "Custom Kit directory given."
+    output.warn "Checking it..."
+    
+    if [ ! -d "$kit_dir" ]; then
+      output.error "Error: Custom Kit directory does not exist. Please check given directory path."
+      output.error "Exiting..."
       exit 1
     else
-      logf "Error: Default installation is missing"
-      printf "echo -e '%s${BOLD_RED}✗${NC}%s Error: Default installation is missing. Please re-install the kit.%s\n'" "$RED" "$RED" "$NC"
-      printf "echo -e '%s${BOLD_RED}✗${NC}%s Exiting...%s\n'" "$RED" "$RED" "$NC"
-      exit 1
+      output.success "Custom Kit directory exists."
     fi
   else
-    if [ "$is_cstm_kit_dir" = true ]; then
-      logf "Custom kit dir exists."
-      printf "echo -e '%s${BOLD_GREEN}✓${NC}%s Custom Kit directory exists.%s'\n" "$GREEN" "$GREEN" "$NC"
+    output.warn "Using default Kit installation."
+    output.warn "Validating..."
+    
+    if [ ! -d "$kit_dir" ]; then
+      output.error "Error: Default installation is missing. Please re-install the kit."
+      output.error "Exiting..."
+      exit 1
     else
-      printf "echo -e '%s${BOLD_GREEN}✓${NC}%s Validated default installation.%s'\n" "$GREEN" "$GREEN" "$NC"
+      output.success "Validated default installation."
       echo
     fi
   fi
 
-  # Check if core file exists
+  # Check if init file exists
   if [ ! -f "$init_file" ]; then
-    logf "Error: Init file is missing in kit."
-    printf "echo -e '%s${BOLD_RED}✗${NC}%s Error: Init file is missing in Kit. Please check installation or re-install.%s\n'" "$RED" "$RED" "$NC"
+    output.error "Error: Init file is missing in Kit. Please check installation or re-install."
     printf "echo -e 'Exiting.....' \n"
     exit 1
   fi
 
+  # Output super variables organized by groups
+  cat <<-SUPER_VARS
 
-  cat <<EOF
-export K_KIT_NAME="$kit_name"
-export K_KIT_OWNER="$kit_owner"
-export K_KIT_SITE="$kit_site"
-export K_KIT_REPO="$kit_repo"
-export K_KIT_BRANCH="$kit_repo_branch"
+	# Super Variables
 
-export K_KIT_DIR="$kit_dir"
-export K_LIB_DIR="$lib_dir"
-export K_INIT_FILE="$init_file"
-export K_PACKAGE_DIR="$package_dir"
-export K_ASSETS_DIR="$assets_dir"
+  export K_LOADED_MODULES=()
 
-export K_KIT_INSTALLER_URL="$kit_installer_url"
-export K_KIT_VER_URL="$kit_ver_url"
-export K_KIT_UPSTREAM_VER_URL="$upstream_ver_url"
+	export K_KIT_NAME="$kit_name"
+	export K_KIT_OWNER="$kit_owner"
+	export K_KIT_SITE="$kit_site"
+	export K_KIT_REPO="$kit_repo"
+	export K_KIT_BRANCH="$kit_repo_branch"
 
-export K_PRJ_NAME="$project_name"
-export K_PRJ_OWNER="$project_owner"
-export K_PRJ_URL="$project_url"
-export K_PRJ_REPO="$project_repo"
-export K_PRJ_CONFIG="$project_config_file"
+	export K_KIT_DIR="$kit_dir"
+	export K_LIB_DIR="$lib_dir"
+	export K_INIT_FILE="$init_file"
+	export K_PACKAGE_DIR="$package_dir"
+	export K_ASSETS_DIR="$assets_dir"
 
-export K_DEBUG_MODE=$debug_mode
+	export K_KIT_INSTALLER_URL="$kit_installer_url"
+	export K_KIT_VER_URL="$kit_ver_url"
+	export K_KIT_UPSTREAM_VER_URL="$upstream_ver_url"
 
-export K_CACHE_DIR="$cache_dir"
-export K_LOG_FILE="$log_file"
+	export K_PRJ_NAME="$project_name"
+	export K_PRJ_OWNER="$project_owner"
+	export K_PRJ_URL="$project_url"
+	export K_PRJ_REPO="$project_repo"
+	export K_PRJ_CONFIG="$project_config_file"
 
-export K_KIT_VERSION="$(get_version)"
-export K_KIT_UPSTREAM_VERSION="$(get_version -u)"
-EOF
+	export K_DEBUG_MODE=$debug_mode
 
-  # Print source and check_dir commands
+	export K_CACHE_DIR="$cache_dir"
+	export K_LOG_FILE="$log_file"
+
+	# Get version information
+	local_ver="$(get_version)" 
+	upstream_ver="$(get_version -u)"
+	
+	export K_KIT_VERSION="${local_ver:-N/A}"
+	export K_KIT_UPSTREAM_VERSION="${upstream_ver:-N/A}"
+
+	SUPER_VARS
+
+
+  # Final initialization steps
   printf "\nsleep 1\n"
   logf "Loading init file....."
-  printf "echo -e \"%s${BOLD_YELLOW}⚠${NC}%s Loading init file...%s\" \n" "$YELLOW" "$YELLOW" "$NC"
-  printf "source \"\$K_INIT_FILE\" \n"
-  printf "log.success 'Init file loaded successfully.' \n"
-  logf "Loaded init file."
+  output.warn "Loading init file..."
 
-  printf "sleep 1\n"
-  printf "log.warn \"Checking cache directory...\"\n"
-  printf "check-dir \"\${K_CACHE_DIR}\" --needed\n"
-  printf "log.success \"Cache directory verified.\"\n"
-  printf "echo \n"
-  printf "log \"KireiSakura-Kit v%s\"  \n" "$(get_version)"
-  printf "sleep 1\n"
-  printf "echo \" \\n \" \n"
-  printf "log.success \"Initialization completed successfully.\" INIT\n"
+  # Source init file and verify
+  cat <<-INIT_FINAL
+	source "\$K_INIT_FILE"
+	log.success 'Init file loaded successfully.'
+	
+	sleep 1
+	log.warn "Checking cache directory..."
+  
+	__is_dir_exists "\${K_CACHE_DIR}" -n
+	log.success "Cache directory verified."
+	
+	echo
+	log "KireiSakura-Kit v$(get_version)"
+	
+	sleep 1
+	echo " \\n "
+	
+	log.success "Initialization completed successfully." INIT
+
+	INIT_FINAL
+
   logf "Initialization complete."
-
   exit 0
 }
 
@@ -363,6 +438,9 @@ while [[ "$#" -ge 0 ]]; do
     ;;
   -v | --version)
     show_version
+    ;;
+  -uv | --upstream-version)
+    show_version -u
     ;;
   -t | --test)
     run_tester

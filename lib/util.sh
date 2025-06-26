@@ -238,6 +238,27 @@ __kit_version() {
 #==---------------------------------------------------------------------------------
 
 
+#
+#
+#==---------------------------------------------------------------------------------
+# NAME:   __remove_command
+# ALIAS:  kit.remove.command 
+# DESC:   Remove command conflicts between functions and aliases.
+# USAGE:  kit.remove.command <command>
+#==---------------------------------------------------------------------------------
+__remove_command() {
+    local command="$1"
+
+    if type "$command" &>/dev/null; then
+        if type "$command" | grep -q -E 'is a (shell )?function'; then
+            unset -f "$command"
+        fi
+
+        if alias "$command" &>/dev/null; then
+            unalias "$command"
+        fi
+    fi
+}
 
 
 
@@ -247,3 +268,4 @@ __kit_version() {
 alias util.compare-num='__compare_num'
 alias kit.version='__kit_version -l'
 alias kit.upstream.version='__kit_version -u'
+alias kit.remove.command='__remove_command'
