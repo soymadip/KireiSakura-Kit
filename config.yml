@@ -1,0 +1,26 @@
+# KireiSakura-Kit Configuration
+# This serves as the default configuration and usage example.
+
+
+
+# === BEHAVIOR & OPTIONS ===
+Behavior:
+  auto_update: true
+  environment: "dev"   # Options: dev, prod
+  log_level:   "info"   # Options: debug, info, error
+
+# === PROJECT METADATA ===
+Project:
+  name: "My Awsome Project"
+  version: "0.0.0"
+  owner: "My Name"
+  description: "A Awsome & passionate project."
+  
+  # URLs
+  url: "https://soymadip.github.io/KireiSakura-Kit"
+  repo: "https://github.com/soymadip/KireiSakura-Kit"
+  issues: "https://github.com/soymadip/KireiSakura-Kit/issues"
+  
+  # Project structure
+  config_file: "config.yml"
+  module_dir: "modules"

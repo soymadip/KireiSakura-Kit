@@ -2,7 +2,7 @@
 # NAME:   __logger
 # ALIAS:  log.*
 # DESC:   Logs the message to the console and log file.
-# USAGE:  log.<log_level> [<log_message>]
+# USAGE:  log.<log_level> [<log_message>] [-f <log_file>]
 # TODO: 
 #        - Add arg for custom color.
 # FIXME: 

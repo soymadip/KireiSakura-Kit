@@ -42,7 +42,7 @@ output() {
 
   # Only try to load the logger module once
   if [[ "$logger_loaded" == "false" ]]; then
-    if source "$lib_dir/logging.sh" && type __logger &>/dev/null; then
+    if source "$lib_dir/utils/logging.sh" && type __logger &>/dev/null; then
       logger_loaded=true
       logf "Logger module loaded successfully."
     else
@@ -204,9 +204,7 @@ compare_num() {
 }
 
 update_kit() {
-  local result
-  local upstream_version
-  local local_version
+  local result upstream_version local_version
   
   # Get local version
   local_version="$(get_version || echo "N/A")"
@@ -251,8 +249,7 @@ update_kit() {
 
 run_tester() {
   echo -e "\n${LAVENDER}================= KireiSakura Kit Test Utility ==================${NC}\n"
-
-  if bash "$lib_dir/_test.sh"; then
+  if bash "$kit_dir/tests/__init__.sh"; then
     echo -e "\n\n${GREEN}================ TEST SUCCESSFULLY COMPLETED ==================${NC}\n"
     exit 0
   else
@@ -340,7 +337,7 @@ init_kit() {
 
 	export K_PRJ_NAME="$project_name"
 	export K_PRJ_OWNER="$project_owner"
-	export K_PRJ_URL="$project_url"
+	export K_PRJ_HOME="$project_url"
 	export K_PRJ_REPO="$project_repo"
 	export K_PRJ_CONFIG="$project_config_file"
 
@@ -366,8 +363,14 @@ init_kit() {
 
   # Source init file and verify
   cat <<-INIT_FINAL
-	source "\$K_INIT_FILE"
-	log.success 'Init file loaded successfully.'
+	{
+    source "\$K_INIT_FILE" &&
+	  log.success 'Init file loaded successfully.'
+  } || {
+    log.error 'Failed to load init file.'
+    log.error "Exiting..."
+    exit 1
+  }
 	
 	sleep 1
 	log.warn "Checking cache directory..."
@@ -376,12 +379,12 @@ init_kit() {
 	log.success "Cache directory verified."
 	
 	echo
-	log "KireiSakura-Kit v$(get_version)"
+	log.info "KireiSakura-Kit v$(get_version)"
 	
 	sleep 1
 	echo " \\n "
 	
-	log.success "Initialization completed successfully." INIT
+	log.success "Initialization completed successfully."
 
 	INIT_FINAL
 
@@ -390,41 +393,45 @@ init_kit() {
 }
 
 
-#_________________________________ Default Configuration Values __________________________________________
+#_________________________ Default Configuration(Super vars) Values _________________________________
 
-# Super variables
-kit_name="KireiSakura-Kit"                 # K_KIT_NAME
-kit_owner="soymadip"                       # K_KIT_OWNER
-kit_site="https://kireisakura.soymadip.me" # K_KIT_SITE
-kit_repo="${kit_owner}/${kit_name}"        # K_KIT_REPO
-kit_repo_branch="main"                     # K_KIT_BRANCH
+# Project Information 
+project_name="My Awsome Project"                       # K_PRJ_NAME
+project_owner="My Name"                                # K_PRJ_OWNER
+project_descriptioon="My Best project"                 # K_PRJ_DESC
+project_home="https://my-project.com"                  # K_PRJ_HOME
+project_repo="https://github.com/my-project"           # K_PRJ_REPO
+project_config_file="config.yml"                       # K_PRJ_CONFIG
+project_module_dir="modules"                           # K_PRJ_MODULE_DIR
 
-kit_dir="$HOME/.local/share/${kit_name}"   # K_KIT_DIR
-lib_dir="$kit_dir/lib"                     # K_LIB_DIR
-init_file="$lib_dir/__init__.sh"           # K_INIT_FILE
-package_dir="$kit_dir/packages"            # K_PACKAGE_DIR
-assets_dir="$kit_dir/Assets"               # K_ASSETS_DIR
+# Kit Information
+kit_name="KireiSakura-Kit"                             # K_KIT_NAME
+kit_owner="soymadip"                                   # K_KIT_OWNER
+kit_site="https://kireisakura.soymadip.me"             # K_KIT_SITE
+kit_repo="https://github.com/${kit_owner}/${kit_name}" # K_KIT_REPO
+kit_repo_branch="main"                                 # K_KIT_BRANCH
 
-kit_installer_url="${kit_site}/install"    # K_KIT_INSTALLER_URL
-kit_ver_url="$kit_dir/.version"            # K_KIT_VER_URL
-upstream_ver_url="$kit_site/version"       # K_KIT_UPSTREAM_VER_URL
+kit_dir="$HOME/.local/share/${kit_name}"               # K_KIT_DIR
+lib_dir="$kit_dir/lib"                                 # K_LIB_DIR
+init_file="$lib_dir/__init__.sh"                       # K_INIT_FILE
+package_dir="$kit_dir/packages"                        # K_PACKAGE_DIR
+assets_dir="$kit_dir/Assets"                           # K_ASSETS_DIR
 
-project_name="$kit_name"                   # K_PRJ_NAME
-project_owner="$kit_owner"                 # K_PRJ_OWNER
-project_url="$kit_site"                    # K_PRJ_URL
-project_repo="$kit_repo"                   # K_PRJ_REPO
-project_config_file="config.yml"           # K_PRJ_CONFIG
+kit_installer_url="${kit_site}/install"                # K_KIT_INSTALLER_URL
+kit_ver_url="$kit_dir/.version"                        # K_KIT_VER_URL
+upstream_ver_url="$kit_site/version"                   # K_KIT_UPSTREAM_VER_URL
 
-debug_mode=false                           # K_DEBUG_MODE
+debug_mode=false                                       # K_DEBUG_MODE
+quiet_mode=false                                       # K_QUIET_MODE
 
-cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/${project_name}" # K_CACHE_DIR
-log_file="${cache_dir}/${project_name}.log"                 # K_LOG_FILE
+cache_dir=".cache"                                     # K_CACHE_DIR
+log_file="${cache_dir}/${project_name}.log"            # K_LOG_FILE
 
 
 # ____________________________________ Main _________________________________________________
 
 # source colors
-eval "$("$(dirname "$0")/../lib/_colors.sh")"
+source "$(dirname "$0")/../lib/ui/colors.sh"
 
 # Parse option
 while [[ "$#" -ge 0 ]]; do

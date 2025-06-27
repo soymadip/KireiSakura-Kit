@@ -14,46 +14,45 @@
 [[ $- != *i* ]] && shopt -s expand_aliases
 
 
-
-#--------------------- Get Color Codes ------------------------
-echo -e "[$(date +"%Y.%m.%d %H:%M:%S")] [INFO] Loading color codes." >>"$K_LOG_FILE"
-
-eval "$("$(dirname "$0")/_colors.sh")" || {
-  echo -e "${RED}Error: Failed to load color codes.${NC}"
-  exit 1
-}
-
-
-#--------------------- Import Logging ------------------------
+#---------------------------- Import Logging ------------------------------
 
 echo -e "[$(date +"%Y.%m.%d %H:%M:%S")] [INFO] Loading Logging." >>"$K_LOG_FILE"
 
-source "$K_LIB_DIR/logging.sh" || {
-  echo -e "${RED}Error: Failed to load logging module.${NC}"
+source "$K_LIB_DIR/utils/logging.sh" || {
+  echo -e "\e[31m ✗ Error: Failed to load logging.\e[0m"
   exit 1
 }
 
+#--------------------- Import Core Library modules ------------------------
 
-#--------------------- Setup library modules ------------------------
-# This is not integrated in kimport because kimport needs library modules as dependencies itself.
-# So, we need to load library modules manually.
-lib_modules=(
-  "ui"
-  "module-manager"
-  "os"
-  "util"
+log.info "\e[38;5;46mInitializing core library...\e[0m"
+
+[ -z "$K_LIB_DIR" ] && {
+  log.error "K_LIB_DIR super variable is not set.Please check above logs for errors."
+  exit 1
+}
+
+declare -a modules_list=(
+# "module/path-->Module-Name"
+  "ui/colors-->Colors"
+  "ui/elements-->UI-Elements"
+  "manager/module-->Module-Manager"
+  "manager/package-->Package-Manager"
+  "manager/config-->Config-Manager"
+  "utils/os-->OS-Utils"
+  "utils/util-->Misc-Utils"
 )
 
-log.info "Initializing core library..."
-
-for lib_module in "${lib_modules[@]}"; do
-  if source "$K_LIB_DIR/$lib_module.sh"; then
-    K_LOADED_MODULES+=("lib.${lib_module}")
-    echo -e "\e[38;5;245m    -> Loaded $lib_module.\e[0m"
-  else
-    echo -e "\e[38;5;196m    -> Failed to load $lib_module!\e[0m" 
+for module in "${modules_list[@]}"; do
+  module_path="${module%-->*}"
+  module_name="${module#*-->}"
+  {
+    source "$K_LIB_DIR/$module_path.sh" &&
+    log.success "   Loaded: $module_name."
+  }  || {
+    log.error "   Failed to load $module_name"
     exit 1
-  fi
+  }
 done
 
-log.success "All library modules loaded successfully."
+log.success "Core library initialized successfully."
