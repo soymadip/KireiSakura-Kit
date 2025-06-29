@@ -1,26 +1,58 @@
-# KireiSakura-Kit Configuration
-# This serves as the default configuration and usage example.
+# _  ___          _ ____        _                          _  ___ _
+#| |/ (_)_ __ ___(_) ___|  __ _| | ___   _ _ __ __ _      | |/ (_) |_
+#| ' /| | '__/ _ \ \___ \ / _` | |/ / | | | '__/ _` |_____| ' /| | __|
+#| . \| | | |  __/ |___) | (_| |   <| |_| | | | (_| |_____| . \| | |_
+#|_|\_\_|_|  \___|_|____/ \__,_|_|\_\\__,_|_|  \__,_|     |_|\_\_|\__|
+#
+# Configuration file.
 
 
-
-# === BEHAVIOR & OPTIONS ===
+#---------------- Various feature flags --------------
 Behavior:
-  auto_update: true
-  environment: "dev"   # Options: dev, prod
-  log_level:   "info"   # Options: debug, info, error
+  auto_update: true       # Auto Update on each run. [true|false]
+  environment: "dev"      # Run environment. [dev|prod]
+  log_level:   "info"     # Density of logging [debug|info|error]
 
-# === PROJECT METADATA ===
+Example:
+  google: "${{ Behavior.auto_update }}"
+
+#-------------- Current Project Metadata ------------ 
 Project:
-  name: "My Awsome Project"
+  name: "My Awesome Project"
   version: "0.0.0"
   owner: "My Name"
-  description: "A Awsome & passionate project."
+  description: "An Awesome & passionate project."
   
   # URLs
-  url: "https://soymadip.github.io/KireiSakura-Kit"
-  repo: "https://github.com/soymadip/KireiSakura-Kit"
-  issues: "https://github.com/soymadip/KireiSakura-Kit/issues"
+  url: "https://myawesomeproj.com"
+  repo: "https://github.com/me/my-awesome-project"
+  issues: ""
   
   # Project structure
   config_file: "config.yml"
   module_dir: "modules"
+  
+# === DIRECTORIES & PATHS ===
+Paths:
+  # Kit installation
+  kit_dir: null          # Default: $XDG_DATA_HOME/<project_name>
+  cache_dir: null        # Default: $XDG_CACHE_HOME/<project_name>  
+  config_dir: null       # Default: $XDG_CONFIG_HOME/<project_name>
+  
+  # Package management  
+  package_dir: null      # Default: $kit_dir/packages
+  module_dir: null       # Default: $kit_dir/modules
+  
+  # Logging
+  log_dir: null          # Default: $cache_dir/logs
+  log_file: "kireisakura.log"
+
+# === REMOTE RESOURCES ===
+Remote:
+  # Documentation
+  docs_url: "https://soymadip.github.io/KireiSakura-Kit"
+  
+  # Installation & Updates
+  installer_url: "https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/refs/heads/install/install.sh"
+  update_check_url: "https://raw.githubusercontent.com/soymadip/KireiSakura-Kit/main/.version"
+  
