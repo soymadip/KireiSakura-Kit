@@ -36,10 +36,10 @@ declare -a modules_list=(
 # "module/path-->Module-Name"
   "ui/colors-->Colors"
   "ui/elements-->UI-Elements"
+  "utils/os-->OS-Utils"
   "manager/module-->Module-Manager"
   "manager/package-->Package-Manager"
   "manager/config-->Config-Manager"
-  "utils/os-->OS-Utils"
   "utils/util-->Misc-Utils"
 )
 
@@ -50,7 +50,7 @@ for module in "${modules_list[@]}"; do
     source "$K_LIB_DIR/$module_path.sh" &&
     log.success "   Loaded: $module_name."
   }  || {
-    log.error "   Failed to load $module_name"
+    log.error "   Failed: $module_name"
     exit 1
   }
 done

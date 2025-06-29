@@ -1,4 +1,3 @@
-
 #/////////////////////  System Power Mangement \\\\\\\\\\\\\\\\\\\\
 
 #
@@ -26,7 +25,7 @@ __reboot() {
         esac
     done
     
-    if [[ "$skip_prompt" = true ]] || prompt "Reboot is recommended, Do you wanna Reboot?"; then
+    if [[ "$skip_prompt" = true ]] || ui.prompt "Reboot is recommended, Do you wanna Reboot?"; then
         log.warn "rebooting..."
         sleep 2
         reboot || sudo reboot || systemctl reboot || log.error "Reboot failed. Please try manually."
@@ -62,7 +61,7 @@ __shut_down() {
         esac
     done
     
-    if [[ "$skip_prompt" = true ]] || prompt "Shut down is recommended, Do you wanna Shut down?"; then
+    if [[ "$skip_prompt" = true ]] || ui.prompt "Shut down is recommended, Do you wanna Shut down?"; then
         log.warn "shutting down..."
         sleep 2
         shutdown now || sudo shutdown now || systemctl poweroff || log.error "Shutdown failed. Please try manually."
@@ -98,7 +97,7 @@ __sleep_system() {
         esac
     done
     
-    if [[ "$skip_prompt" = true ]] || prompt "Putting system to Sleep is recommended, Please confirm"; then
+    if [[ "$skip_prompt" = true ]] || ui.prompt "Putting system to Sleep is recommended, Please confirm"; then
         log.warn "putting system to sleep..."
         sleep 2
         systemctl suspend || sudo systemctl suspend || log.error "Sleep failed. Please try manually."
@@ -109,53 +108,42 @@ __sleep_system() {
 #==---------------------------------------------------------------------------------
 
 
-#/////////////////////////// Package Management \\\\\\\\\\\\\\\\\\\\\\\\\
+#/////////////////////////// Command Management \\\\\\\\\\\\\\\\\\\\\\\\\
 
 
 #
 #
 #==---------------------------------------------------------------------------------
-# NAME:   __is_installed
-# ALIAS:  os.package.installed
-# DESC:   Check if a package is installed.
-# USAGE:  os.package.installed [<flags>] <package>
-# RETURN: 0 if installed, 1 if not installed.
-# FLAGS:
-#         -q,--quiet    Suppress output.
+# NAME:   __has_command
+# ALIAS:  os.has.command
+# DESC:   Check if a command exists.
+# USAGE:  os.has.command <command>
+# TODO:   Add Support for multiple commands
 #==---------------------------------------------------------------------------------
-__is_installed() {
-    local pkg
-    local be_quiet=false
+__has_command() {
+    local command="$1"
     local debug_mode=${K_DEBUG_MODE:-false}
-    
-    while [[ $# -gt 0 ]]; do
-        case "$1" in
-            -q | --quiet)
-                be_quiet=true
-                shift
-            ;;
-            *)
-                pkg="$1"
-                shift
-            ;;
-        esac
-    done
-    
-    if [[ -z "$pkg" ]]; then
-        log.error "No package provided."
+
+    [[ -z "$command" ]] && {
+        $debug_mode && log.error "No command provided."
         return 1
-    fi
-    
-    if command -v "$pkg" &>/dev/null; then
-        $debug_mode && log.success "$pkg is installed."
+    }
+
+    if command -v "$command" &>/dev/null; then
+        $debug_mode && log.success "Command '$command' exists."
         return 0
     else
-        $debug_mode && log.warn "$pkg is not installed."
+        $debug_mode && log.warn "Command '$command' does not exist."
         return 1
     fi
 }
 #==---------------------------------------------------------------------------------
 
+
+
+#/////////////////////////// Package Management \\\\\\\\\\\\\\\\\\\\\\\\\
+
+# TODO:   Add flatpak & snap support
 
 #
 #
@@ -168,15 +156,20 @@ __is_installed() {
 __get_package_manager() {
     
     if [[ "$(uname)" == "Linux" ]]; then
-        if __is_installed -q pacman; then
+
+        if __has_command paru; then
+            echo "paru"
+        elif __has_command yay; then
+            echo "yay"
+        elif __has_command pacman; then
             echo "pacman"
-            elif __is_installed -q apt; then
+        elif __has_command apt; then
             echo "apt"
-            elif __is_installed -q dnf; then
+        elif __has_command dnf; then
             echo "dnf"
-            elif __is_installed -q zypper; then
+        elif __has_command zypper; then
             echo "zypper"
-            elif __is_installed -q apk; then
+        elif __has_command apk; then
             echo "apk"
         else
             log.error "Unsupported Linux distribution."
@@ -185,7 +178,7 @@ __get_package_manager() {
             return 1
         fi
         return 0
-        elif [[ "$(uname)" == "Darwin" ]]; then
+    elif [[ "$(uname)" == "Darwin" ]]; then
         echo "brew"
         return 0
     else
@@ -200,18 +193,144 @@ __get_package_manager() {
 #
 #
 #==---------------------------------------------------------------------------------
+# NAME:   __is_installed
+# ALIAS:  os.package.installed
+# DESC:   Check if a package is installed.
+# USAGE:  os.package.installed <package>
+# RETURN: 0 if installed, 1 if not installed.
+# NOTE:   Shows debug messages only when K_DEBUG_MODE=true
+#==---------------------------------------------------------------------------------
+__is_package_installed() {
+    local pkg
+    local debug_mode=${K_DEBUG_MODE:-false}
+    local pkg_mngr
+    pkg_mngr="$(__get_package_manager)"
+    
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -*)
+                log.error "Invalid Flag: $1"
+                return 1
+            ;;
+            *)
+                pkg="$1"
+                shift
+            ;;
+        esac
+    done
+    
+    [[ -z "$pkg" ]] && {
+        log.error "No package provided."
+        return 1
+    }
+
+    case $pkg_mngr in
+        paru)
+            if paru -Q  "$pkg" &>/dev/null; then
+                $debug_mode && log.success "Package '$pkg' is installed."
+                return 0
+            else
+                $debug_mode && log.warn "Package '$pkg' is not installed."
+                return 1
+            fi
+        ;;
+        yay)
+            if yay -Q  "$pkg" &>/dev/null; then
+                $debug_mode && log.success "Package '$pkg' is installed."
+                return 0
+            else
+                $debug_mode && log.warn "Package '$pkg' is not installed."
+                return 1
+            fi
+        ;;
+        pacman)
+            if pacman -Q "$pkg" &>/dev/null; then
+                $debug_mode && log.success "Package '$pkg' is installed."
+                return 0
+            else
+                $debug_mode && log.warn "Package '$pkg' is not installed."
+                return 1
+            fi
+        ;;
+        apt)
+            if dpkg -s "$pkg" &>/dev/null; then
+                $debug_mode && log.success "Package '$pkg' is installed."
+                return 0
+            else
+                $debug_mode && log.warn "Package '$pkg' is not installed."
+                return 1
+            fi
+        ;;
+        dnf|zypper)
+            if rpm -q  "$pkg" &>/dev/null; then
+                $debug_mode && log.success "Package '$pkg' is installed."
+                return 0
+            else
+                $debug_mode && log.warn "Package '$pkg' is not installed."
+                return 1
+            fi
+        ;;
+        apk)
+            if apk info -e "$pkg" &>/dev/null; then
+                $debug_mode && log.success "Package '$pkg' is installed."
+                return 0
+            else
+                $debug_mode && log.warn "Package '$pkg' is not installed."
+                return 1
+            fi
+        ;;
+        brew)
+            if brew list --formula "$pkg" &>/dev/null || brew list --cask "$pkg" &>/dev/null; then
+                $debug_mode && log.success "Package '$pkg' is installed."
+                return 0
+            else
+                $debug_mode && log.warn "Package '$pkg' is not installed."
+                return 1
+            fi
+        ;;
+        *)
+            log.error "Unsupported Linux distribution."
+            log.error "No supported package manager found."
+            log.warn "Use one (or derivatives) of below distros: "
+            log.warn "Debian, Ubuntu, Fedora, Arch, SUSE"
+            return 1
+        ;;
+    esac
+}
+#==---------------------------------------------------------------------------------
+
+
+#
+#
+#==---------------------------------------------------------------------------------
 # NAME:   __install_package
 # ALIAS:  os.package.install
 # DESC:   determine distro's package manager and installs the package.
 # USAGE:  os.package.install <package>
+# TODO:   Add caching.
 #==---------------------------------------------------------------------------------
 __install_package() {
     local pkg="$1"
     local pkg_mngr
-    
     pkg_mngr="$(__get_package_manager)"
+
+    [[ -z "$pkg" ]] && {
+        log.error "No package provided."
+        return 1
+    }
+    
+    __is_package_installed "$pkg" && {
+        log.warn "Package '$pkg' is already installed."
+        return 0
+    }
     
     case $pkg_mngr in
+        paru)
+            paru -S --noconfirm --needed "$pkg" >/dev/null || return 1
+        ;;
+        yay)
+            yay -S --noconfirm --needed "$pkg" >/dev/null || return 1
+        ;;
         pacman)
             sudo pacman -S --noconfirm --needed "$pkg" >/dev/null || return 1
         ;;
@@ -233,7 +352,7 @@ __install_package() {
         ;;
         *)
             log.error "Unsupported Linux distribution."
-            log.error "No suppoeted package manager found."
+            log.error "No supported package manager found."
             log.warn "Use one (or derivatives) of below distros: "
             log.warn "Debian, Ubuntu, Fedora, Arch, SUSE"
             return 1
@@ -483,9 +602,12 @@ alias os.sleep='__sleep_system'
 # alias os.lock='__lock_screen'
 # alias os.log.out='__logout_user'
 
+# Command Management
+alias os.has.command='__has_command'
+
 # Package Management
 alias os.get.package.manager='__get_package_manager'
-alias os.package.installed='__is_installed'
+alias os.package.installed='__is_package_installed'
 alias os.package.install='__install_package'
 # alias os.package.remove='__remove_package'
 # alias os.package.reinstall='__reinstall_package'

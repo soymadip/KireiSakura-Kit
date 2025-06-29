@@ -64,6 +64,12 @@ jobs:
         id: get_repo_name
         run: echo "REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)" >> $GITHUB_ENV
 
+      - name: Change Config Environment 
+        uses: mikefarah/yq@master
+        run: |
+          yq -i '.Behavior.environment = "prod"' config.yml || exit 1
+          yq -i '.Behavior.log_level = "info"' config.yml || exit 1
+
       - name: Create a tar.gz archive
         run: |
           mkdir release
