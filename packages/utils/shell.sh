@@ -1,14 +1,15 @@
 #
 #
-#---------------------------------------------------------------------------------
-# NAME:  change-shell
-# DESC:  Change the login shell of the current user.
-# USAGE: change-shell <shell_name>.
+#==---------------------------------------------------------------------------------
+# NAME:   __change_shell
+# ALIAS:  shell.change
+# DESC:   Change the login shell of the current user.
+# USAGE:  shell.change <shell_name>
 # FIXME:
 #      - sync with current project.
 #      - adapt to use which need lchsh (https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH#install-and-set-up-zsh-as-default)
-#---------------------------------------------------------------------------------
-change-shell() {
+#==---------------------------------------------------------------------------------
+__change_shell() {
     local shell_name="$1"
 
     if [ "$(basename "$SHELL")" == "${shell_name}" ]; then
@@ -24,15 +25,18 @@ change-shell() {
         log.warn "Log out and log back again for changes to take effect."
     fi
 }
+#==---------------------------------------------------------------------------------
+
 
 #
 #
-#---------------------------------------------------------------------------------
-# NAME:  enable-sudo-feedback
-# DESC:  Enable feedback(adds * as chars are typed) when typing sudo password.
-# USAGE: enable-sudo-feedback.
-#---------------------------------------------------------------------------------
-enable-sudo-feedback() {
+#==---------------------------------------------------------------------------------
+# NAME:   __enable_sudo_feedback
+# ALIAS:  shell.enable.sudo.feedback
+# DESC:   Enable feedback (adds * as chars are typed) when typing sudo password.
+# USAGE:  shell.enable.sudo.feedback
+#==---------------------------------------------------------------------------------
+__enable_sudo_feedback() {
 
     if sudo grep -q "Defaults.*pwfeedback" /etc/sudoers; then
         log.success "Sudo feedback is already enabled."
@@ -51,25 +55,11 @@ enable-sudo-feedback() {
         fi
     fi
 }
+#==---------------------------------------------------------------------------------
 
-#
-#
-#---------------------------------------------------------------------------------
-# NAME:  confirm-reboot
-# DESC:  Ask for confirmation before reboot.
-# USAGE: confirm-reboot
-#---------------------------------------------------------------------------------
-confirm-reboot () {
 
-  log.warn "!" prompt "Reboot is recommended, Do you wanna Reboot?" cfrm_reboot
-  if [ "$cfrm_reboot" == "y" ] || [ "$cfrm_reboot" == "Y" ] || [ -z "$cfrm_reboot" ]; then
-    log.warn "rebooting..."
-    sleep 2
-    sudo reboot
-  else
-    log.success "Ok, Enjoy your system! and don't forget to reboot later.."
-    sleep 2
-    clear
-  fi
 
-}
+
+#_____________________ Aliases _________________________
+alias shell.change='__change_shell'
+alias shell.enable.sudo.feedback='__enable_sudo_feedback'

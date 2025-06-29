@@ -1,6 +1,14 @@
 
-# TODO: just re-implement this. I was to immature when wrote this.
-function stow_restore {
+#
+#
+#==---------------------------------------------------------------------------------
+# NAME:   __stow_restore
+# ALIAS:  stow.restore
+# DESC:   Restore dotfiles using GNU Stow.
+# USAGE:  stow.restore [<dotfiles_dir>]
+# TODO:   Just re-implement this. I was too immature when I wrote this.
+#==---------------------------------------------------------------------------------
+__stow_restore() {
     local cwd=$(pwd)
     local dot_dir="$HOME/${1:-Dotfiles}"
 
@@ -28,3 +36,9 @@ function stow_restore {
     log.warn "Changing directory back to $cwd"
     cd "$cwd" || log.error "Failed to change back to $cwd"
 }
+#==---------------------------------------------------------------------------------
+
+
+
+#_____________________ Aliases _________________________
+alias stow.restore='__stow_restore'

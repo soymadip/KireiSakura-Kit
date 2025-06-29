@@ -1,5 +1,12 @@
-
-check-mount-entry() {
+#
+#
+#==---------------------------------------------------------------------------------
+# NAME:   __check_mount_entry
+# ALIAS:  disk.mount.entry.check.mount
+# DESC:   Check if disk is already mounted or has an entry in fstab.
+# USAGE:  disk.check.mount.entry <disk_id> <mount_dir>
+#==---------------------------------------------------------------------------------
+__check_mount_entry() {
   local disk_id="$1"
   local mount_dir="$2"
   local fstab_file="/etc/fstab"
@@ -16,10 +23,21 @@ check-mount-entry() {
   else
       return 0
   fi
-
 }
+#==---------------------------------------------------------------------------------
 
-mount-external-drive() {
+#
+#
+#==---------------------------------------------------------------------------------
+# NAME:   __mount_external_drive
+# ALIAS:  disk.mount.external.drive
+# DESC:   Mount an external drive with proper permissions.
+# USAGE:  disk.mount.external.drive [options]
+# FLAGS:
+#         -md, --mount-dir  The directory to mount the drive at.
+#         -u, --user        The user who should own the mounted directory.
+#==---------------------------------------------------------------------------------
+__mount_external_drive() {
   local mount_dir username user_group disk_id mount_config
 
   while [[ "$#" -gt 1 ]]; do
@@ -81,35 +99,12 @@ mount-external-drive() {
 
   log.success "External Drive '$disk_id' mounted at '$mount_dir'"
 }
+#==---------------------------------------------------------------------------------
 
 
 
-# Function to Resize swap file:
-resize-swap() {
-    echo -e "Do you wanna Create/Resize your swapfile? (y/n)\n(Your swap file will be of ${swap_file_size}B)"
-    read -p "=>"   rsz_swapf
-    if [ "$rsz_swapf" == "y" ] || [ "$rsz_swapf" == "Y" ] || [ -z "$rsz_swapf" ]; then
-        if [ -f "$swap_file" ]; then
-            log.info "Swapfile already exists. Resizing to $swap_file_size..."
-            log.warn "turning off swaps"
-            sudo swapoff -a
-            log.warn "removing already present swapfile."
-            sudo rm "$swap_file"
-        else
-            log.info "Creating swapfile of size $swap_file_size..."
-        fi
-        log.warn "creating new file of ${swap_file_size}B for swap."
-        sudo fallocate -l "$swap_file_size" "$swap_file"
-        log.warn "changing permissions."
-        sudo chmod 600 "$swap_file"
-        log.warn "making the ${swap_file} a swapfile."
-        sudo mkswap "$swap_file"
-        log.warn "turning new swapfile on"
-        sudo swapon "$swap_file"
-        log.warn "please check if everything is good:"
-        swapon --show
-        footer "Swapfile created and activated."
-    else
-        echo -e "${RED}swapfile size change skipped.${NC}"
-    fi
-}
+#_____________________ Aliases _________________________
+
+alias disk.check.mount.entry='__check_mount_entry'
+alias disk.mount.external.drive='__mount_external_drive'
+alias disk.resize.swap='__resize_swap'

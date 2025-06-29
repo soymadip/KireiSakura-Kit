@@ -2,7 +2,15 @@
 # Do NOT use in production.
 
 
-read-ini() {
+#
+#
+#==---------------------------------------------------------------------------------
+# NAME:   __read_ini
+# ALIAS:  ini.read
+# DESC:   Read a value from an INI file using section.key format.
+# USAGE:  ini.read <ini_file> <section.key>
+#==---------------------------------------------------------------------------------
+__read_ini() {
     local ini_file="$1"
     local section_key="$2"
     local resolved_value=""
@@ -50,3 +58,8 @@ read-ini() {
     # Output the resolved value
     echo -n "$resolved_value"
 }
+#==---------------------------------------------------------------------------------
+
+
+#_____________________ Aliases _________________________
+alias ini.read='__read_ini'

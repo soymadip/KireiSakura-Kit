@@ -1,13 +1,14 @@
 
 #
 #
-#---------------------------------------------------------------------------------
-# NAME:  fix-ntv-message
-# DESC:  Fix the "Native Messaging Host" message(by default firefox forks).
-# USAGE: fix-ntv-message <config folder>
-# FIXME: This function is not uptodate.
-#---------------------------------------------------------------------------------
-fix-ntv-message() {
+#==---------------------------------------------------------------------------------
+# NAME:   __fix_ntv_message
+# ALIAS:  app-patches.fix.ntv_message
+# DESC:   Fix the "Native Messaging Host" message (by default Firefox forks).
+# USAGE:  app-patches.fix.ntv_message <config folder>
+# FIXME:  This function is not up-to-date.
+#==---------------------------------------------------------------------------------
+__fix_ntv_message() {
   local librewolf_dir1='~/.librewolf/native-messaging-hosts'
   local librewolf_dir2='/usr/lib/librewolf/native-messaging-hosts'
   local firefox_dir1='~/.mozilla/native-messaging-hosts'
@@ -36,20 +37,20 @@ fix-ntv-message() {
       return 0
     fi
   fi
-
 }
+#==---------------------------------------------------------------------------------
+
 
 #
 #
-#---------------------------------------------------------------------------------
-# NAME:  change-papirus-folder-color
-# DESC:  Function-Description.
-# USAGE: change-papirus-folder-color <arguments>
-# FLAGS:
-#      -1st,--full1st  flag desc.
-# FIXME: This function is not up-to-date.
-#---------------------------------------------------------------------------------
-change-papirus-folder-color() {
+#==---------------------------------------------------------------------------------
+# NAME:   __change_papirus_folder_color
+# ALIAS:  app-patches.change.papirus.folder.color
+# DESC:   Change folder color for Papirus icon theme.
+# USAGE:  app-patches.change.papirus.folder.color <color_name> [<theme_name>]
+# FIXME:  This function is not up-to-date.
+#==---------------------------------------------------------------------------------
+__change_papirus_folder_color() {
   local color_name=$1
   local theme_name=${2:-Papirus-Dark}
 
@@ -61,5 +62,9 @@ change-papirus-folder-color() {
   command papirus-folders -v -C $color_name --theme $theme_name
   log.success "Papirus folder color changed to $color_name."
 }
+#==---------------------------------------------------------------------------------
 
 
+#_____________________ Aliases _________________________
+alias app-patches.fix.ntv_message='__fix_ntv_message'
+alias app-patches.change.papirus.folder.color='__change_papirus_folder_color'
