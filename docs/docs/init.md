@@ -15,8 +15,7 @@ In this page, you'll learn,
 ## :material-file-tree: **Directory Structure**
 
 !!! info "About this.."
-    - The default structure is intended (& recommended) to provide a clean structure & follo
-    - wed by documentation.  
+    - The default structure is intended (& recommended) to provide a clean structure & followed by documentation.  
     - **Except modules dir, config file**, you are free to organize your project however you like.[^*]
 
 ```markdown
